@@ -40,7 +40,7 @@
   <img
     src="https://github-readme-stats.vercel.app/api/top-langs/?username=KurohaneKaoruko&amp;layout=compact&amp;theme=transparent&amp;hide_border=true&amp;langs_count=8"
     alt="Top languages for KurohaneKaoruko"
-    width="40%"
+    width="39%"
   />
 </p>
 
