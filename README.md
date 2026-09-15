@@ -33,30 +33,9 @@
 
 <p align="center">
   <img
-    src="https://github-readme-stats.vercel.app/api?username=KurohaneKaoruko&amp;show_icons=true&amp;theme=transparent&amp;hide_border=true&amp;include_all_commits=true&amp;rank_icon=percentile"
-    alt="GitHub stats for KurohaneKaoruko"
-    width="59%"
-  />
-  <img
-    src="https://github-readme-stats.vercel.app/api/top-langs/?username=KurohaneKaoruko&amp;layout=compact&amp;theme=transparent&amp;hide_border=true&amp;langs_count=8"
-    alt="Top languages for KurohaneKaoruko"
-    width="39%"
-  />
-</p>
-
-<p align="center">
-  <img
     src="https://streak-stats.demolab.com?user=KurohaneKaoruko&amp;theme=transparent&amp;hide_border=true"
     alt="GitHub streak for KurohaneKaoruko"
     width="80%"
-  />
-</p>
-
-<p align="center">
-  <img
-    src="https://github-readme-activity-graph.vercel.app/graph?username=KurohaneKaoruko&amp;bg_color=00000000&amp;color=8B949E&amp;line=58A6FF&amp;point=1F6FEB&amp;area=true&amp;area_color=58A6FF&amp;title_color=1F6FEB&amp;hide_border=true&amp;custom_title=Contribution%20Activity"
-    alt="Contribution activity graph for KurohaneKaoruko"
-    width="100%"
   />
 </p>
 
