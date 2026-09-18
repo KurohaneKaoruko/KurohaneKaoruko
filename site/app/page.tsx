@@ -3,6 +3,7 @@ import Marquee from "@/components/Marquee";
 import Reveal from "@/components/Reveal";
 import ProjectCard from "@/components/ProjectCard";
 import { Button } from "@/components/ui/Button";
+import { BracketCorner } from "@/components/ui/Decorators";
 import { ScrambleText } from "@/components/ui/ScrambleText";
 import { marqueeTech, projects, typingLines } from "@/lib/data";
 
@@ -33,12 +34,24 @@ export default function Home() {
             <ScrambleText text="ACCESS GRANTED" className="text-primary" duration={900} delay={600} />
           </p>
 
-          <h1
-            className="fade-in-up mt-8 font-mono text-4xl font-bold tracking-tight sm:text-6xl md:text-7xl"
+          <div
+            className="fade-in-up group relative z-10 mt-8 flex justify-center"
             style={{ animationDelay: "0.1s" }}
           >
-            KUROHANE KAORUKO
-          </h1>
+            <BracketCorner
+              position="top-left"
+              className="w-6 h-6 -top-3 -left-3 border-primary/20 transition-all duration-300 group-hover:-top-4 group-hover:-left-4 group-hover:border-primary sm:w-8 sm:h-8 sm:-top-4 sm:-left-4 sm:group-hover:-top-6 sm:group-hover:-left-6"
+            />
+            <BracketCorner
+              position="bottom-right"
+              className="w-6 h-6 -bottom-3 -right-3 border-primary/20 transition-all duration-300 group-hover:-bottom-4 group-hover:-right-4 group-hover:border-primary sm:w-8 sm:h-8 sm:-bottom-4 sm:-right-4 sm:group-hover:-bottom-6 sm:group-hover:-right-6"
+            />
+            <h1 className="font-mono text-5xl font-bold leading-[1.05] tracking-tight sm:text-7xl md:text-8xl">
+              KUROHANE
+              <br />
+              KAORUKO
+            </h1>
+          </div>
 
           <div
             className="fade-in-up mt-6 font-mono text-base text-text-muted sm:text-xl"
