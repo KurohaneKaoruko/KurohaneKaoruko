@@ -14,7 +14,6 @@
   --border-active: #ff3333;
   --text-muted: #888888;
   --text-dim: #4a4a4a;
-  --grid-color: rgba(255, 255, 255, 0.05);
   --font-inter: "Inter Variable", "Inter", "Noto Sans SC", system-ui, sans-serif;
   --font-roboto-mono: "Roboto Mono Variable", "Roboto Mono", ui-monospace, Consolas, monospace;
 }
@@ -58,7 +57,6 @@ body {
 body {
   overflow-x: hidden;
   background-color: var(--background);
-  background-image: linear-gradient(to top, #121214 0%, #08080a 40%, #08080a 100%);
   min-height: 100vh;
   color: var(--foreground);
   font-family: var(--font-inter);
@@ -76,49 +74,6 @@ body {
 ::selection {
   background: var(--primary);
   color: #ffffff;
-}
-
-/* ===== 背景装饰层（移植：地形等高线 + 精密点阵） ===== */
-body::before {
-  content: "";
-  position: fixed;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background-image:
-    repeating-radial-gradient(
-      circle at 80% 80%,
-      rgba(255, 255, 255, 0.02) 0,
-      rgba(255, 255, 255, 0.02) 1px,
-      transparent 1px,
-      transparent 120px
-    ),
-    repeating-radial-gradient(
-      circle at 20% 20%,
-      rgba(255, 255, 255, 0.015) 0,
-      rgba(255, 255, 255, 0.015) 1px,
-      transparent 1px,
-      transparent 180px
-    );
-  pointer-events: none;
-  z-index: -2;
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-  background-size: 40px 40px;
-  -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
-  mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0.6;
 }
 
 /* ===== 科技工具类（移植自 globals.scss / default.scss） ===== */
@@ -158,21 +113,6 @@ body::after {
   background-size: 20px 100%;
   height: 4px;
   width: 100%;
-}
-
-.tech-grid-bg {
-  background-image:
-    linear-gradient(var(--grid-color) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-
-.tech-scanline {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, transparent 50%, rgba(255, 51, 51, 0.05) 51%, transparent 51%);
-  background-size: 100% 4px;
-  pointer-events: none;
 }
 
 .clip-diagonal-tl {
@@ -317,17 +257,6 @@ body::after {
   to { width: 100%; }
 }
 
-/* ===== 雷达扫描线（仅 transform 位移，合成器友好） ===== */
-@keyframes radar-sweep {
-  0% { transform: translateY(-5vh); opacity: 0; }
-  6% { opacity: 1; }
-  94% { opacity: 1; }
-  100% { transform: translateY(105vh); opacity: 0; }
-}
-.radar-sweep {
-  animation: radar-sweep 9s linear 1.5s infinite;
-}
-
 /* ===== 滚动条 ===== */
 ::-webkit-scrollbar {
   width: 6px;
@@ -348,20 +277,15 @@ body::after {
   .boot-root {
     display: none;
   }
-  .aurora-anim,
   .marquee-track,
   .boot-bar,
   .glitch-title::before,
   .glitch-title::after,
-  .glitch-text:hover,
-  body::before {
+  .glitch-text:hover {
     animation: none !important;
   }
   .boot-line {
     opacity: 1;
     animation: none !important;
-  }
-  .radar-sweep {
-    display: none;
   }
 }
