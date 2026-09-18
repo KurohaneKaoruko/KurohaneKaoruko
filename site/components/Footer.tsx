@@ -27,7 +27,7 @@ export default function Footer() {
               GitHub
             </a>
           </div>
-          <p>Powered by Next.js 16 · GitHub Pages</p>
+          <p>Powered by GitHub Pages</p>
         </div>
       </div>
     </footer>
