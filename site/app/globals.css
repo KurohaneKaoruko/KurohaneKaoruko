@@ -1,0 +1,359 @@
+@import "tailwindcss";
+
+/* ===== 主题令牌 ===== */
+:root {
+  --background: #0a0a0a;
+  --foreground: #ffffff;
+  --primary: #ff3333;
+  --primary-foreground: #ffffff;
+  --secondary: #3b82f6;
+  --accent: #ff3333;
+  --card-bg: #111111;
+  --border: rgba(255, 255, 255, 0.14);
+  --border-strong: rgba(255, 255, 255, 0.4);
+  --border-active: #ff3333;
+  --text-muted: #888888;
+  --text-dim: #4a4a4a;
+  --grid-color: rgba(255, 255, 255, 0.05);
+  --font-inter: "Inter Variable", "Inter", "Noto Sans SC", system-ui, sans-serif;
+  --font-roboto-mono: "Roboto Mono Variable", "Roboto Mono", ui-monospace, Consolas, monospace;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-card-bg: var(--card-bg);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-active: var(--border-active);
+  --color-text-muted: var(--text-muted);
+  --color-text-dim: var(--text-dim);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-roboto-mono);
+}
+
+/* ===== 重置与全局 ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: var(--background);
+  background-image: linear-gradient(to top, #121214 0%, #08080a 40%, #08080a 100%);
+  min-height: 100vh;
+  color: var(--foreground);
+  font-family: var(--font-inter);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  position: relative;
+}
+
+/* font-mono 直读变量，绕开令牌链自引用 */
+.font-mono {
+  font-family: var(--font-roboto-mono), ui-monospace, monospace;
+}
+
+::selection {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+/* ===== 背景装饰层（移植：地形等高线 + 精密点阵） ===== */
+@keyframes topography-drift {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-20px, -10px); }
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background-image:
+    repeating-radial-gradient(
+      circle at 80% 80%,
+      rgba(255, 255, 255, 0.02) 0,
+      rgba(255, 255, 255, 0.02) 1px,
+      transparent 1px,
+      transparent 120px
+    ),
+    repeating-radial-gradient(
+      circle at 20% 20%,
+      rgba(255, 255, 255, 0.015) 0,
+      rgba(255, 255, 255, 0.015) 1px,
+      transparent 1px,
+      transparent 180px
+    );
+  animation: topography-drift 60s linear infinite alternate;
+  pointer-events: none;
+  z-index: -2;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+  -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+  mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.6;
+}
+
+/* ===== 科技工具类（移植自 globals.scss / default.scss） ===== */
+.tech-border {
+  border: 1px solid var(--border);
+  position: relative;
+}
+
+.tech-corners {
+  position: relative;
+}
+.tech-corners::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid var(--primary);
+  border-left: 2px solid var(--primary);
+  transition: all 0.3s ease;
+}
+.tech-corners::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 8px;
+  height: 8px;
+  border-bottom: 2px solid var(--primary);
+  border-right: 2px solid var(--primary);
+  transition: all 0.3s ease;
+}
+
+.tech-ruler-h {
+  background-image: linear-gradient(90deg, var(--border-strong) 1px, transparent 1px);
+  background-size: 20px 100%;
+  height: 4px;
+  width: 100%;
+}
+
+.tech-grid-bg {
+  background-image:
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.tech-scanline {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(255, 51, 51, 0.05) 51%, transparent 51%);
+  background-size: 100% 4px;
+  pointer-events: none;
+}
+
+.clip-diagonal-tl {
+  clip-path: polygon(20px 0, 100% 0, 100% 100%, 0 100%, 0 20px);
+}
+.clip-diagonal-tr {
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%);
+}
+.clip-diagonal-br {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
+}
+.clip-diagonal-bl {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+}
+.clip-tech-card {
+  clip-path: polygon(
+    20px 0,
+    100% 0,
+    100% calc(100% - 20px),
+    calc(100% - 20px) 100%,
+    0 100%,
+    0 20px
+  );
+}
+
+/* ===== 故障效果 ===== */
+.glitch-text:hover {
+  animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+  color: var(--primary);
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+/* 标题故障：双层错位色 + 周期性抽搐 */
+.glitch-title {
+  position: relative;
+  display: inline-block;
+}
+.glitch-title::before,
+.glitch-title::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
+.glitch-title::before {
+  color: var(--secondary);
+  animation: glitch-idle-a 7s infinite;
+}
+.glitch-title::after {
+  color: var(--primary);
+  animation: glitch-idle-b 7s infinite;
+}
+.glitch-title:hover::before {
+  animation: glitch-a 0.35s steps(2, end) infinite;
+  opacity: 0.85;
+}
+.glitch-title:hover::after {
+  animation: glitch-b 0.35s steps(2, end) infinite;
+  opacity: 0.85;
+}
+@keyframes glitch-a {
+  0% { transform: translate(-3px, 2px); }
+  50% { transform: translate(2px, -2px); }
+  100% { transform: translate(-2px, -1px); }
+}
+@keyframes glitch-b {
+  0% { transform: translate(3px, -2px); }
+  50% { transform: translate(-2px, 2px); }
+  100% { transform: translate(2px, 1px); }
+}
+@keyframes glitch-idle-a {
+  0%, 91%, 100% { opacity: 0; transform: none; }
+  92%, 94% { opacity: 0.55; transform: translate(-3px, 2px); }
+  95% { opacity: 0.55; transform: translate(2px, -1px); }
+}
+@keyframes glitch-idle-b {
+  0%, 94%, 100% { opacity: 0; transform: none; }
+  95%, 96.5% { opacity: 0.55; transform: translate(3px, -2px); }
+  97% { opacity: 0.55; transform: translate(-2px, 1px); }
+}
+
+/* ===== 入场与跑马灯 ===== */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-in-up {
+  animation: fade-in-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 30s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ===== 开机自检屏（纯 CSS 驱动，JS 仅负责提前卸载） ===== */
+.boot-root {
+  animation: boot-out 0.45s ease 2.35s forwards;
+}
+@keyframes boot-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+.boot-line {
+  opacity: 0;
+  animation: boot-line-in 0.12s steps(1, end) forwards;
+}
+@keyframes boot-line-in {
+  to { opacity: 1; }
+}
+.boot-bar {
+  width: 0%;
+  animation: boot-bar-fill 1.6s steps(24) 0.3s forwards;
+}
+@keyframes boot-bar-fill {
+  to { width: 100%; }
+}
+
+/* ===== 滚动条 ===== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* 减少动态效果偏好：停用全部装饰性动画 */
+@media (prefers-reduced-motion: reduce) {
+  .boot-root {
+    display: none;
+  }
+  .aurora-anim,
+  .marquee-track,
+  .boot-bar,
+  .glitch-title::before,
+  .glitch-title::after,
+  .glitch-text:hover,
+  body::before {
+    animation: none !important;
+  }
+  .boot-line {
+    opacity: 1;
+    animation: none !important;
+  }
+}
