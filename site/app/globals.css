@@ -171,39 +171,30 @@ body {
 }
 .glitch-title::before {
   color: var(--secondary);
-  animation: glitch-idle-a 7s infinite;
 }
 .glitch-title::after {
   color: var(--primary);
-  animation: glitch-idle-b 7s infinite;
 }
+/* 悬停时单次衰减故障：触发一次，0.7s 内自然消退，不循环 */
 .glitch-title:hover::before {
-  animation: glitch-a 0.35s steps(2, end) infinite;
-  opacity: 0.85;
+  animation: glitch-a 0.7s steps(2, end) 1 forwards;
 }
 .glitch-title:hover::after {
-  animation: glitch-b 0.35s steps(2, end) infinite;
-  opacity: 0.85;
+  animation: glitch-b 0.7s steps(2, end) 1 forwards;
 }
 @keyframes glitch-a {
-  0% { transform: translate(-3px, 2px); }
-  50% { transform: translate(2px, -2px); }
-  100% { transform: translate(-2px, -1px); }
+  0% { opacity: 0.85; transform: translate(-3px, 2px); }
+  25% { opacity: 0.7; transform: translate(2px, -2px); }
+  50% { opacity: 0.5; transform: translate(-2px, -1px); }
+  75% { opacity: 0.3; transform: translate(1px, 1px); }
+  100% { opacity: 0; transform: none; }
 }
 @keyframes glitch-b {
-  0% { transform: translate(3px, -2px); }
-  50% { transform: translate(-2px, 2px); }
-  100% { transform: translate(2px, 1px); }
-}
-@keyframes glitch-idle-a {
-  0%, 91%, 100% { opacity: 0; transform: none; }
-  92%, 94% { opacity: 0.55; transform: translate(-3px, 2px); }
-  95% { opacity: 0.55; transform: translate(2px, -1px); }
-}
-@keyframes glitch-idle-b {
-  0%, 94%, 100% { opacity: 0; transform: none; }
-  95%, 96.5% { opacity: 0.55; transform: translate(3px, -2px); }
-  97% { opacity: 0.55; transform: translate(-2px, 1px); }
+  0% { opacity: 0.85; transform: translate(3px, -2px); }
+  25% { opacity: 0.7; transform: translate(-2px, 2px); }
+  50% { opacity: 0.5; transform: translate(2px, 1px); }
+  75% { opacity: 0.3; transform: translate(-1px, -1px); }
+  100% { opacity: 0; transform: none; }
 }
 
 /* ===== 入场与跑马灯 ===== */
@@ -279,8 +270,6 @@ body {
   }
   .marquee-track,
   .boot-bar,
-  .glitch-title::before,
-  .glitch-title::after,
   .glitch-text:hover {
     animation: none !important;
   }
