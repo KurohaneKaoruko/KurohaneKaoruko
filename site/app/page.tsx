@@ -34,8 +34,7 @@ export default function Home() {
           </p>
 
           <h1
-            className="glitch-title fade-in-up mt-8 font-mono text-4xl font-bold tracking-tight sm:text-6xl md:text-7xl"
-            data-text="KUROHANE KAORUKO"
+            className="fade-in-up mt-8 font-mono text-4xl font-bold tracking-tight sm:text-6xl md:text-7xl"
             style={{ animationDelay: "0.1s" }}
           >
             KUROHANE KAORUKO

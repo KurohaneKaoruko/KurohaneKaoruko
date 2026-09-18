@@ -153,50 +153,6 @@ body {
   100% { transform: translate(0); }
 }
 
-/* 标题故障：双层错位色 + 周期性抽搐 */
-.glitch-title {
-  position: relative;
-  display: inline-block;
-}
-.glitch-title::before,
-.glitch-title::after {
-  content: attr(data-text);
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  pointer-events: none;
-}
-.glitch-title::before {
-  color: var(--secondary);
-}
-.glitch-title::after {
-  color: var(--primary);
-}
-/* 悬停时单次衰减故障：触发一次，0.7s 内自然消退，不循环 */
-.glitch-title:hover::before {
-  animation: glitch-a 0.7s steps(2, end) 1 forwards;
-}
-.glitch-title:hover::after {
-  animation: glitch-b 0.7s steps(2, end) 1 forwards;
-}
-@keyframes glitch-a {
-  0% { opacity: 0.85; transform: translate(-3px, 2px); }
-  25% { opacity: 0.7; transform: translate(2px, -2px); }
-  50% { opacity: 0.5; transform: translate(-2px, -1px); }
-  75% { opacity: 0.3; transform: translate(1px, 1px); }
-  100% { opacity: 0; transform: none; }
-}
-@keyframes glitch-b {
-  0% { opacity: 0.85; transform: translate(3px, -2px); }
-  25% { opacity: 0.7; transform: translate(-2px, 2px); }
-  50% { opacity: 0.5; transform: translate(2px, 1px); }
-  75% { opacity: 0.3; transform: translate(-1px, -1px); }
-  100% { opacity: 0; transform: none; }
-}
-
 /* ===== 入场与跑马灯 ===== */
 @keyframes fade-in-up {
   from {
