@@ -30,7 +30,7 @@ export default function Home() {
         <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
           <p className="fade-in-up font-mono text-[11px] tracking-[0.3em] text-text-muted sm:text-xs">
             <span className="mr-2 inline-block h-2 w-2 animate-pulse bg-primary align-middle" />
-            SYS.ONLINE // PORTFOLIO_KERNEL v2.1 //{" "}
+            SYS.ONLINE // PORTFOLIO_KERNEL v1.0 //{" "}
             <ScrambleText text="ACCESS GRANTED" className="text-primary" duration={900} delay={600} />
           </p>
 

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 const LINES = [
-  "> KUROHANE.SYS v2.1 — PORTFOLIO KERNEL",
+  "> KUROHANE.SYS v1.0 — PORTFOLIO KERNEL",
   "> MOUNTING /dev/portfolio .......... OK",
   "> LOADING AGENTS [swarm.mode] ...... OK",
   "> LINKING rust + py + ts runtime ... OK",
