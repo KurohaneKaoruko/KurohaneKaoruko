@@ -5,14 +5,15 @@ import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 
 export const TechDecoration = () => {
-  const [mounted, setMounted] = useState(false);
+  const [enabled, setEnabled] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
-    setMounted(true);
+    // 装饰层仅桌面端启用：移动端 GPU/合成器预算有限，减少常驻动画层
+    setEnabled(window.matchMedia("(min-width: 768px)").matches);
   }, []);
 
-  if (!mounted || pathname !== "/") return null;
+  if (!enabled || pathname !== "/") return null;
 
   return (
     <div className="pointer-events-none fixed inset-0 z-0 select-none overflow-hidden">
@@ -23,7 +24,7 @@ export const TechDecoration = () => {
       {/* 垂直标尺 */}
       <div className="absolute bottom-0 left-8 top-0 flex w-px flex-col items-center justify-center gap-32 bg-white/5 py-12">
         {[...Array(5)].map((_, i) => (
-          <div key={`l-marker-${i}`} className="relative">
+          <div key={"l-marker-" + i} className="relative">
             <div className="h-px w-2 bg-primary/30" />
             <div className="absolute left-4 top-1/2 -translate-y-1/2 -rotate-90 origin-left font-mono text-[8px] text-white/10">
               COORD_{i}
@@ -34,7 +35,7 @@ export const TechDecoration = () => {
 
       <div className="absolute bottom-0 right-8 top-0 flex w-px flex-col items-center justify-center gap-32 bg-white/5 py-12">
         {[...Array(5)].map((_, i) => (
-          <div key={`r-marker-${i}`} className="relative">
+          <div key={"r-marker-" + i} className="relative">
             <div className="h-px w-2 bg-primary/30" />
             <div className="absolute right-4 top-1/2 -translate-y-1/2 rotate-90 origin-right font-mono text-[8px] text-white/10">
               SYS_{i}
