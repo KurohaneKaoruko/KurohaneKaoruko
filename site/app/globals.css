@@ -115,6 +115,13 @@ body {
   width: 100%;
 }
 
+.tech-ruler-v {
+  background-image: linear-gradient(180deg, var(--border-strong) 1px, transparent 1px);
+  background-size: 100% 20px;
+  width: 4px;
+  height: 100%;
+}
+
 .clip-diagonal-tl {
   clip-path: polygon(20px 0, 100% 0, 100% 100%, 0 100%, 0 20px);
 }
