@@ -11,13 +11,13 @@ export const BackgroundEffects = () => {
 
   useEffect(() => {
     setMounted(true);
-    const newParticles = Array.from({ length: 20 }).map((_, i) => ({
+    const newParticles = Array.from({ length: 10 }).map((_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
       size: Math.random() * 2 + 1,
-      opacity: Math.random() * 0.3 + 0.1,
-      duration: Math.random() * 20 + 10,
+      opacity: Math.random() * 0.25 + 0.08,
+      duration: Math.random() * 18 + 12,
       delay: Math.random() * 10,
     }));
     setParticles(newParticles);
@@ -27,29 +27,17 @@ export const BackgroundEffects = () => {
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[-1] overflow-hidden">
-      {/* 雷达扫描线 */}
-      <motion.div
-        className="absolute top-0 h-[2px] w-full bg-primary/20 shadow-[0_0_15px_rgba(255,51,51,0.3)]"
-        animate={{
-          top: ["0%", "100%"],
-          opacity: [0, 1, 0],
-        }}
-        transition={{
-          duration: 8,
-          ease: "linear",
-          repeat: Infinity,
-          repeatDelay: 2,
-        }}
-      />
+      {/* 雷达扫描线：CSS transform 动画，不再逐帧触发布局 */}
+      <div className="radar-sweep absolute left-0 top-0 h-[2px] w-full bg-primary/20 shadow-[0_0_15px_rgba(255,51,51,0.3)]" />
 
-      {/* 漂浮粒子 */}
+      {/* 漂浮粒子（仅 transform + opacity，数量减半） */}
       {particles.map((p) => (
         <motion.div
           key={p.id}
           className="absolute rounded-full bg-white"
           style={{
-            left: `${p.x}%`,
-            top: `${p.y}%`,
+            left: p.x + "%",
+            top: p.y + "%",
             width: p.size,
             height: p.size,
             opacity: p.opacity,
@@ -67,20 +55,12 @@ export const BackgroundEffects = () => {
         />
       ))}
 
-      {/* 数字噪点覆盖层 */}
-      <motion.div
-        className="absolute inset-0 opacity-[0.03] mix-blend-overlay"
+      {/* 数字噪点：静态覆盖层（无动画、无混合模式，零持续开销） */}
+      <div
+        className="absolute inset-0 opacity-[0.025]"
         style={{
           backgroundImage:
             'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")',
-        }}
-        animate={{
-          backgroundPosition: ["0% 0%", "10% 10%"],
-        }}
-        transition={{
-          duration: 0.2,
-          repeat: Infinity,
-          repeatType: "reverse",
         }}
       />
     </div>

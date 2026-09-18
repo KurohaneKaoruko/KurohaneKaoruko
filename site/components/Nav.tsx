@@ -15,7 +15,7 @@ export default function Nav() {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/90 md:bg-background/80 md:backdrop-blur-md">
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Link
           href="/"
