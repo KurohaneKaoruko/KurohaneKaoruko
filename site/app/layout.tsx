@@ -6,8 +6,6 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import BootSplash from "@/components/features/BootSplash";
-import { TechDecoration } from "@/components/ui/TechDecoration";
-import { BackgroundEffects } from "@/components/ui/BackgroundEffects";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://kurohanekaoruko.github.io/KurohaneKaoruko"),
@@ -28,11 +26,9 @@ export default function RootLayout({
     <html lang="zh-CN" suppressHydrationWarning>
       <body className="min-h-screen antialiased">
         <BootSplash />
-        <BackgroundEffects />
         <Nav />
         <main className="relative z-10 pt-16">{children}</main>
         <Footer />
-        <TechDecoration />
       </body>
     </html>
   );
