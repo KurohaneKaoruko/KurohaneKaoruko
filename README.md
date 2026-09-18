@@ -29,6 +29,17 @@
   />
 </p>
 
+## Website
+
+<p align="center">
+  <a href="https://kurohanekaoruko.github.io/KurohaneKaoruko/">
+    <img
+      src="https://img.shields.io/badge/Personal_Website-kurohanekaoruko.github.io-ff3333?style=for-the-badge&amp;logo=googlechrome&amp;logoColor=white"
+      alt="Kurohane Kaoruko's personal website"
+    />
+  </a>
+</p>
+
 ## GitHub Stats
 
 <p align="center">
