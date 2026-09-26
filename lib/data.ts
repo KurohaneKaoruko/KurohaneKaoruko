@@ -36,7 +36,7 @@ export const projects: Project[] = [
   { name: "Rosemary-Maidcafe", desc: "Tauri + Next.js 编写的女仆咖啡厅模拟经营单机游戏", lang: "TypeScript", stars: 2, url: "https://github.com/KurohaneKaoruko/Rosemary-Maidcafe", topics: ["Game", "Tauri"] },
   { name: "Girl-Ai-Agent", desc: "一款多功能、多模型、多平台的拟人智能体交互软件", lang: "Rust", stars: 2, url: "https://github.com/KurohaneKaoruko/Girl-Ai-Agent", topics: ["AI Agent", "Desktop"] },
   { name: "Project-Rosmarin", desc: "由一些前端小项目组成的 Next.js 网站", lang: "TypeScript", stars: 2, url: "https://github.com/KurohaneKaoruko/Project-Rosmarin", homepage: "https://rosmarin.vercel.app", topics: ["Next.js", "Frontend"] },
-  { name: "KurohaneKaoruko", desc: "这个站点本身 —— 用 Next.js 写的个人主页与作品集，也放在这里一起展示", lang: "TypeScript", stars: 1, url: "https://github.com/KurohaneKaoruko/KurohaneKaoruko", homepage: "https://kurohane-kaoruko.vercel.app", topics: [] },
+  { name: "KurohaneKaoruko", desc: "这个站点本身 —— 用 Next.js 写的个人主页与作品集，也放在这里一起展示", lang: "TypeScript", stars: 1, url: "https://github.com/KurohaneKaoruko/KurohaneKaoruko", homepage: "https://kurohanekaoruko.vercel.app", topics: [] },
   { name: "ExMachina-Agents", desc: "基于绝对理性的 AI Agents，将 AI 打造成高度智能、强理性逻辑的系统", lang: "TypeScript", stars: 1, url: "https://github.com/KurohaneKaoruko/ExMachina-Agents", topics: ["AI Agents", "Rationality"] },
   { name: "alchemy-workshop", desc: "一款以炼金术为主题的文字冒险游戏", lang: "TypeScript", stars: 1, url: "https://github.com/KurohaneKaoruko/alchemy-workshop", homepage: "https://alchemy-workshop.vercel.app", topics: ["Game", "Text Adventure"] },
   { name: "DSH-Novel-App", desc: "基于 DSH 的 AI 小说工作台", lang: "JavaScript", stars: 0, url: "https://github.com/KurohaneKaoruko/DSH-Novel-App", topics: [] },

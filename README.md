@@ -41,10 +41,19 @@
 </p>
 
 <p align="center">
-  <a href="https://kurohane-kaoruko.vercel.app/">
+  <a href="https://kurohanekaoruko.vercel.app/">
     <img
-      src="https://img.shields.io/badge/Vercel-kurohane--kaoruko.vercel.app-000000?style=for-the-badge&amp;logo=vercel&amp;logoColor=white"
+      src="https://img.shields.io/badge/Vercel-kurohanekaoruko.vercel.app-000000?style=for-the-badge&amp;logo=vercel&amp;logoColor=white"
       alt="Kurohane Kaoruko's personal website on Vercel"
+    />
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://kurohanekaoruko.pages.dev/">
+    <img
+      src="https://img.shields.io/badge/Cloudflare-kurohanekaoruko.pages.dev-F38020?style=for-the-badge&amp;logo=cloudflare&amp;logoColor=white"
+      alt="Kurohane Kaoruko's personal website on Cloudflare Pages"
     />
   </a>
 </p>
