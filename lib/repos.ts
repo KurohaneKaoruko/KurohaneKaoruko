@@ -36,7 +36,7 @@ const OVERRIDES = new Map(CURATED.map((p) => [p.name, p]));
 
 /** 未认证的公开接口限额是 60 次/小时/IP，所以结果要缓存，别每次导航都打 */
 export const REPOS_CACHE_KEY = "kk-repos";
-export const REPOS_CACHE_TTL = 10 * 60 * 1000;
+export const REPOS_CACHE_TTL = 30 * 60 * 1000;
 
 const API_URL =
   `https://api.github.com/users/${SITE.handle}/repos?per_page=100&sort=pushed`;
