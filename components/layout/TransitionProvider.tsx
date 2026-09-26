@@ -114,6 +114,35 @@ export default function TransitionProvider({ children }: { children: React.React
     checkReady();
   }, [checkReady]);
 
+  /**
+   * 把链接 href 换算成「不含部署前缀」的路由路径。
+   * router.push / router.prefetch 会自动补 basePath（GitHub Pages 为
+   * /KurohaneKaoruko），而下方的点击拦截器从 DOM 拿到的 href 是 Next
+   * 渲染时已烤入前缀的 —— 直接喂回去前缀就会翻倍（/KK/KK/projects）。
+   * 前缀推导：location.pathname（含前缀）减 usePathname()（不含），
+   * 两边都先归一化尾部斜杠。
+   */
+  const toRouteHref = useCallback(
+    (rawHref: string): string => {
+      let url: URL;
+      try {
+        url = new URL(rawHref, window.location.origin);
+      } catch {
+        return rawHref;
+      }
+      const strip = (p: string) => (p.length > 1 && p.endsWith("/") ? p.slice(0, -1) : p);
+      const routePath = strip(pathnameRef.current);
+      const loc = strip(window.location.pathname);
+      let base = "";
+      if (routePath === "/") base = loc;
+      else if (loc.endsWith(routePath)) base = loc.slice(0, loc.length - routePath.length);
+      if (base === "/") base = "";
+      const full = url.pathname + url.search + url.hash;
+      return base && full.startsWith(base) ? full.slice(base.length) || "/" : full;
+    },
+    [pathnameRef]
+  );
+
   const startTransition = useCallback(
     (href: string) => {
       if (phaseRef.current !== "idle") {
@@ -192,11 +221,11 @@ export default function TransitionProvider({ children }: { children: React.React
       if (!href || !href.startsWith("/") || href.startsWith("//")) return;
       if (/^\/#/.test(href)) return;
       event.preventDefault();
-      startTransition(href);
+      startTransition(toRouteHref(href));
     };
     document.addEventListener("click", onClick, true);
     return () => document.removeEventListener("click", onClick, true);
-  }, [startTransition]);
+  }, [startTransition, toRouteHref]);
 
   // pathname 仅处理 snap（返回/前进）
   useLayoutEffect(() => {
@@ -234,14 +263,14 @@ export default function TransitionProvider({ children }: { children: React.React
       if (prefetchedRef.current.has(href)) return;
       prefetchedRef.current.add(href);
       try {
-        router.prefetch(href);
+        router.prefetch(toRouteHref(href));
       } catch {
         /* 预取失败不影响点击跳转 */
       }
     };
     document.addEventListener("pointerover", onOver, true);
     return () => document.removeEventListener("pointerover", onOver, true);
-  }, [router]);
+  }, [router, toRouteHref]);
 
   useLayoutEffect(() => {
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
