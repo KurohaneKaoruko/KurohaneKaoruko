@@ -29,12 +29,12 @@
   />
 </p>
 
-## Website
+## Personal Website
 
 <p align="center">
   <a href="https://kurohanekaoruko.github.io/KurohaneKaoruko/">
     <img
-      src="https://img.shields.io/badge/Personal_Website-kurohanekaoruko.github.io-ff3333?style=for-the-badge&amp;logo=googlechrome&amp;logoColor=white"
+      src="https://img.shields.io/badge/GitHub.io-kurohanekaoruko.github.io-ff3333?style=for-the-badge&amp;logo=googlechrome&amp;logoColor=white"
       alt="Kurohane Kaoruko's personal website"
     />
   </a>
