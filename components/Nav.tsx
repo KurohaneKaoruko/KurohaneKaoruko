@@ -69,19 +69,30 @@ export default function Navigation() {
     };
   }, [isMobileMenuOpen]);
 
+  /**
+   * replaceState 的路径必须带上部署前缀（GitHub Pages 为 /KurohaneKaoruko），
+   * 否则点导航/LOGO 会把地址栏改写成无前缀路径，刷新即 404。
+   * usePathname() 不含前缀，所以用 location.pathname 减去它来推导。
+   */
+  const withBase = (path: string) => {
+    const loc = window.location.pathname;
+    const base = loc.endsWith(pathname) ? loc.slice(0, loc.length - pathname.length) : "";
+    return base + path;
+  };
+
   const handleSectionLinkClick = (event: MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     if (pathname !== "/") return;
     const element = document.getElementById(sectionId);
     if (!element) return;
     event.preventDefault();
     element.scrollIntoView({ behavior: "smooth", block: "start" });
-    window.history.replaceState(null, "", "/#" + sectionId);
+    window.history.replaceState(null, "", withBase("/#" + sectionId));
   };
 
   const handleHomeLinkClick = (event: MouseEvent<HTMLAnchorElement>) => {
     if (pathname !== "/") return;
     event.preventDefault();
-    window.history.replaceState(null, "", "/");
+    window.history.replaceState(null, "", withBase("/"));
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
