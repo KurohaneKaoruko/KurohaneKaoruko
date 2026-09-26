@@ -34,17 +34,8 @@
 <p align="center">
   <a href="https://kurohanekaoruko.github.io/KurohaneKaoruko/">
     <img
-      src="https://img.shields.io/badge/GitHub.io-kurohanekaoruko.github.io-ff3333?style=for-the-badge&amp;logo=googlechrome&amp;logoColor=white"
+      src="https://img.shields.io/badge/GitHub.io-kurohanekaoruko.github.io-ff3333?style=for-the-badge&amp;logo=github&amp;logoColor=white"
       alt="Kurohane Kaoruko's personal website"
-    />
-  </a>
-</p>
-
-<p align="center">
-  <a href="https://kurohanekaoruko.vercel.app/">
-    <img
-      src="https://img.shields.io/badge/Vercel-kurohanekaoruko.vercel.app-000000?style=for-the-badge&amp;logo=vercel&amp;logoColor=white"
-      alt="Kurohane Kaoruko's personal website on Vercel"
     />
   </a>
 </p>
@@ -54,6 +45,15 @@
     <img
       src="https://img.shields.io/badge/Cloudflare-kurohanekaoruko.pages.dev-F38020?style=for-the-badge&amp;logo=cloudflare&amp;logoColor=white"
       alt="Kurohane Kaoruko's personal website on Cloudflare Pages"
+    />
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://kurohanekaoruko.vercel.app/">
+    <img
+      src="https://img.shields.io/badge/Vercel-kurohanekaoruko.vercel.app-000000?style=for-the-badge&amp;logo=vercel&amp;logoColor=white"
+      alt="Kurohane Kaoruko's personal website on Vercel"
     />
   </a>
 </p>
