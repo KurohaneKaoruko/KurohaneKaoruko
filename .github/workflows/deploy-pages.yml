@@ -26,18 +26,15 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: site/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
-        working-directory: site
         run: npm ci
 
       - name: Type check
-        working-directory: site
         run: npm run typecheck
 
       - name: Build site
-        working-directory: site
         run: npm run build
         env:
           DEPLOY_TARGET: pages
@@ -45,7 +42,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: site/out
+          path: out
 
   deploy:
     needs: build
