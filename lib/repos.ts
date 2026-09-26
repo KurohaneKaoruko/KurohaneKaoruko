@@ -1,18 +1,15 @@
 import { SITE } from "@/lib/site";
-import { projects as CURATED, type Project } from "@/lib/data";
+import type { Project } from "@/lib/data";
 
 /**
  * 仓库数据的实时层（纯浏览器端）。
  *
  * 站点是静态导出的，没有服务端运行时，所以这里直接从前端调 GitHub 公开 API：
- * 打开页面就能拿到当前星标、语言、最近推送，以及站内还没收录的新仓库，
- * 不必等一次重新构建。
+ * 星标、语言、介绍、topics、最近推送全部以 GitHub 原文为准，
+ * 站内不做人工覆写（用户裁决：别自己写，全部获取）。
  *
- * 两条原则：
- *   1. **永不空白**：`lib/data.ts` 里的手写清单先做为兜底快照渲染，
- *      拉取成功后再替换。拉取失败 / 超限 / 离线，页面照常显示快照。
- *   2. **手写文案是覆写层**：站内写的 `desc` / `topics` 是人工润色过的，
- *      命中同名仓库时保留；没写过的仓库（新仓库）才用 GitHub 的原文。
+ * 仍保留的一条原则：**永不空白** —— `lib/data.ts` 里的清单只作为「接口失败 /
+ * 超限 / 离线」时的兜底快照，正常路径下页面展示的内容 100% 来自 GitHub。
  */
 
 /** 站内清单没有记录最近推送时间，实时数据才有 */
@@ -31,9 +28,6 @@ type ApiRepo = {
   pushed_at: string;
 };
 
-/** 人工覆写层：站内写过文案的仓库 */
-const OVERRIDES = new Map(CURATED.map((p) => [p.name, p]));
-
 /** 未认证的公开接口限额是 60 次/小时/IP，所以结果要缓存，别每次导航都打 */
 export const REPOS_CACHE_KEY = "kk-repos";
 export const REPOS_CACHE_TTL = 30 * 60 * 1000;
@@ -49,25 +43,22 @@ export type SyncResult = { repos: Repo[]; syncedAt: number };
 /**
  * 把 API 原始数据整理成站点用的形状。
  * - 剔除 fork
- * - 站内手写文案优先，缺的字段用 GitHub 补
+ * - 全部字段以 GitHub 返回为准，站内不覆写
  * - 星标降序（同分按名称），保证顺序稳定
  */
 export function normalizeRepos(api: ApiRepo[]): Repo[] {
   return api
     .filter((r) => !r.fork)
-    .map<Repo>((r) => {
-      const override = OVERRIDES.get(r.name);
-      return {
-        name: r.name,
-        desc: override?.desc?.trim() || (r.description ?? "").trim(),
-        lang: r.language ?? override?.lang ?? "",
-        stars: r.stargazers_count,
-        url: r.html_url,
-        homepage: r.homepage?.trim() || undefined,
-        topics: override?.topics?.length ? override.topics : (r.topics ?? []),
-        pushedAt: r.pushed_at,
-      };
-    })
+    .map<Repo>((r) => ({
+      name: r.name,
+      desc: (r.description ?? "").trim(),
+      lang: r.language ?? "",
+      stars: r.stargazers_count,
+      url: r.html_url,
+      homepage: r.homepage?.trim() || undefined,
+      topics: r.topics ?? [],
+      pushedAt: r.pushed_at,
+    }))
     .sort((a, b) => b.stars - a.stars || a.name.localeCompare(b.name));
 }
 
