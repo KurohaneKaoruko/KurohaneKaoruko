@@ -40,6 +40,15 @@
   </a>
 </p>
 
+<p align="center">
+  <a href="https://kurohane-kaoruko.vercel.app/">
+    <img
+      src="https://img.shields.io/badge/Vercel-kurohane--kaoruko.vercel.app-000000?style=for-the-badge&amp;logo=vercel&amp;logoColor=white"
+      alt="Kurohane Kaoruko's personal website on Vercel"
+    />
+  </a>
+</p>
+
 ## GitHub Stats
 
 <p align="center">
