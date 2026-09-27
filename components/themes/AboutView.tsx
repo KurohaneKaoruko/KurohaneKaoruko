@@ -7,17 +7,7 @@ import { SubPageHeader } from "@/components/ui/SubPageHeader";
 import { TechCard } from "@/components/ui/TechCard";
 import { SITE, SKILL_GROUPS } from "@/lib/site";
 
-const facts = [
-  { label: "FOCUS", value: "AI / LLM Agents / Dev Tools" },
-  { label: "STACK", value: "Rust · Python · TypeScript" },
-];
-
-const brutalistFacts = [
-  { label: "专注", value: "AI / LLM Agents / Dev Tools" },
-  { label: "栈", value: "Rust · Python · TypeScript" },
-];
-
-/** 粗野：粗框事实清单 + 技能分组 + 联系方式 */
+/** 粗野：头像 + 技能分组 + 联系方式 */
 function BrutalistAbout() {
   return (
     <section className="container mx-auto px-6 py-20 font-sans">
@@ -25,47 +15,31 @@ function BrutalistAbout() {
         关于我
       </h1>
 
-      <div className="mt-10 flex justify-center">
+      {/* 窄屏：头像在上、技能分组竖排；lg 起头像与分组并排，头像拉伸到与分组同高 */}
+      <div className="mt-10 flex flex-col gap-6 lg:flex-row lg:items-stretch">
         <img
           src="/logo.jpg"
           alt="Kurohane Kaoruko"
-          className="h-48 w-auto border-2 border-foreground bg-background p-3"
+          className="h-28 w-auto self-start border-2 border-foreground bg-background p-3 object-cover lg:aspect-square lg:h-auto lg:max-w-[14rem] lg:self-stretch"
         />
+
+        <div className="grid flex-1 gap-x-16 gap-y-10 lg:grid-cols-3">
+          {SKILL_GROUPS.map((g) => (
+            <div key={g.title}>
+              <h3 className="font-mono text-[11px] uppercase tracking-[0.3em] text-primary">
+                {g.title}
+              </h3>
+              <ul className="mt-4 space-y-2 text-sm font-bold tracking-wide">
+                {g.items.map((it) => (
+                  <li key={it} className="border-b border-foreground/15 pb-2">
+                    {it}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </div>
-
-      <dl className="mt-14 max-w-3xl border-2 border-foreground">
-        {brutalistFacts.map((f, i) => (
-          <div
-            key={f.label}
-            className={
-              "flex items-baseline justify-between gap-6 px-5 py-4 " +
-              (i > 0 ? "border-t-2 border-foreground" : "")
-            }
-          >
-            <dt className="font-mono text-[11px] uppercase tracking-[0.25em] text-text-muted">
-              {f.label}
-            </dt>
-            <dd className="text-right text-sm font-bold tracking-wide">{f.value}</dd>
-          </div>
-        ))}
-      </dl>
-
-      <section className="mt-20 grid gap-x-16 gap-y-10 border-t-4 border-foreground pt-10 lg:grid-cols-12">
-        {SKILL_GROUPS.map((g) => (
-          <div key={g.title} className="lg:col-span-4">
-            <h3 className="font-mono text-[11px] uppercase tracking-[0.3em] text-primary">
-              {g.title}
-            </h3>
-            <ul className="mt-4 space-y-2 text-sm font-bold tracking-wide">
-              {g.items.map((it) => (
-                <li key={it} className="border-b border-foreground/15 pb-2">
-                  {it}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </section>
 
       <div className="mt-20 flex flex-wrap gap-5 border-t-4 border-foreground pt-10">
         <a
@@ -96,47 +70,33 @@ function TerminalAbout() {
       </Reveal>
 
       <Reveal delay={0.03}>
-        <div className="mt-8 flex justify-center">
+        {/* 窄屏：头像在上、技能分组竖排；lg 起头像与分组并排，头像拉伸到与分组同高 */}
+        <div className="mt-8 flex flex-col gap-5 lg:flex-row lg:items-stretch">
           <img
             src="/logo.jpg"
             alt="Kurohane Kaoruko"
-            className="h-40 w-auto border border-border bg-card-bg p-2"
+            className="h-28 w-auto self-start border border-border bg-card-bg p-2 object-cover lg:h-auto lg:w-[10.5rem] lg:self-stretch"
           />
-        </div>
-      </Reveal>
 
-      <Reveal delay={0.05}>
-        <div className="mt-10 grid gap-px border border-border bg-border sm:grid-cols-2">
-          {facts.map((f) => (
-            <div key={f.label} className="bg-card-bg p-5">
-              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-text-dim">
-                {f.label}
-              </p>
-              <p className="mt-2 font-mono text-sm text-foreground">{f.value}</p>
-            </div>
-          ))}
-        </div>
-      </Reveal>
-
-      <Reveal className="mt-6" delay={0.08}>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {SKILL_GROUPS.map((group) => (
-            <TechCard key={group.title} className="p-5">
-              <h3 className="font-mono text-[11px] uppercase tracking-[0.3em] text-secondary">
-                {group.title}
-              </h3>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {group.items.map((item) => (
-                  <span
-                    key={item}
-                    className="border border-border px-2.5 py-1 font-mono text-xs text-text-muted transition-colors hover:border-active hover:text-primary"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </TechCard>
-          ))}
+          <div className="grid flex-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {SKILL_GROUPS.map((group) => (
+              <TechCard key={group.title} className="p-5">
+                <h3 className="font-mono text-[11px] uppercase tracking-[0.3em] text-secondary">
+                  {group.title}
+                </h3>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {group.items.map((item) => (
+                    <span
+                      key={item}
+                      className="border border-border px-2.5 py-1 font-mono text-xs text-text-muted transition-colors hover:border-active hover:text-primary"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </TechCard>
+            ))}
+          </div>
         </div>
       </Reveal>
 
