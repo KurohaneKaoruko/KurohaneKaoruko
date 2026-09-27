@@ -1,5 +1,9 @@
 "use client";
 
+/* v45: 白团视口内垂直+水平双居中（修正蒙版偏下）+ 高度不超视口 + fs 回归 8.219px +
+   光栅 146×129 竖幅窗（发顶贴窗顶、领口下裁除、零变形）+ 15 值字符集 +
+   首帧布局与 resize 同源（computeLayout 纯函数单源） */
+
 import Link from "next/link";
 import { createPortal } from "react-dom";
 import { useEffect, useRef, useState } from "react";
@@ -10,6 +14,7 @@ type MaskSpec = {
   w0: number; h0: number; // 基准尺寸（伸缩围绕该级别往复）
   move: number; // 单步位移幅度上限（容器点）
   sizeK: number; // 单步尺寸伸缩上限（占比）
+  durBase: number; durJit: number; // 步进间隔（秒）＝ base + rand×jit
   clamp: number; // 离家上限（容器点）
   a1: number; // ≤1% 正弦微扰幅度
   s1: number; // 微扰速度
@@ -42,25 +47,61 @@ function clampSize(v: number, base: number, k: number): number {
   return Math.min(base * (1 + k), Math.max(base * (1 - k), v));
 }
 
+const ROW_PX_EM = 0.933; // 行距系数（em），与 .nf-field line-height 一致
+// 左侧 GIF 处理残留裁切：bin 数据 col 0 含 ~21% 散点噪声（"边缘线"），cols 1..5 全空白。
+// 裁 2 列保险（.ts 首 11 列本就空白，无内容损失；裁后实际显示 144 列，仍由 ASCII_COLS 描述原始数据）。
+const LEFT_TRIM = 2;
+const trimLeftEdge = (s: string): string =>
+  s.split("\n").map(l => l.length > LEFT_TRIM ? l.slice(LEFT_TRIM) : "").join("\n");
+
+type NfLayout = {
+  fs: number; // 字号（px）
+  stageH: number; // 白团高（px）= vh（贴住窗口高度）
+  rowEm: number; // 行距系数（em）= pitch × 0.933（保持原设计单元宽高比）
+  letterEm: number; // 字距（em）= 0.3（半个字符）
+};
+
+
+
+// 布局单源（v44 修复 / v45 收敛）：首帧挂载与 resize 走同一纯函数——同视口输入必得同输出，
+// 保证首次渲染与 resize 后 fs/网格维度/装饰带列数零差异。
+// fs = min(容器宽/146, 视口高/(129×0.933))；白团高 = 129×0.933×fs ≤ 视口高（永不超视口）；
+// 容器 CSS 定位视口内垂直+水平双居中（top:50% + translate(-50%,-50%)，禁止顶对齐）。
+// 1080p：fs=8.219、白团 1200×989.2 居中（上下留白 45.4px）；矮视口 fs 由高度项压低（零出界优先）。
+function computeLayout(): NfLayout {
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const containerW = Math.min(vw * 0.92, 1200);
+  // 半个字符字距（Roboto Mono 字步进 0.6em 的 1/2）→ 节距 0.9em
+  const letterEm = 0.3;
+  const pitch = 0.6 + letterEm;
+  // 单元宽高比保持原设计 1.0/0.933（数据零变形）→ 行距 rowEm = pitch × 0.933
+  const rowEm = pitch * 0.933;
+  // fs 由 156×rowEm×fs=vh 反推，宽度为上限
+  const fs = Math.min(vh / (ASCII_ROWS * rowEm), containerW / (ASCII_COLS * pitch));
+  const stageH = vh;
+  return { fs, stageH, rowEm, letterEm };
+}
+
 const MASK_SPECS: MaskSpec[] = [
-  { hx: 50, hy: 19, w0: 76, h0: 24, move: 3, sizeK: 0.12, clamp: 6, a1: 0.8, s1: 0.5, p1: 0.0 },
-  { hx: 50, hy: 40, w0: 74, h0: 28, move: 3, sizeK: 0.12, clamp: 6, a1: 0.7, s1: 0.38, p1: 2.1 },
-  { hx: 50, hy: 62, w0: 67, h0: 28, move: 3, sizeK: 0.12, clamp: 6, a1: 0.8, s1: 0.45, p1: 4.2 },
-  { hx: 38, hy: 82, w0: 55, h0: 26, move: 4, sizeK: 0.12, clamp: 6, a1: 0.9, s1: 0.52, p1: 1.2 },
-  { hx: 62, hy: 82, w0: 47, h0: 26, move: 4, sizeK: 0.12, clamp: 6, a1: 0.9, s1: 0.41, p1: 5.2 },
-  { hx: 22, hy: 33, w0: 34, h0: 28, move: 9, sizeK: 0.55, clamp: 16, a1: 0.9, s1: 0.33, p1: 3.3 },
-  { hx: 78, hy: 35, w0: 34, h0: 28, move: 9, sizeK: 0.55, clamp: 16, a1: 0.9, s1: 0.41, p1: 0.6 },
-  { hx: 23, hy: 66, w0: 34, h0: 24, move: 10, sizeK: 0.55, clamp: 16, a1: 1.0, s1: 0.36, p1: 2.6 },
-  { hx: 77, hy: 64, w0: 34, h0: 26, move: 10, sizeK: 0.55, clamp: 16, a1: 1.0, s1: 0.48, p1: 3.7 },
-  { hx: 50, hy: 12, w0: 30, h0: 9, move: 7, sizeK: 0.55, clamp: 12, a1: 0.8, s1: 0.29, p1: 4.8 },
-  { hx: 18, hy: 15, w0: 11, h0: 9, move: 13, sizeK: 0.6, clamp: 13, a1: 1.0, s1: 0.6, p1: 1.4 },
-  { hx: 82, hy: 13, w0: 11, h0: 9, move: 13, sizeK: 0.6, clamp: 13, a1: 1.0, s1: 0.55, p1: 4.4 },
-  { hx: 14, hy: 48, w0: 10, h0: 13, move: 14, sizeK: 0.6, clamp: 13, a1: 1.0, s1: 0.5, p1: 0.4 },
-  { hx: 86, hy: 46, w0: 10, h0: 13, move: 14, sizeK: 0.6, clamp: 13, a1: 1.0, s1: 0.62, p1: 3.8 },
-  { hx: 22, hy: 84, w0: 12, h0: 8, move: 15, sizeK: 0.6, clamp: 13, a1: 1.0, s1: 0.45, p1: 2.9 },
-  { hx: 50, hy: 90, w0: 18, h0: 6, move: 16, sizeK: 0.6, clamp: 22, a1: 1.0, s1: 0.4, p1: 5.6 },
-  { hx: 80, hy: 86, w0: 10, h0: 7, move: 16, sizeK: 0.6, clamp: 22, a1: 1.0, s1: 0.57, p1: 1.6 },
-  { hx: 22, hy: 10, w0: 7, h0: 7, move: 16, sizeK: 0.6, clamp: 22, a1: 1.0, s1: 0.63, p1: 0.8 },
+  { hx: 50, hy: 19, w0: 74, h0: 24, move: 3, durBase: 0.4, durJit: 0.4, sizeK: 0.12, clamp: 6, a1: 0.8, s1: 0.5, p1: 0.0 },
+  { hx: 50, hy: 40, w0: 72, h0: 28, move: 3, durBase: 0.4, durJit: 0.4, sizeK: 0.12, clamp: 6, a1: 0.7, s1: 0.38, p1: 2.1 },
+  { hx: 50, hy: 62, w0: 65, h0: 28, move: 3, durBase: 0.4, durJit: 0.4, sizeK: 0.12, clamp: 6, a1: 0.8, s1: 0.45, p1: 4.2 },
+  { hx: 38, hy: 82, w0: 53, h0: 26, move: 4, durBase: 0.4, durJit: 0.4, sizeK: 0.12, clamp: 6, a1: 0.9, s1: 0.52, p1: 1.2 },
+  { hx: 62, hy: 82, w0: 45, h0: 26, move: 4, durBase: 0.4, durJit: 0.4, sizeK: 0.12, clamp: 6, a1: 0.9, s1: 0.41, p1: 5.2 },
+  { hx: 22, hy: 33, w0: 34, h0: 28, move: 9, durBase: 0.2, durJit: 0.3, sizeK: 0.55, clamp: 16, a1: 0.9, s1: 0.33, p1: 3.3 },
+  { hx: 78, hy: 35, w0: 34, h0: 28, move: 9, durBase: 0.2, durJit: 0.3, sizeK: 0.55, clamp: 16, a1: 0.9, s1: 0.41, p1: 0.6 },
+  { hx: 23, hy: 66, w0: 34, h0: 24, move: 10, durBase: 0.2, durJit: 0.3, sizeK: 0.55, clamp: 16, a1: 1.0, s1: 0.36, p1: 2.6 },
+  { hx: 77, hy: 64, w0: 34, h0: 26, move: 10, durBase: 0.2, durJit: 0.3, sizeK: 0.55, clamp: 16, a1: 1.0, s1: 0.48, p1: 3.7 },
+  { hx: 50, hy: 12, w0: 30, h0: 9, move: 7, durBase: 0.2, durJit: 0.3, sizeK: 0.55, clamp: 12, a1: 0.8, s1: 0.29, p1: 4.8 },
+  { hx: 18, hy: 15, w0: 11, h0: 9, move: 13, durBase: 0.15, durJit: 0.25, sizeK: 0.55, clamp: 13, a1: 1.0, s1: 0.6, p1: 1.4 },
+  { hx: 82, hy: 13, w0: 11, h0: 9, move: 13, durBase: 0.15, durJit: 0.25, sizeK: 0.55, clamp: 13, a1: 1.0, s1: 0.55, p1: 4.4 },
+  { hx: 14, hy: 48, w0: 10, h0: 13, move: 14, durBase: 0.15, durJit: 0.25, sizeK: 0.55, clamp: 13, a1: 1.0, s1: 0.5, p1: 0.4 },
+  { hx: 86, hy: 46, w0: 10, h0: 13, move: 14, durBase: 0.15, durJit: 0.25, sizeK: 0.55, clamp: 13, a1: 1.0, s1: 0.62, p1: 3.8 },
+  { hx: 22, hy: 84, w0: 12, h0: 8, move: 15, durBase: 0.15, durJit: 0.25, sizeK: 0.55, clamp: 13, a1: 1.0, s1: 0.45, p1: 2.9 },
+  { hx: 50, hy: 90, w0: 18, h0: 6, move: 16, durBase: 0.15, durJit: 0.25, sizeK: 0.55, clamp: 22, a1: 1.0, s1: 0.4, p1: 5.6 },
+  { hx: 80, hy: 86, w0: 10, h0: 7, move: 16, durBase: 0.15, durJit: 0.25, sizeK: 0.55, clamp: 22, a1: 1.0, s1: 0.57, p1: 1.6 },
+  { hx: 22, hy: 10, w0: 7, h0: 7, move: 16, durBase: 0.15, durJit: 0.25, sizeK: 0.55, clamp: 22, a1: 1.0, s1: 0.63, p1: 0.8 },
 ];
 
 const MASK_LAYERS = new Array<string>(MASK_SPECS.length);
@@ -82,18 +123,19 @@ function buildSliceClip(): string {
 
 const CSS = `
 
-/* 白团容器（v41 响应式 + 竖幅人物带）：宽 min(1200px, 92vw)、
-   高 = 129 行 × 行距 7.67px = 988.7px——顶部对齐视口顶（发顶距视口顶
-   ~60px 留白 ✓）、底部溢出视口 120px 被裁（领口下授权区）；
+/* 白团容器（v45 双居中 + 动态几何）：宽 min(1200px, 92vw)；
+   高 = 129 行 × 0.933em × fs（内联样式由 computeLayout 定稿，CSS 仅回退占位），
+   fs ≤ 视口高/(129×0.933) → 白团高 ≤ 视口高（永不超视口、零裁切）；
+   top 50% + translate(-50%,-50%) → 视口内垂直+水平双居中（v45 修正蒙版偏下）；
    白底 #f2f2f2 仅在蒙版层（.nf-mask 填充 = 白团块本体，mask 外露黑）。
-   三段式字符画（fs 由 relayout 按容器动态设置）印在白团上横排居中。 */
+   三段式字符画（fs/装饰带列数由 computeLayout 单源计算）印在白团上横排居中。 */
 .nf-stage {
   position: absolute;
-  top: 0;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   width: min(1200px, 92vw);
-  height: 988.7px;
+  height: 989.2px; /* 回退占位（129×0.933×8.219）；实际以内联样式为准 */
   z-index: 10;
   display: flex;
   align-items: center;
@@ -113,9 +155,9 @@ const CSS = `
   font-family: var(--font-roboto-mono), ui-monospace, monospace;
   flex-shrink: 0;
   
-  font-size: 9.5px;
-  line-height: 0.933;
-  letter-spacing: 0.4em;
+  font-size: 8.219px; /* 回退占位；实际由内联样式按 computeLayout 定稿 */
+  line-height: 0.933; /* 回退占位；实际由内联 lineHeight 按 computeLayout 定稿 */
+  letter-spacing: 0.4em; /* 回退占位；实际由内联 letterSpacing 按 computeLayout 定稿 */
   color: #141414;
   white-space: pre;
   user-select: none;
@@ -159,79 +201,42 @@ const CSS = `
 `;
 
 export default function NotFound() {
-  const field0 = ASCII_FRAME0; // 人物带同步首帧（挂载前初始内容 / 数据未加载期）
+  const field0 = trimLeftEdge(ASCII_FRAME0); // 人物带同步首帧（挂载前初始内容 / 数据未加载期）
   const maskRef = useRef<HTMLDivElement>(null);
   const fieldRef = useRef<HTMLPreElement>(null);
-  const decoLRef = useRef<HTMLPreElement>(null);
-  const decoRRef = useRef<HTMLPreElement>(null);
   const fgRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
+  const [layout, setLayout] = useState<NfLayout | null>(null);
 
   useEffect(() => {
     setMounted(true);
+    // 首帧布局（v44 修复核心）：在 portal 渲染前经 state 定稿 fs/白团高/装饰带，
+    // 首次提交的 DOM 即为目标尺寸。原缺陷：relayout 在 effect 时点执行，此时
+    // mounted 尚为 false、portal 未挂载、全部 ref 为 null，DOM 写入被静默跳过，
+    // 首帧回落到 CSS 默认 9.5px（偏大），直至 resize 才被修正。
+    setLayout(computeLayout());
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const FS = 8.219; // 字号（px）＝ 白团宽 1200 ÷ 146 列（用户「字符调小」目标 ≈8.2）
-    const GRID_COLS = 146; // 总列数（人物带，数据维度）
-    const ROW_PX_EM = 0.933; // 行距系数（em）
-    const DECO_DENSITY = 0.46; // 装饰带字符密度（≈参考疏朗度，与人物带墨迹一致）
     let framesSrc: string[] = [ASCII_FRAME0];
     let alive = true;
     let resizeTimer = 0;
-    let showRows = ASCII_ROWS; // 人物带显示行数（79 全量）
-    let colsL = 0, colsR = 0;
 
-    const buildDecoText = (cols: number, rows: number, seed: number) => {
-      const rng = mulberry32(seed);
-      const lines: string[] = [];
-      for (let r = 0; r < rows; r++) {
-        let line = "";
-        for (let i = 0; i < cols; i++) {
-          line += rng() < DECO_DENSITY ? (rng() > 0.5 ? "1" : "0") : " ";
-        }
-        lines.push(line);
-      }
-      return lines.join("\n");
-    };
-
-    // 视口适配（挂载 + resize，v41 响应式）：容器宽 min(1200, 92vw)、高 min(700, 100vh)；
-    // fs = min(容器宽/126, 容器高/73.707) → 总宽/总高恰好铺满容器（零出界零露白），
-    // 格数恒定 → 人像零变形在任何视口保持；装饰带格数恒定，纹理仅随行数重建
-    const relayout = () => {
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
-      const containerW = Math.min(vw * 0.92, 1200);
-      const containerH = Math.min(vh, 700);
-      const fs = Math.min(containerW / GRID_COLS, containerH / (ASCII_ROWS * ROW_PX_EM));
-      showRows = ASCII_ROWS;
-      const deco = GRID_COLS - ASCII_COLS;
-      colsL = Math.floor(deco / 2);
-      colsR = deco - colsL;
-      if (decoLRef.current) decoLRef.current.textContent = buildDecoText(colsL, showRows, 0x44654f);
-      if (decoRRef.current) decoRRef.current.textContent = buildDecoText(colsR, showRows, 0x5fe11d);
-      for (const el of [decoLRef.current, fieldRef.current, decoRRef.current]) {
-        if (el) el.style.fontSize = `${fs.toFixed(3)}px`;
-      }
-    };
     const paintFrame = (fi: number) => {
       const fEl = fieldRef.current;
       const frame = framesSrc[fi];
       if (!fEl || !frame) return;
-      if (showRows >= ASCII_ROWS) {
-        fEl.textContent = frame;
-      } else {
-        const arr = frame.split("\n");
-        fEl.textContent = arr.slice(0, showRows).join("\n");
-      }
+      fEl.textContent = frame; // 每帧恒为 ASCII_ROWS 行（生成器逐帧断言维度）
     };
 
     const states = MASK_SPECS.map((s, i) => {
       const rng = mulberry32(0x4d41534b + i * 0x9e3779b9);
       return {
-        fx: s.hx, fy: s.hy, fw: s.w0, fh: s.h0, // 插值起点
-        tx: s.hx, ty: s.hy, tw: s.w0, th: s.h0, // 插值目标
-        t0: -1, dur: 1, rng, // t0<0 = 尚未起步
+        fx: s.hx, fy: s.hy, fw: s.w0, fh: s.h0, // 移动起点（当前就位位）
+        tx: s.hx, ty: s.hy, tw: s.w0, th: s.h0, // 目标
+        moveT0: 0, // 本次移动开始时刻
+        nextStepT: 0, // 下次步进时刻
+        rng,
       };
     });
     let lastMaskCss = ""; // 上次写入的蒙版 CSS 签名（热修：无变化帧跳过 style 写入，避免强制样式解析）
@@ -252,6 +257,12 @@ export default function NotFound() {
       el.style.maskRepeat = "no-repeat";
     };
 
+    // 呼吸档位跳变状态（effect 作用域，跨帧持久；专用播种 RNG 保持确定性）
+    const BREATH_STEPS = [0.92, 0.96, 1.0, 1.03];
+    let breathIdx = 2;
+    let breathNextT = 1.5;
+    const breathRng = mulberry32(0xb2ea71);
+
     const paintMask = (t: number) => {
       const el = maskRef.current;
       if (!el) return;
@@ -261,16 +272,18 @@ export default function NotFound() {
       for (let k = 0; k < MASK_SPECS.length; k++) {
         const s = MASK_SPECS[k];
         const r = states[k];
-        while (r.t0 < 0 || t >= r.t0 + r.dur) {
+        // 步进点（glitch 跳变）：t ≥ 步进时刻 → 就位到目标 + 抽下一目标。
+        // 移动用 0.055s 极速插值（「抖动就位」），之后保持静止至下次步进。
+        if (t >= r.nextStepT) {
           r.fx = r.tx; r.fy = r.ty; r.fw = r.tw; r.fh = r.th;
           r.tx = clampTo(r.fx + (r.rng() * 2 - 1) * s.move, s.hx, s.clamp);
           r.ty = clampTo(r.fy + (r.rng() * 2 - 1) * s.move, s.hy, s.clamp);
           r.tw = clampSize(r.fw * (1 + (r.rng() * 2 - 1) * s.sizeK), s.w0, s.sizeK);
           r.th = clampSize(r.fh * (1 + (r.rng() * 2 - 1) * s.sizeK), s.h0, s.sizeK);
-          r.t0 = r.t0 < 0 ? t : r.t0 + r.dur;
-          r.dur = 0.4 + r.rng() * 0.7; // 插值步长 0.4-1.1s（v27 加速），各矩形独立
+          r.moveT0 = t;
+          r.nextStepT = t + s.durBase + r.rng() * s.durJit;
         }
-        const u = Math.min(1, (t - r.t0) / r.dur);
+        const u = Math.min(1, (t - r.moveT0) / 0.055);
         const e = smoothstep(u);
         const cx = r.fx + (r.tx - r.fx) * e + s.a1 * Math.sin(t * s.s1 + s.p1) + (k < 5 ? driftX : 0);
         const cy = r.fy + (r.ty - r.fy) * e + s.a1 * Math.cos(t * s.s1 * 0.9 + s.p1) + (k < 5 ? driftY : 0);
@@ -285,7 +298,13 @@ export default function NotFound() {
       }
       const anchorX = areaSum > 0 ? wSumX / areaSum : 50;
       const anchorY = areaSum > 0 ? wSumY / areaSum : 50;
-      const br = 0.995 + 0.045 * Math.sin((t * 2 * Math.PI) / 13) + 0.02 * Math.sin((t * 2 * Math.PI) / 29 + 1.7);
+      // 呼吸档位随机跳变（glitch 化）：档位 {0.92,0.96,1.00,1.04}、每 1.5-3s
+      // 随机跳一档（专用播种 RNG 保持确定性），替代连续正弦呼吸
+      if (t >= breathNextT) {
+        breathIdx = Math.floor(breathRng() * BREATH_STEPS.length);
+        breathNextT = t + 1.5 + breathRng() * 1.5;
+      }
+      const br = BREATH_STEPS[breathIdx];
       for (let k = 0; k < MASK_SPECS.length; k++) {
         const b = k * 4;
         const x0 = MASK_BBOX[b], y0 = MASK_BBOX[b + 1], w = MASK_BBOX[b + 2], h = MASK_BBOX[b + 3];
@@ -300,10 +319,10 @@ export default function NotFound() {
     };
 
     if (reduced) {
-      relayout();
-      paintFrame(0);
-      const el = maskRef.current;
-      if (el) {
+      // 静态蒙版：portal 提交后一帧绘制（v44：effect 时点 portal 未挂载，ref 为 null 会静默跳过）
+      requestAnimationFrame(() => {
+        const el = maskRef.current;
+        if (!el) return;
         const br = 1.0;
         let areaSum = 0, wSumX = 0, wSumY = 0;
         for (let k = 0; k < MASK_SPECS.length; k++) {
@@ -324,15 +343,14 @@ export default function NotFound() {
           MASK_POSITIONS[k] = `${((nx0 * 100) / (100 - nw)).toFixed(2)}% ${((ny0 * 100) / (100 - nh)).toFixed(2)}%`;
         }
         writeMaskStyles(el);
-      }
+      });
       return;
     }
 
-    relayout(); // 生成装饰带纹理 + 计算人物带显示行数（fs 固定，无字号缩放）
     const onResize = () => {
       window.clearTimeout(resizeTimer);
       resizeTimer = window.setTimeout(() => {
-        relayout();
+        setLayout(computeLayout()); // 与首帧同一布局单源（同视口输入 → 同输出）
         lastFrame = -1; // 强制下一轮重写当前帧
       }, 200);
     };
@@ -366,7 +384,7 @@ export default function NotFound() {
           frames.push(lines.slice(i, i + ASCII_ROWS).join("\n"));
         }
         if (!alive || frames.length === 0) return;
-        framesSrc = frames;
+        framesSrc = frames.map(trimLeftEdge);
         lastFrame = -1; // 强制重写当前帧
       } catch {
       } finally {
@@ -471,13 +489,16 @@ export default function NotFound() {
 
       
       
-      <div ref={stageRef} className="nf-stage">
+      <div ref={stageRef} className="nf-stage" style={layout ? { height: `${layout.stageH.toFixed(2)}px` } : undefined}>
         <div ref={maskRef} className="nf-mask">
-          <pre ref={decoLRef} aria-hidden className="nf-field" />
-          <pre ref={fieldRef} aria-hidden className="nf-field">
+          <pre
+            ref={fieldRef}
+            aria-hidden
+            className="nf-field"
+            style={layout ? { fontSize: `${layout.fs.toFixed(3)}px`, lineHeight: layout.rowEm.toFixed(3), letterSpacing: `${layout.letterEm.toFixed(4)}em` } : undefined}
+          >
             {field0}
           </pre>
-          <pre ref={decoRRef} aria-hidden className="nf-field" />
         </div>
       </div>
 
