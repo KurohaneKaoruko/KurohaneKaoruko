@@ -25,6 +25,14 @@ function BrutalistAbout() {
         关于我
       </h1>
 
+      <div className="mt-10 flex justify-center">
+        <img
+          src="/logo.jpg"
+          alt="Kurohane Kaoruko"
+          className="h-48 w-auto border-2 border-foreground bg-background p-3"
+        />
+      </div>
+
       <dl className="mt-14 max-w-3xl border-2 border-foreground">
         {brutalistFacts.map((f, i) => (
           <div
@@ -85,6 +93,16 @@ function TerminalAbout() {
     <section className="container mx-auto px-6 py-16 sm:py-20">
       <Reveal>
         <SubPageHeader eyebrow="ABOUT" title="关于我" />
+      </Reveal>
+
+      <Reveal delay={0.03}>
+        <div className="mt-8 flex justify-center">
+          <img
+            src="/logo.jpg"
+            alt="Kurohane Kaoruko"
+            className="h-40 w-auto border border-border bg-card-bg p-2"
+          />
+        </div>
       </Reveal>
 
       <Reveal delay={0.05}>
