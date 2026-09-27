@@ -82,13 +82,17 @@ function buildSliceClip(): string {
 
 const CSS = `
 
+/* 白团容器（v41 响应式）：宽 min(1200px, 92vw)、高 min(700px, 100vh)——桌面
+   1200×700 原样，窄窗口整体等比缩小、永不超出视口（用户实测出界修复）；
+   白底 #f2f2f2 仅在蒙版层（.nf-mask 填充 = 白团块本体，mask 外露黑）。
+   三段式字符画（fs 由 relayout 按容器动态设置）印在白团上横排居中。 */
 .nf-stage {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 1200px;
-  height: 700px;
+  width: min(1200px, 92vw);
+  height: min(700px, 100vh);
   z-index: 10;
   display: flex;
   align-items: center;
@@ -172,13 +176,14 @@ export default function NotFound() {
     setMounted(true);
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const FS = 9.5; // 修正字号（px）＝ 白团高 700 ÷ 79 行 ÷ 0.933
-    const ROW_PX = FS * 0.933; // 每行高 8.8635px
+    const FS = 9.5; // 桌面满宽基准字号（px）＝ 白团宽 1200 ÷ 126 列（实际 fs 随容器动态缩放）
+    const GRID_COLS = 126; // 总列数 = 人物带 85 + 装饰 41（格数恒定，fs 均匀缩放）
+    const ROW_PX_EM = 0.933; // 行距系数（em）
     const DECO_DENSITY = 0.46; // 装饰带字符密度（≈参考疏朗度，与人物带墨迹一致）
     let framesSrc: string[] = [ASCII_FRAME0];
     let alive = true;
     let resizeTimer = 0;
-    let showRows = ASCII_ROWS; // 人物带显示行数（50 全量）
+    let showRows = ASCII_ROWS; // 人物带显示行数（79 全量）
     let colsL = 0, colsR = 0;
 
     const buildDecoText = (cols: number, rows: number, seed: number) => {
@@ -194,16 +199,24 @@ export default function NotFound() {
       return lines.join("\n");
     };
 
+    // 视口适配（挂载 + resize，v41 响应式）：容器宽 min(1200, 92vw)、高 min(700, 100vh)；
+    // fs = min(容器宽/126, 容器高/73.707) → 总宽/总高恰好铺满容器（零出界零露白），
+    // 格数恒定 → 人像零变形在任何视口保持；装饰带格数恒定，纹理仅随行数重建
     const relayout = () => {
       const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const containerW = Math.min(vw * 0.92, 1200);
+      const containerH = Math.min(vh, 700);
+      const fs = Math.min(containerW / GRID_COLS, containerH / (ASCII_ROWS * ROW_PX_EM));
       showRows = ASCII_ROWS;
-      const containerW = Math.min(vw, 1200); // 白团容器实宽（锁死 1200，小视口收缩）
-      const colsTotal = Math.max(ASCII_COLS, Math.round(containerW / FS));
-      const deco = colsTotal - ASCII_COLS;
+      const deco = GRID_COLS - ASCII_COLS;
       colsL = Math.floor(deco / 2);
       colsR = deco - colsL;
       if (decoLRef.current) decoLRef.current.textContent = buildDecoText(colsL, showRows, 0x44654f);
       if (decoRRef.current) decoRRef.current.textContent = buildDecoText(colsR, showRows, 0x5fe11d);
+      for (const el of [decoLRef.current, fieldRef.current, decoRRef.current]) {
+        if (el) el.style.fontSize = `${fs.toFixed(3)}px`;
+      }
     };
     const paintFrame = (fi: number) => {
       const fEl = fieldRef.current;
