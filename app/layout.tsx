@@ -49,6 +49,11 @@ export const metadata: Metadata = {
     description: SITE.description,
   },
   robots: { index: true, follow: true },
+  icons: {
+    icon: [{ url: "/logo.jpg", type: "image/jpeg" }],
+    shortcut: [{ url: "/logo.jpg", type: "image/jpeg" }],
+    apple: [{ url: "/logo.jpg", type: "image/jpeg" }],
+  },
 };
 
 export const viewport: Viewport = {
