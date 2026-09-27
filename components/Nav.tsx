@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { ThemeSwitcher } from "@/components/theme/ThemeSwitcher";
 import { useTheme } from "@/components/theme/ThemeProvider";
-import { Logo } from "@/components/ui/Logo";
 import { SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -92,7 +91,6 @@ export default function Navigation() {
         <header className="fixed inset-x-0 top-0 z-50 flex h-[var(--nav-h)] items-center border-b-2 border-foreground bg-background">
           <nav className="container mx-auto flex w-full items-center justify-between gap-6 px-4 md:px-6">
             <Link href="/" onClick={handleHomeLinkClick} className="flex items-center gap-3">
-              <Logo className="h-9 w-9" />
               <span className="text-lg font-black uppercase tracking-[-0.03em] sm:text-xl">
                 {SITE.name}
               </span>
@@ -149,7 +147,6 @@ export default function Navigation() {
             <div className="flex h-10 items-center justify-between">
               {/* 标识 */}
               <Link href="/" onClick={handleHomeLinkClick} className="flex items-center gap-2">
-                <Logo className="h-8 w-8" />
                 <div className="flex flex-col">
                   <span className="text-sm font-bold leading-none tracking-widest text-foreground">
                     {SITE.short}
