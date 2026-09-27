@@ -153,11 +153,6 @@ const CSS = `
 @keyframes nfScanMove { to { background-position: 0 9px; } }
 .nf-btn { transition: background-color 0.15s ease, color 0.15s ease; }
 .nf-btn:hover { background-color: #0b0b0b; color: #f2f2f2; }
-.nf-blink { animation: nfBlink 1s steps(1, end) infinite; }
-@keyframes nfBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.08; }
-}
 @media (prefers-reduced-motion: reduce) {
   .nf-root, .nf-root * { animation: none !important; }
 }
@@ -534,13 +529,7 @@ export default function NotFound() {
         </p>
       </div>
 
-      
-      <div className="nf-blink pointer-events-none absolute left-[8%] top-[16%] z-40 h-[2px] w-28 bg-white/80" />
-      <div className="nf-blink pointer-events-none absolute left-[66%] top-[30%] z-40 h-[2px] w-16 bg-[#ff2a2a]" style={{ animationDelay: "-0.6s" }} />
-      <div className="nf-blink pointer-events-none absolute left-[22%] top-[72%] z-40 h-[2px] w-20 bg-[#2f6dff]" style={{ animationDelay: "-1.2s" }} />
-      <div className="nf-blink pointer-events-none absolute left-[76%] top-[82%] z-40 h-[2px] w-12 bg-white/60" style={{ animationDelay: "-0.3s" }} />
-
-      
+      {/* 随机故障线池（v43）：位置/形态/颜色/生命周期全随机，200ms tick 状态转移 */}
       <div className="nf-scan pointer-events-none fixed inset-0 z-40" />
       <div
         className="pointer-events-none fixed inset-0 z-40"
