@@ -79,7 +79,7 @@ function computeLayout(): NfLayout {
   const rowEm = pitch * 0.933;
   // fs 由 156×rowEm×fs=vh 反推，宽度为上限
   const fs = Math.min(vh / (ASCII_ROWS * rowEm), containerW / (ASCII_COLS * pitch));
-  const stageH = vh;
+  const stageH = ASCII_ROWS * rowEm * fs; // 画高本身（移动端 fs 受容器宽压制时蒙版同步收缩）
   return { fs, stageH, rowEm, letterEm };
 }
 
