@@ -82,17 +82,18 @@ function buildSliceClip(): string {
 
 const CSS = `
 
-/* 白团容器（v41 响应式）：宽 min(1200px, 92vw)、高 min(700px, 100vh)——桌面
-   1200×700 原样，窄窗口整体等比缩小、永不超出视口（用户实测出界修复）；
+/* 白团容器（v41 响应式 + 竖幅人物带）：宽 min(1200px, 92vw)、
+   高 = 129 行 × 行距 7.67px = 988.7px——顶部对齐视口顶（发顶距视口顶
+   ~60px 留白 ✓）、底部溢出视口 120px 被裁（领口下授权区）；
    白底 #f2f2f2 仅在蒙版层（.nf-mask 填充 = 白团块本体，mask 外露黑）。
    三段式字符画（fs 由 relayout 按容器动态设置）印在白团上横排居中。 */
 .nf-stage {
   position: absolute;
-  top: 50%;
+  top: 0;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   width: min(1200px, 92vw);
-  height: min(700px, 100vh);
+  height: 988.7px;
   z-index: 10;
   display: flex;
   align-items: center;
@@ -176,8 +177,8 @@ export default function NotFound() {
     setMounted(true);
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const FS = 9.5; // 桌面满宽基准字号（px）＝ 白团宽 1200 ÷ 126 列（实际 fs 随容器动态缩放）
-    const GRID_COLS = 126; // 总列数 = 人物带 85 + 装饰 41（格数恒定，fs 均匀缩放）
+    const FS = 8.219; // 字号（px）＝ 白团宽 1200 ÷ 146 列（用户「字符调小」目标 ≈8.2）
+    const GRID_COLS = 146; // 总列数（人物带，数据维度）
     const ROW_PX_EM = 0.933; // 行距系数（em）
     const DECO_DENSITY = 0.46; // 装饰带字符密度（≈参考疏朗度，与人物带墨迹一致）
     let framesSrc: string[] = [ASCII_FRAME0];
