@@ -49,6 +49,17 @@ export const metadata: Metadata = {
     description: SITE.description,
   },
   robots: { index: true, follow: true },
+  /**
+   * 全站是深色设计，但 QQ / UC / 华为这类浏览器的「智能反色」（X5 夜间模式）
+   * 只翻浅色元素、不动深色底，结果就是：黑底还在，白团和浅色按钮却被翻成深色，
+   * 页面直接花掉。`color-scheme: dark`（见下方 viewport）不足以阻止它，
+   * 还得靠这几个国内浏览器认的私有声明。
+   */
+  other: {
+    nightmode: "disable",
+    "x5-nightmode": "disable",
+    "supported-color-schemes": "dark",
+  },
   icons: {
     icon: [{ url: "/logo.jpg", type: "image/jpeg" }],
     shortcut: [{ url: "/logo.jpg", type: "image/jpeg" }],

@@ -1,0 +1,183 @@
+/* ==========================================================================
+   404 页样式
+   ==========================================================================
+   不跟随站点主题 —— 404 出现在「站点已经出问题」的时刻，不该再依赖可能
+   一起坏掉的主题状态；它还要脱离站点外壳，让用户明白这不是普通页面。
+   配色因此写死：黑底 + 纸白 + 红蓝故障色。
+   ========================================================================== */
+
+$paper: #f2f2f2; // 白团本体 / 浅色按钮底
+$ink: #0b0b0b; // 正文黑 / 深色按钮底
+$field-ink: #141414; // 字符画笔触
+$glitch-red: #ff2a2a;
+$glitch-blue: #2f6dff;
+$mono: var(--font-roboto-mono), ui-monospace, monospace;
+
+/* 红蓝故障副本层：两者只有关键帧名与时长不同 */
+@mixin glitch-layer($name, $duration) {
+  position: absolute;
+  inset: 0;
+  animation: $name $duration steps(1, end) infinite;
+}
+
+.nf {
+  /* 全屏根层。浅色只出现在白团和按钮上，而 QQ / UC 这类浏览器的「智能反色」
+     专挑浅色元素翻、不动深色底，正好把这两处翻坏。两道防线：
+       1) layout.tsx 的 nightmode meta —— 关掉浏览器的反色开关（渲染层）；
+       2) 这里的 color-scheme / forced-color-adjust 与 !important 色值
+          —— 万一对方靠注入 CSS 实现，也能按住。 */
+  &-root {
+    color-scheme: dark;
+
+    &,
+    * {
+      forced-color-adjust: none;
+    }
+  }
+
+  /* 白团容器：宽 min(1200px, 92vw)，高由 computeLayout 定稿后写内联样式，
+     这里的 height 仅为回退占位。双居中保证永不超出视口。 */
+  &-stage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(1200px, 92vw);
+    height: 1080px; // 1080p 基准回退占位，实际由 computeLayout 内联定稿
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* 本层填充即白团本体，mask 之外露出黑底 */
+  &-mask {
+    position: absolute;
+    inset: 0;
+    background: $paper !important;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 字符画印在白团上。字号 / 行距 / 字距都是回退占位，实际值由内联样式按
+     computeLayout 定稿。 */
+  &-field {
+    font-family: $mono;
+    flex-shrink: 0;
+    font-size: 8.81px;
+    line-height: 0.8397;
+    letter-spacing: 0.3em;
+    color: $field-ink !important;
+    white-space: pre;
+    user-select: none;
+  }
+
+  &-404 {
+    font-family: $mono;
+    font-weight: 900;
+    font-size: clamp(4.5rem, 15vw, 10rem);
+    letter-spacing: -0.02em;
+    line-height: 0.9;
+  }
+
+  &-g-r {
+    @include glitch-layer(nfGlitchR, 2.7s);
+  }
+
+  &-g-b {
+    @include glitch-layer(nfGlitchB, 3.4s);
+  }
+
+  &-scan {
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.05) 0 1px,
+      transparent 1px 3px
+    );
+    animation: nfScanMove 9s linear infinite;
+  }
+
+  &-btn {
+    background-color: $paper !important;
+    color: $ink !important;
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
+
+    &:hover {
+      background-color: $ink !important;
+      color: $paper !important;
+    }
+  }
+}
+
+/* 故障色分离：两层各自随机跳动，制造红蓝错版 */
+@keyframes nfGlitchR {
+  0% {
+    clip-path: inset(0 0 84% 0);
+    transform: translate(-4px, -2px);
+  }
+  20% {
+    clip-path: inset(26% 0 54% 0);
+    transform: translate(4px, 1px);
+  }
+  40% {
+    clip-path: inset(64% 0 6% 0);
+    transform: translate(-3px, 2px);
+  }
+  60% {
+    clip-path: inset(10% 0 68% 0);
+    transform: translate(3px, -1px);
+  }
+  80% {
+    clip-path: inset(46% 0 28% 0);
+    transform: translate(-4px, 1px);
+  }
+  100% {
+    clip-path: inset(0 0 92% 0);
+    transform: translate(2px, -2px);
+  }
+}
+
+@keyframes nfGlitchB {
+  0% {
+    clip-path: inset(70% 0 12% 0);
+    transform: translate(4px, 2px);
+  }
+  22% {
+    clip-path: inset(8% 0 74% 0);
+    transform: translate(-4px, -1px);
+  }
+  44% {
+    clip-path: inset(38% 0 40% 0);
+    transform: translate(3px, 2px);
+  }
+  66% {
+    clip-path: inset(82% 0 4% 0);
+    transform: translate(-3px, -2px);
+  }
+  88% {
+    clip-path: inset(16% 0 62% 0);
+    transform: translate(2px, 1px);
+  }
+  100% {
+    clip-path: inset(56% 0 22% 0);
+    transform: translate(-2px, 1px);
+  }
+}
+
+@keyframes nfScanMove {
+  to {
+    background-position: 0 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nf-root,
+  .nf-root * {
+    animation: none !important;
+  }
+}

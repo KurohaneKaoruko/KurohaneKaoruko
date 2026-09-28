@@ -23,6 +23,7 @@
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "sass": "^1.105.0",
     "tailwindcss": "^4",
     "typescript": "^5.9.3"
   }

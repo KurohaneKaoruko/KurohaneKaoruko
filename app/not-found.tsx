@@ -1,13 +1,26 @@
 "use client";
 
-/* v45: 白团视口内垂直+水平双居中（修正蒙版偏下）+ 高度不超视口 + fs 回归 8.219px +
-   光栅 146×129 竖幅窗（发顶贴窗顶、领口下裁除、零变形）+ 15 值字符集 +
-   首帧布局与 resize 同源（computeLayout 纯函数单源） */
+/* v63: 0/1 档位互换 —— 实测 Roboto Mono '0' 墨量(6092)是 '1'(2858) 的两倍+，最暗档改用 0；
+   v62: BLANK_SHARE 再收至 0.50；v61 曾为 0.52；最初 0.58 —— 脸部/眼周高光区吃进灰阶字符（用户反馈局部过亮）；
+   v60: 网格回部署版 136×146 + letterEm 0.3（fs ≈ 8.81px@1080p）—— 用户定稿：部署版的细密纹理观感最好；
+   v59: 素材换黑白柔和对比版（convert-source-bw.py --k 0.75 --hard 0）：对比接近部署版的自然层次，
+   无准二值化；
+   v56: 着色回退 13c8a48 方案 —— 10 档灰阶 charset （ .'"-_=+01 ）+ BLANK_SHARE 0.58，字符内容静态直出（无 0/1 随机变异）；
+   排版调整保留：96×103、letterEm 0.36（fs 11.71px@1080p）。v52: 用回彩色原片；
+   （间距加大、字号 12.49→11.71px@1080p）；v50-v51: 黑区随机闪烁 0/1 + '.' 灰度填充（charset " .01"），
+   墨水格的 0/1 运行时随机生成并持续变异（~90ms 翻转 22%）—— 固定图案观感死板。
+   v49: 源素材推到准二值（convert-source-bw.py 加 --hard 0.72 硬阈值混合，中间调 3.9% → 0.3%）——
+   发丝/水手服成实心黑字符块、脸部干净留白，对齐参考站的黑白构成；
+   重笔画字符 8.9% - 24.9%，中间调减半，黑白分明；网格/字号沿用 v47（96x103 / 12.49px@1080p）。
+   v47: 字符画网格 112x120 - 96x103（字号比 v4 原 136x146 +42%）；
+   bin.gz 的 fetch 加 ?v= 击穿浏览器缓存（上一轮 +22% 用户反馈「没放大」的疑因之一）；
+15 值字符集 + 首帧布局与 resize 同源（computeLayout 纯函数单源） */
 
 import Link from "next/link";
 import { createPortal } from "react-dom";
 import { useEffect, useRef, useState } from "react";
 import { ASCII_COLS, ASCII_FPS, ASCII_FRAME0, ASCII_ROWS } from "./ascii-frames";
+import "./not-found.scss";
 
 type MaskSpec = {
   hx: number; hy: number; // 初始/锚点位置
@@ -49,7 +62,7 @@ function clampSize(v: number, base: number, k: number): number {
 
 const ROW_PX_EM = 0.933; // 行距系数（em），与 .nf-field line-height 一致
 // 左侧 GIF 处理残留裁切：bin 数据 col 0 含 ~21% 散点噪声（"边缘线"），cols 1..5 全空白。
-// 裁 2 列保险（.ts 首 11 列本就空白，无内容损失；裁后实际显示 144 列，仍由 ASCII_COLS 描述原始数据）。
+// 裁 2 列保险（v47 96 列数据实测前 6 列全空白，无内容损失；裁后实际显示 94 列，仍由 ASCII_COLS 描述原始数据）。
 const LEFT_TRIM = 2;
 const trimLeftEdge = (s: string): string =>
   s.split("\n").map(l => l.length > LEFT_TRIM ? l.slice(LEFT_TRIM) : "").join("\n");
@@ -65,19 +78,20 @@ type NfLayout = {
 
 // 布局单源（v44 修复 / v45 收敛）：首帧挂载与 resize 走同一纯函数——同视口输入必得同输出，
 // 保证首次渲染与 resize 后 fs/网格维度/装饰带列数零差异。
-// fs = min(容器宽/146, 视口高/(129×0.933))；白团高 = 129×0.933×fs ≤ 视口高（永不超视口）；
+// fs = min(容器宽/136, 视口高/(146×0.933×0.9))；白团高 = 146×rowEm×fs ≤ 视口高（永不超视口）；
 // 容器 CSS 定位视口内垂直+水平双居中（top:50% + translate(-50%,-50%)，禁止顶对齐）。
-// 1080p：fs=8.219、白团 1200×989.2 居中（上下留白 45.4px）；矮视口 fs 由高度项压低（零出界优先）。
+// 1080p：fs=8.81、白团 1079×1080（高度项为约束边，上下贴满视口，左右居中各留 420px）；
+// 矮视口 fs 由高度项压低（零出界优先）。
 function computeLayout(): NfLayout {
   const vw = window.innerWidth;
   const vh = window.innerHeight;
   const containerW = Math.min(vw * 0.92, 1200);
-  // 半个字符字距（Roboto Mono 字步进 0.6em 的 1/2）→ 节距 0.9em
-  const letterEm = 0.3;
+  // 字距 0.32em（Roboto Mono 字步进 0.6em）→ 节距 0.92em；rowEm 同步跟随保持单元比例
+    const letterEm = 0.3; // v60：随部署版细网格一并回退（0.32 → 0.3，fs ≈ 8.81px@1080p）
   const pitch = 0.6 + letterEm;
   // 单元宽高比保持原设计 1.0/0.933（数据零变形）→ 行距 rowEm = pitch × 0.933
   const rowEm = pitch * 0.933;
-  // fs 由 156×rowEm×fs=vh 反推，宽度为上限
+  // fs 由 146×rowEm×fs=vh 反推，宽度为上限
   const fs = Math.min(vh / (ASCII_ROWS * rowEm), containerW / (ASCII_COLS * pitch));
   const stageH = ASCII_ROWS * rowEm * fs; // 画高本身（移动端 fs 受容器宽压制时蒙版同步收缩）
   return { fs, stageH, rowEm, letterEm };
@@ -120,85 +134,6 @@ function buildSliceClip(): string {
   }
   return `polygon(${p})`;
 }
-
-const CSS = `
-
-/* 白团容器（v45 双居中 + 动态几何）：宽 min(1200px, 92vw)；
-   高 = 129 行 × 0.933em × fs（内联样式由 computeLayout 定稿，CSS 仅回退占位），
-   fs ≤ 视口高/(129×0.933) → 白团高 ≤ 视口高（永不超视口、零裁切）；
-   top 50% + translate(-50%,-50%) → 视口内垂直+水平双居中（v45 修正蒙版偏下）；
-   白底 #f2f2f2 仅在蒙版层（.nf-mask 填充 = 白团块本体，mask 外露黑）。
-   三段式字符画（fs/装饰带列数由 computeLayout 单源计算）印在白团上横排居中。 */
-.nf-stage {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: min(1200px, 92vw);
-  height: 989.2px; /* 回退占位（129×0.933×8.219）；实际以内联样式为准 */
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-.nf-mask {
-  position: absolute;
-  inset: 0;
-  background: #f2f2f2;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.nf-field {
-  font-family: var(--font-roboto-mono), ui-monospace, monospace;
-  flex-shrink: 0;
-  
-  font-size: 8.219px; /* 回退占位；实际由内联样式按 computeLayout 定稿 */
-  line-height: 0.933; /* 回退占位；实际由内联 lineHeight 按 computeLayout 定稿 */
-  letter-spacing: 0.4em; /* 回退占位；实际由内联 letterSpacing 按 computeLayout 定稿 */
-  color: #141414;
-  white-space: pre;
-  user-select: none;
-}
-.nf-404 {
-  font-family: var(--font-roboto-mono), ui-monospace, monospace;
-  font-weight: 900;
-  font-size: clamp(4.5rem, 15vw, 10rem);
-  letter-spacing: -0.02em;
-  line-height: 0.9;
-}
-.nf-g-r, .nf-g-b { position: absolute; inset: 0; animation-timing-function: steps(1, end); animation-iteration-count: infinite; }
-.nf-g-r { animation-name: nfGlitchR; animation-duration: 2.7s; }
-.nf-g-b { animation-name: nfGlitchB; animation-duration: 3.4s; }
-@keyframes nfGlitchR {
-  0% { clip-path: inset(0 0 84% 0); transform: translate(-4px, -2px); }
-  20% { clip-path: inset(26% 0 54% 0); transform: translate(4px, 1px); }
-  40% { clip-path: inset(64% 0 6% 0); transform: translate(-3px, 2px); }
-  60% { clip-path: inset(10% 0 68% 0); transform: translate(3px, -1px); }
-  80% { clip-path: inset(46% 0 28% 0); transform: translate(-4px, 1px); }
-  100% { clip-path: inset(0 0 92% 0); transform: translate(2px, -2px); }
-}
-@keyframes nfGlitchB {
-  0% { clip-path: inset(70% 0 12% 0); transform: translate(4px, 2px); }
-  22% { clip-path: inset(8% 0 74% 0); transform: translate(-4px, -1px); }
-  44% { clip-path: inset(38% 0 40% 0); transform: translate(3px, 2px); }
-  66% { clip-path: inset(82% 0 4% 0); transform: translate(-3px, -2px); }
-  88% { clip-path: inset(16% 0 62% 0); transform: translate(2px, 1px); }
-  100% { clip-path: inset(56% 0 22% 0); transform: translate(-2px, 1px); }
-}
-.nf-scan {
-  background: repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 3px);
-  animation: nfScanMove 9s linear infinite;
-}
-@keyframes nfScanMove { to { background-position: 0 9px; } }
-.nf-btn { transition: background-color 0.15s ease, color 0.15s ease; }
-.nf-btn:hover { background-color: #0b0b0b; color: #f2f2f2; }
-@media (prefers-reduced-motion: reduce) {
-  .nf-root, .nf-root * { animation: none !important; }
-}
-`;
 
 export default function NotFound() {
   const field0 = trimLeftEdge(ASCII_FRAME0); // 人物带同步首帧（挂载前初始内容 / 数据未加载期）
@@ -375,7 +310,7 @@ export default function NotFound() {
       framesCtrl = ctrl;
       const timer = window.setTimeout(() => ctrl.abort(), 3000);
       try {
-        const res = await fetch("/ascii-frames.bin.gz", { signal: ctrl.signal });
+        const res = await fetch("/ascii-frames.bin.gz?v=136x146swap01", { signal: ctrl.signal }); // v= 随数据版本递增，击穿 bin.gz 的浏览器缓存
         if (!res.ok || !res.body) throw new Error(`HTTP ${res.status}`);
         const text = await new Response(res.body.pipeThrough(new DecompressionStream("gzip"))).text();
         const lines = text.split("\n");
@@ -485,7 +420,7 @@ export default function NotFound() {
 
   return createPortal(
     <div className="nf-root fixed inset-0 z-[200] overflow-hidden bg-black text-white">
-      <style dangerouslySetInnerHTML={{ __html: CSS }} />
+      {/* 404 全部样式在 app/not-found.scss */}
 
       
       
@@ -510,7 +445,7 @@ export default function NotFound() {
               ERR_0x194
             </span>
             <span>SIGNAL LOST</span>
-            <span className="text-[#7fa5ff]">NODE:KUROHANEKAORUKO</span>
+            <span className="text-[#7fa5ff]">NODE:K.H.KAORUKO</span>
           </div>
         </div>
 

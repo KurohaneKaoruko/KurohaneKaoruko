@@ -29,6 +29,8 @@
   /* 字体：@fontsource-variable 在 layout 里 import，这里给出变量与回退链 */
   --font-inter: "Inter Variable", "Inter", "Noto Sans SC", system-ui, sans-serif;
   --font-roboto-mono: "Roboto Mono Variable", "Roboto Mono", ui-monospace, Consolas, monospace;
+  /* 等宽族的完整回退链：全局样式里有多处要用，抽出来只维护一份 */
+  --font-mono-stack: var(--font-roboto-mono), ui-monospace, monospace;
 
   /* 装饰层 */
   --grid-color: rgba(255, 255, 255, 0.035);
@@ -85,8 +87,6 @@
 
   color-scheme: light;
 }
-
-@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
@@ -151,7 +151,7 @@ body {
 
 /* font-mono 直读变量，绕开令牌链自引用 */
 .font-mono {
-  font-family: var(--font-roboto-mono), ui-monospace, monospace;
+  font-family: var(--font-mono-stack);
 }
 
 ::selection {
@@ -185,7 +185,7 @@ body {
   padding: 10px 16px;
   background: var(--primary);
   color: var(--primary-foreground);
-  font-family: var(--font-roboto-mono), ui-monospace, monospace;
+  font-family: var(--font-mono-stack);
   font-size: 12px;
   letter-spacing: 0.15em;
   transition: top 0.2s ease;
@@ -263,7 +263,7 @@ html.bg-decor-on body::after {
 }
 
 .eyebrow {
-  font-family: var(--font-roboto-mono), ui-monospace, monospace;
+  font-family: var(--font-mono-stack);
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.3em;
@@ -507,7 +507,7 @@ html.bg-decor-on body::after {
   border: 1px solid var(--border);
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-roboto-mono), ui-monospace, monospace;
+  font-family: var(--font-mono-stack);
   font-size: 10px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -575,12 +575,8 @@ html.bg-decor-on body::after {
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
-  .anim-marquee,
-  .anim-sweep,
   .anim-spin-120,
   .anim-spin-60,
-  .anim-blink,
-  .anim-float,
   .marquee-track,
   .caret,
   .theme-panel {
