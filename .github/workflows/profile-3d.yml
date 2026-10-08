@@ -1,0 +1,34 @@
+name: Generate 3D contribution graph
+
+on:
+  schedule:
+    - cron: "0 18 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate 3D contribution SVGs
+        uses: yoshi389111/github-profile-3d-contrib@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: KurohaneKaoruko
+
+      - name: Commit & push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A .
+          if git diff --quiet --cached; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: regenerate 3D contribution graph [skip ci]"
+            git push
+          fi

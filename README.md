@@ -1,3 +1,11 @@
+<p align="center">
+  <img
+    src="https://capsule-render.vercel.app/api?type=waving&amp;color=gradient&amp;height=140&amp;section=header"
+    alt=""
+    width="100%"
+  />
+</p>
+
 <h1 align="center">Kurohane Kaoruko</h1>
 
 <p align="center">
@@ -62,10 +70,52 @@
 
 <p align="center">
   <img
+    src="https://github-readme-stats.vercel.app/api?username=KurohaneKaoruko&amp;show_icons=true&amp;theme=transparent&amp;hide_border=true&amp;include_all_commits=true&amp;rank_icon=github"
+    alt="GitHub stats for KurohaneKaoruko"
+    width="100%"
+  />
+</p>
+
+<p align="center">
+  <img
+    src="https://github-readme-stats.vercel.app/api/top-langs/?username=KurohaneKaoruko&amp;layout=compact&amp;theme=transparent&amp;hide_border=true&amp;langs_count=8"
+    alt="Top languages for KurohaneKaoruko"
+    width="60%"
+  />
+</p>
+
+<p align="center">
+  <img
+    src="https://github-profile-trophy.vercel.app/?username=KurohaneKaoruko&amp;theme=flat&amp;no-frame=true&amp;no-bg=true&amp;column=7&amp;margin-w=8&amp;margin-h=8"
+    alt="GitHub trophies for KurohaneKaoruko"
+    width="100%"
+  />
+</p>
+
+<p align="center">
+  <img
     src="https://streak-stats.demolab.com?user=KurohaneKaoruko&amp;theme=transparent&amp;hide_border=true"
     alt="GitHub streak for KurohaneKaoruko"
     width="80%"
   />
+</p>
+
+<p align="center">
+  <picture>
+    <source
+      media="(prefers-color-scheme: dark)"
+      srcset="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/output/github-snake-dark.svg"
+    />
+    <source
+      media="(prefers-color-scheme: light)"
+      srcset="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/output/github-snake.svg"
+    />
+    <img
+      src="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/output/github-snake.svg"
+      alt="Contribution snake animation for KurohaneKaoruko"
+      width="100%"
+    />
+  </picture>
 </p>
 
 ## More Insights
@@ -104,6 +154,40 @@
   />
 </p>
 
+<p align="center">
+  <img
+    src="https://github-readme-activity-graph.vercel.app/graph?username=KurohaneKaoruko&amp;theme=github-compact&amp;bg_color=00000000&amp;color=58A6FF&amp;line=58A6FF&amp;point=58A6FF&amp;area=true&amp;area_color=58A6FF&amp;hide_border=true"
+    alt="Activity graph for KurohaneKaoruko"
+    width="100%"
+  />
+</p>
+
+<p align="center">
+  <picture>
+    <source
+      media="(prefers-color-scheme: dark)"
+      srcset="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/main/profile-3d-contrib/profile-night-rainbow.svg"
+    />
+    <source
+      media="(prefers-color-scheme: light)"
+      srcset="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/main/profile-3d-contrib/profile-green-animate.svg"
+    />
+    <img
+      src="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/main/profile-3d-contrib/profile-green-animate.svg"
+      alt="3D contribution graph for KurohaneKaoruko"
+      width="100%"
+    />
+  </picture>
+</p>
+
 ## Note
 
 > COMPILE THIS WORLD.
+
+<p align="center">
+  <img
+    src="https://capsule-render.vercel.app/api?type=waving&amp;color=gradient&amp;height=120&amp;section=footer"
+    alt=""
+    width="100%"
+  />
+</p>
