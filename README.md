@@ -131,14 +131,6 @@
 </p>
 
 <p align="center">
-  <img
-    src="https://github-readme-activity-graph.vercel.app/graph?username=KurohaneKaoruko&amp;theme=github-compact&amp;bg_color=00000000&amp;color=58A6FF&amp;line=58A6FF&amp;point=58A6FF&amp;area=true&amp;area_color=58A6FF&amp;hide_border=true"
-    alt="Activity graph for KurohaneKaoruko"
-    width="100%"
-  />
-</p>
-
-<p align="center">
   <picture>
     <source
       media="(prefers-color-scheme: dark)"
