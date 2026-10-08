@@ -70,14 +70,6 @@
 
 <p align="center">
   <img
-    src="https://github-profile-trophy.vercel.app/?username=KurohaneKaoruko&amp;theme=flat&amp;no-frame=true&amp;no-bg=true&amp;column=7&amp;margin-w=8&amp;margin-h=8"
-    alt="GitHub trophies for KurohaneKaoruko"
-    width="100%"
-  />
-</p>
-
-<p align="center">
-  <img
     src="https://streak-stats.demolab.com?user=KurohaneKaoruko&amp;theme=transparent&amp;hide_border=true"
     alt="GitHub streak for KurohaneKaoruko"
     width="80%"
