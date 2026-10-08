@@ -70,22 +70,6 @@
 
 <p align="center">
   <img
-    src="https://github-readme-stats.vercel.app/api?username=KurohaneKaoruko&amp;show_icons=true&amp;theme=transparent&amp;hide_border=true&amp;include_all_commits=true&amp;rank_icon=github"
-    alt="GitHub stats for KurohaneKaoruko"
-    width="100%"
-  />
-</p>
-
-<p align="center">
-  <img
-    src="https://github-readme-stats.vercel.app/api/top-langs/?username=KurohaneKaoruko&amp;layout=compact&amp;theme=transparent&amp;hide_border=true&amp;langs_count=8"
-    alt="Top languages for KurohaneKaoruko"
-    width="60%"
-  />
-</p>
-
-<p align="center">
-  <img
     src="https://github-profile-trophy.vercel.app/?username=KurohaneKaoruko&amp;theme=flat&amp;no-frame=true&amp;no-bg=true&amp;column=7&amp;margin-w=8&amp;margin-h=8"
     alt="GitHub trophies for KurohaneKaoruko"
     width="100%"
