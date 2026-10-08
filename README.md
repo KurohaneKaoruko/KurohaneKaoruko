@@ -28,10 +28,6 @@
 
 <p align="center">
   <img
-    src="https://komarev.com/ghpvc/?username=KurohaneKaoruko&amp;style=for-the-badge&amp;label=Profile+Views&amp;color=58A6FF"
-    alt="Profile views for KurohaneKaoruko"
-  />
-  <img
     src="https://img.shields.io/github/followers/KurohaneKaoruko?style=for-the-badge&amp;logo=github&amp;label=Followers&amp;color=24292F"
     alt="GitHub followers for KurohaneKaoruko"
   />
