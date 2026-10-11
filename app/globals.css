@@ -88,6 +88,326 @@
   color-scheme: light;
 }
 
+/* -------- glacial：冷白科幻，发丝细线 + 切角面板 + 冰蓝 -------- */
+[data-theme="glacial"] {
+  --background: #eef1f4;
+  --foreground: #131920;
+
+  --primary: #0891b2;
+  --primary-foreground: #ffffff;
+  --secondary: #5b7a8c;
+  --accent: #0891b2;
+  --brand-hover: #0891b2;
+
+  --card-bg: #fafcfd;
+  --border: rgba(19, 25, 32, 0.16);
+  --border-strong: rgba(19, 25, 32, 0.4);
+  --border-active: #0891b2;
+
+  --text-muted: #4a5866;
+  --text-dim: #8b98a5;
+
+  --grid-color: rgba(19, 25, 32, 0.045);
+  --grid-size: 48px;
+  --decor-ring-a: rgba(8, 145, 178, 0.05);
+  --decor-ring-b: rgba(19, 25, 32, 0.03);
+  --decor-dot: rgba(19, 25, 32, 0.1);
+  --body-gradient: linear-gradient(to top, #e3e9ee 0%, #eef1f4 40%, #f4f7fa 100%);
+
+  --nav-h: 64px;
+
+  --hard-shadow: none;
+
+  color-scheme: light;
+}
+
+/* -------- maximal：暖纸底 + 朱红/靛蓝/墨绿的稠密装饰 -------- */
+[data-theme="maximal"] {
+  --background: #faf3e3;
+  --foreground: #1c1410;
+
+  --primary: #d4380d;
+  --primary-foreground: #fff7e8;
+  --secondary: #1d4ed8;
+  --accent: #0f766e;
+  --brand-hover: #d4380d;
+
+  --card-bg: #fffaf0;
+  --border: rgba(28, 20, 16, 0.35);
+  --border-strong: #1c1410;
+  --border-active: #d4380d;
+
+  --text-muted: #5c4f45;
+  --text-dim: #97897c;
+
+  --grid-color: rgba(28, 20, 16, 0.07);
+  --grid-size: 24px;
+  --decor-ring-a: rgba(212, 56, 13, 0.05);
+  --decor-ring-b: rgba(29, 78, 216, 0.04);
+  --decor-dot: rgba(28, 20, 16, 0.14);
+  --body-gradient: linear-gradient(to top, #f1e6cd 0%, #faf3e3 40%, #fdf8ec 100%);
+
+  --nav-h: 64px;
+
+  --hard-shadow: none;
+
+  /* 极繁专属的第四色：芥末黄（荧光笔 / 色块），只有极繁组件会引用 */
+  --max-sun: #f0b429;
+
+  color-scheme: light;
+}
+
+/* -------- glitch：黑底红蓝错位，被恢复的截获信号 -------- */
+[data-theme="glitch"] {
+  --background: #060607;
+  --foreground: #e6e6e9;
+
+  --primary: #ff2a2a;
+  --primary-foreground: #ffffff;
+  --secondary: #2f6bff;
+  --accent: #ff2aa8;
+  --brand-hover: #ff2a2a;
+
+  --card-bg: #0d0d10;
+  --border: rgba(230, 230, 233, 0.16);
+  --border-strong: rgba(230, 230, 233, 0.38);
+  --border-active: #ff2a2a;
+
+  --text-muted: #8b8b93;
+  --text-dim: #55555c;
+
+  --grid-color: rgba(230, 230, 233, 0.04);
+  --grid-size: 40px;
+  --decor-ring-a: rgba(255, 42, 42, 0.03);
+  --decor-ring-b: rgba(47, 107, 255, 0.03);
+  --decor-dot: rgba(230, 230, 233, 0.07);
+  --body-gradient: linear-gradient(to top, #0a0a0c 0%, #060607 40%, #060607 100%);
+
+  --nav-h: 64px;
+
+  --hard-shadow: none;
+
+  /* 故障专属：色差双色的实际值，工具类直接引用 */
+  --g-red: #ff2a2a;
+  --g-blue: #2f6bff;
+
+  color-scheme: dark;
+}
+
+/* -------- minimal：纯白单列编辑部，只留排版本身 -------- */
+[data-theme="minimal"] {
+  --background: #ffffff;
+  --foreground: #141414;
+
+  --primary: #141414;
+  --primary-foreground: #ffffff;
+  --secondary: #6b7280;
+  --accent: #141414;
+  --brand-hover: #141414;
+
+  --card-bg: #ffffff;
+  --border: rgba(20, 20, 20, 0.1);
+  --border-strong: rgba(20, 20, 20, 0.32);
+  --border-active: #141414;
+
+  --text-muted: #6b7280;
+  --text-dim: #9aa0a6;
+
+  --grid-color: rgba(20, 20, 20, 0.04);
+  --grid-size: 48px;
+  --decor-ring-a: transparent;
+  --decor-ring-b: transparent;
+  --decor-dot: transparent;
+  --body-gradient: linear-gradient(to top, #ffffff 0%, #ffffff 100%);
+
+  --nav-h: 64px;
+
+  --hard-shadow: none;
+
+  color-scheme: light;
+}
+
+/* -------- cyberpunk：夜城紫黑 + 霓虹青/品红/酸黄 -------- */
+[data-theme="cyberpunk"] {
+  --background: #0b0b16;
+  --foreground: #e8e8f4;
+
+  --primary: #00f0ff;
+  --primary-foreground: #061018;
+  --secondary: #ff2ec4;
+  --accent: #ffe14d;
+  --brand-hover: #00f0ff;
+
+  --card-bg: #131327;
+  --border: rgba(232, 232, 244, 0.18);
+  --border-strong: rgba(232, 232, 244, 0.42);
+  --border-active: #00f0ff;
+
+  --text-muted: #8f8fb0;
+  --text-dim: #55557a;
+
+  --grid-color: rgba(0, 240, 255, 0.04);
+  --grid-size: 44px;
+  --decor-ring-a: rgba(255, 46, 196, 0.04);
+  --decor-ring-b: rgba(0, 240, 255, 0.04);
+  --decor-dot: rgba(232, 232, 244, 0.07);
+  --body-gradient: linear-gradient(to top, #120f2e 0%, #0b0b16 45%, #1c0f33 100%);
+
+  --nav-h: 64px;
+
+  --hard-shadow: none;
+
+  /* 赛博专属：霓虹的三原值，霓虹工具类直接引用 */
+  --cp-cyan: #00f0ff;
+  --cp-magenta: #ff2ec4;
+  --cp-yellow: #ffe14d;
+
+  color-scheme: dark;
+}
+
+/* -------- vaporwave：粉紫黄昏 + 镭射渐变 + 网格海面 -------- */
+[data-theme="vaporwave"] {
+  --background: #2b0a3d;
+  --foreground: #fdf4ff;
+
+  --primary: #ff71ce;
+  --primary-foreground: #2b0a3d;
+  --secondary: #01cdfe;
+  --accent: #b967ff;
+  --brand-hover: #ff71ce;
+
+  --card-bg: #3a1160;
+  --border: rgba(253, 244, 255, 0.25);
+  --border-strong: rgba(253, 244, 255, 0.5);
+  --border-active: #ff71ce;
+
+  --text-muted: #d9b8ef;
+  --text-dim: #9d7ab8;
+
+  --grid-color: rgba(255, 113, 206, 0.07);
+  --grid-size: 40px;
+  --decor-ring-a: rgba(1, 205, 254, 0.05);
+  --decor-ring-b: rgba(255, 113, 206, 0.05);
+  --decor-dot: rgba(253, 244, 255, 0.1);
+  --body-gradient: linear-gradient(to top, #1a0526 0%, #2b0a3d 45%, #4a1170 100%);
+
+  --nav-h: 64px;
+
+  --hard-shadow: none;
+
+  /* 蒸汽波专属：镭射渐变（chrome 字与装饰共用） */
+  --vw-grad: linear-gradient(90deg, #ff71ce 0%, #b967ff 45%, #01cdfe 100%);
+
+  color-scheme: dark;
+}
+
+/* -------- y2k：银蓝千禧 + 金属渐变 + 气泡高光 -------- */
+[data-theme="y2k"] {
+  --background: #dfe9f8;
+  --foreground: #1a2440;
+
+  --primary: #2f6df6;
+  --primary-foreground: #ffffff;
+  --secondary: #ff7ac8;
+  --accent: #8f5cff;
+  --brand-hover: #2f6df6;
+
+  --card-bg: #f6f9ff;
+  --border: rgba(26, 36, 64, 0.25);
+  --border-strong: #1a2440;
+  --border-active: #2f6df6;
+
+  --text-muted: #5a6a8c;
+  --text-dim: #90a0c0;
+
+  --grid-color: rgba(26, 36, 64, 0.06);
+  --grid-size: 36px;
+  --decor-ring-a: rgba(47, 109, 246, 0.05);
+  --decor-ring-b: rgba(255, 122, 200, 0.05);
+  --decor-dot: rgba(26, 36, 64, 0.12);
+  --body-gradient: linear-gradient(to top, #c3d4ee 0%, #dfe9f8 40%, #eef4fd 100%);
+
+  --nav-h: 64px;
+
+  --hard-shadow: none;
+
+  /* Y2K 专属：金属渐变（面板边与 chrome 字共用） */
+  --k2-metal: linear-gradient(135deg, #f8fbff 0%, #c5d4ec 40%, #edf3ff 55%, #aebfe0 100%);
+
+  color-scheme: light;
+}
+
+/* -------- cassette：米色塑料机身 + 琥珀屏 + 橄榄 -------- */
+[data-theme="cassette"] {
+  --background: #e6e0d0;
+  --foreground: #2b2620;
+
+  --primary: #c2571a;
+  --primary-foreground: #f5efe0;
+  --secondary: #5f6f4f;
+  --accent: #4f6f8f;
+  --brand-hover: #c2571a;
+
+  --card-bg: #efe9d8;
+  --border: rgba(43, 38, 32, 0.3);
+  --border-strong: #2b2620;
+  --border-active: #c2571a;
+
+  --text-muted: #6b6353;
+  --text-dim: #9a917e;
+
+  --grid-color: rgba(43, 38, 32, 0.06);
+  --grid-size: 32px;
+  --decor-ring-a: rgba(194, 87, 26, 0.04);
+  --decor-ring-b: rgba(95, 111, 79, 0.04);
+  --decor-dot: rgba(43, 38, 32, 0.1);
+  --body-gradient: linear-gradient(to top, #d8d1bd 0%, #e6e0d0 40%, #eee8d8 100%);
+
+  --nav-h: 64px;
+
+  --hard-shadow: none;
+
+  /* 卡带专属：琥珀屏（暗底琥珀字的内嵌小屏） */
+  --cs-amber: #ffb340;
+  --cs-screen: #241c10;
+
+  color-scheme: light;
+}
+
+/* -------- swiss：白纸黑字瑞士红，外露模数网格 -------- */
+[data-theme="swiss"] {
+  --background: #ffffff;
+  --foreground: #111111;
+
+  --primary: #e30613;
+  --primary-foreground: #ffffff;
+  --secondary: #6e6e6e;
+  --accent: #e30613;
+  --brand-hover: #e30613;
+
+  --card-bg: #ffffff;
+  --border: rgba(17, 17, 17, 0.22);
+  --border-strong: #111111;
+  --border-active: #e30613;
+
+  --text-muted: #4a4a4a;
+  --text-dim: #8f8f8f;
+
+  /* 网格线比别的主题更实 —— 网格本身就是这个主题的设计语言 */
+  --grid-color: rgba(17, 17, 17, 0.14);
+  --grid-size: 72px;
+  --decor-ring-a: transparent;
+  --decor-ring-b: transparent;
+  --decor-dot: transparent;
+  --body-gradient: linear-gradient(to top, #ffffff 0%, #ffffff 100%);
+
+  --nav-h: 64px;
+
+  --hard-shadow: none;
+
+  color-scheme: light;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -247,6 +567,138 @@ html.bg-decor-on body::after {
   opacity: 0.6;
 }
 
+/* glacial：等高线换成 96px 细方格，仪表面板感 */
+html[data-theme="glacial"].bg-decor-on body::before {
+  background-image:
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 96px 96px;
+}
+html[data-theme="glacial"].bg-decor-on body::after {
+  opacity: 0.45;
+}
+
+/* maximal：双向斜纹 + 更密的点阵，装饰密度拉满 */
+html[data-theme="maximal"].bg-decor-on body::before {
+  background-image:
+    repeating-linear-gradient(45deg, var(--decor-ring-a) 0, var(--decor-ring-a) 2px, transparent 2px, transparent 22px),
+    repeating-linear-gradient(-45deg, var(--decor-ring-b) 0, var(--decor-ring-b) 2px, transparent 2px, transparent 30px);
+}
+html[data-theme="maximal"].bg-decor-on body::after {
+  background-size: 24px 24px;
+  opacity: 0.5;
+}
+
+/* glitch：竖向扫描线盖满全页，等高线换成红蓝双细栅 */
+html[data-theme="glitch"].bg-decor-on body::before {
+  background-image:
+    repeating-linear-gradient(90deg, rgba(47, 107, 255, 0.03) 0, rgba(47, 107, 255, 0.03) 1px, transparent 1px, transparent 120px),
+    repeating-linear-gradient(90deg, rgba(255, 42, 42, 0.03) 0, rgba(255, 42, 42, 0.03) 1px, transparent 1px, transparent 173px);
+  animation: none;
+}
+html[data-theme="glitch"].bg-decor-on body::after {
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.05) 0,
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  mask-image: none;
+  -webkit-mask-image: none;
+  opacity: 0.55;
+}
+
+/* minimal：一切背景装饰关闭，只留纸面 */
+html[data-theme="minimal"].bg-decor-on body::before,
+html[data-theme="minimal"].bg-decor-on body::after {
+  display: none;
+}
+
+/* cyberpunk：街角霓虹光晕 + 酸雨斜纹 */
+html[data-theme="cyberpunk"].bg-decor-on body::before {
+  background-image:
+    radial-gradient(600px 300px at 85% 12%, rgba(255, 46, 196, 0.09), transparent 70%),
+    radial-gradient(500px 260px at 10% 80%, rgba(0, 240, 255, 0.08), transparent 70%);
+  animation: none;
+}
+html[data-theme="cyberpunk"].bg-decor-on body::after {
+  background-image: repeating-linear-gradient(
+    100deg,
+    rgba(0, 240, 255, 0.028) 0,
+    rgba(0, 240, 255, 0.028) 1px,
+    transparent 1px,
+    transparent 72px
+  );
+  mask-image: none;
+  -webkit-mask-image: none;
+  opacity: 0.8;
+}
+
+/* vaporwave：地平线太阳光晕 + 旧 CRT 横纹 */
+html[data-theme="vaporwave"].bg-decor-on body::before {
+  background-image:
+    radial-gradient(46% 30% at 50% 26%, rgba(255, 113, 206, 0.16), transparent 70%),
+    radial-gradient(70% 40% at 50% 100%, rgba(1, 205, 254, 0.08), transparent 75%);
+  animation: none;
+}
+html[data-theme="vaporwave"].bg-decor-on body::after {
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(253, 244, 255, 0.025) 0,
+    rgba(253, 244, 255, 0.025) 1px,
+    transparent 1px,
+    transparent 5px
+  );
+  mask-image: none;
+  -webkit-mask-image: none;
+  opacity: 0.4;
+}
+
+/* y2k：星点闪光 + 气泡光斑 */
+html[data-theme="y2k"].bg-decor-on body::before {
+  background-image:
+    radial-gradient(1.5px 1.5px at 22% 30%, rgba(47, 109, 246, 0.35), transparent 100%),
+    radial-gradient(1px 1px at 68% 18%, rgba(143, 92, 255, 0.3), transparent 100%),
+    radial-gradient(1.5px 1.5px at 84% 56%, rgba(255, 122, 200, 0.3), transparent 100%),
+    radial-gradient(1px 1px at 38% 72%, rgba(47, 109, 246, 0.25), transparent 100%),
+    radial-gradient(240px 240px at 80% 10%, rgba(255, 255, 255, 0.5), transparent 70%);
+  background-size: 100% 100%;
+  animation: none;
+}
+html[data-theme="y2k"].bg-decor-on body::after {
+  opacity: 0.35;
+}
+
+/* cassette：机身横缝与散热栅 */
+html[data-theme="cassette"].bg-decor-on body::before {
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(43, 38, 32, 0.035) 0,
+    rgba(43, 38, 32, 0.035) 1px,
+    transparent 1px,
+    transparent 96px
+  );
+  animation: none;
+}
+html[data-theme="cassette"].bg-decor-on body::after {
+  background-image: radial-gradient(rgba(43, 38, 32, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.35;
+}
+
+/* swiss：外露模数网格（设计语言本身），无其他装饰 */
+html[data-theme="swiss"].bg-decor-on body::before {
+  background-image:
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+  animation: none;
+}
+html[data-theme="swiss"].bg-decor-on body::after {
+  display: none;
+}
+
 /* ==========================================================================
    版式
    ========================================================================== */
@@ -260,6 +712,35 @@ html.bg-decor-on body::after {
 [data-theme="brutalist"] .display-title {
   font-weight: 900;
   letter-spacing: -0.045em;
+}
+[data-theme="glacial"] .display-title {
+  font-weight: 550;
+  letter-spacing: -0.03em;
+}
+[data-theme="maximal"] .display-title {
+  font-weight: 900;
+  letter-spacing: -0.05em;
+}
+[data-theme="glitch"] .display-title {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+[data-theme="minimal"] .display-title {
+  font-weight: 300;
+  letter-spacing: -0.015em;
+  text-transform: none;
+}
+[data-theme="cyberpunk"] .display-title {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+[data-theme="vaporwave"] .display-title {
+  font-weight: 300;
+  letter-spacing: 0.08em;
+}
+[data-theme="cassette"] .display-title {
+  font-weight: 650;
+  letter-spacing: 0.01em;
 }
 
 .eyebrow {
@@ -401,6 +882,255 @@ html.bg-decor-on body::after {
 [data-theme="brutalist"] .clip-diagonal-br,
 [data-theme="brutalist"] .clip-diagonal-bl {
   clip-path: none;
+}
+
+/* glacial：切角面板与角部刻度 */
+.chamfer {
+  clip-path: polygon(
+    14px 0,
+    100% 0,
+    100% calc(100% - 14px),
+    calc(100% - 14px) 100%,
+    0 100%,
+    0 14px
+  );
+}
+.chamfer-sm {
+  clip-path: polygon(
+    8px 0,
+    100% 0,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    0 100%,
+    0 8px
+  );
+}
+.corner-ticks {
+  position: relative;
+}
+.corner-ticks::before,
+.corner-ticks::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+}
+.corner-ticks::before {
+  top: 7px;
+  left: 7px;
+  border-top: 1px solid var(--primary);
+  border-left: 1px solid var(--primary);
+}
+.corner-ticks::after {
+  bottom: 7px;
+  right: 7px;
+  border-bottom: 1px solid var(--primary);
+  border-right: 1px solid var(--primary);
+}
+/* 描边空心大数字（面板索引） */
+.num-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--text-dim);
+}
+
+/* maximal：纹样与叠框 */
+.pattern-dots {
+  background-image: radial-gradient(currentColor 1px, transparent 1.4px);
+  background-size: 12px 12px;
+}
+.pattern-diag {
+  background-image: repeating-linear-gradient(
+    45deg,
+    currentColor 0,
+    currentColor 2px,
+    transparent 2px,
+    transparent 10px
+  );
+}
+.pattern-cross {
+  background-image:
+    linear-gradient(currentColor 1px, transparent 1px),
+    linear-gradient(90deg, currentColor 1px, transparent 1px);
+  background-size: 14px 14px;
+}
+/* 双层描边框：本体边框 + 外扩 4px 的第二圈 */
+.frame-double {
+  border: 1px solid var(--border-strong);
+  outline: 1px solid var(--border-strong);
+  outline-offset: 4px;
+}
+
+/* maximal：棋盘格纹样（与 dots/diag/cross 同族，消费 currentColor） */
+.pattern-checker {
+  background-image: repeating-conic-gradient(currentColor 0% 25%, transparent 0% 50%);
+  background-size: 16px 16px;
+}
+/* maximal：荧光笔划过的痕迹（标题里的强调 span） */
+.marker-hl {
+  background-image: linear-gradient(100deg, transparent 2%, var(--max-sun) 2% 96%, transparent 96%);
+  background-repeat: no-repeat;
+  background-size: 100% 46%;
+  background-position: 0 82%;
+}
+
+/* glitch：RGB 色差错位字 */
+.rgb-split {
+  text-shadow:
+    2px 0 0 var(--g-red, #ff2a2a),
+    -2px 0 0 var(--g-blue, #2f6bff);
+}
+/* glitch：扫描线覆盖层（绝对定位铺在区块上的 div 用） */
+.scanlines {
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.05) 0,
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+/* glitch：撕裂边缘。tear-top 撕上边，tear-bottom 撕下边（配对用于频段块） */
+.tear-top {
+  clip-path: polygon(
+    0 10px, 5% 3px, 12% 11px, 21% 4px, 30% 12px, 39% 5px, 49% 10px, 58% 3px,
+    68% 11px, 77% 4px, 86% 10px, 94% 3px, 100% 9px, 100% 100%, 0 100%
+  );
+}
+.tear-bottom {
+  clip-path: polygon(
+    0 0, 100% 0, 100% calc(100% - 10px), 94% calc(100% - 3px), 86% calc(100% - 11px),
+    77% calc(100% - 4px), 68% calc(100% - 12px), 58% calc(100% - 5px), 49% calc(100% - 10px),
+    39% calc(100% - 3px), 30% calc(100% - 12px), 21% calc(100% - 4px), 12% calc(100% - 11px),
+    5% calc(100% - 3px), 0 calc(100% - 10px)
+  );
+}
+/* glitch：损坏数据条（区块之间的静态噪声带） */
+.corrupt-bar {
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--g-red, #ff2a2a) 0 14px,
+    transparent 14px 24px,
+    var(--g-blue, #2f6bff) 24px 33px,
+    transparent 33px 46px,
+    var(--foreground, #e6e6e9) 46px 48px,
+    transparent 48px 62px
+  );
+  opacity: 0.55;
+}
+/* glitch：偶发闪烁（标题关键词用，4s 一次） */
+.flicker {
+  animation: flicker-kf 4s linear infinite;
+}
+@keyframes flicker-kf {
+  0%, 91%, 94%, 98%, 100% { opacity: 1; }
+  92% { opacity: 0.35; }
+  96% { opacity: 0.65; }
+}
+
+/* cyberpunk：霓虹发光字与霓虹边框 */
+.neon-text {
+  color: var(--cp-cyan);
+  text-shadow:
+    0 0 8px var(--cp-cyan),
+    0 0 26px var(--cp-cyan);
+}
+.neon-text-m {
+  color: var(--cp-magenta);
+  text-shadow:
+    0 0 8px var(--cp-magenta),
+    0 0 26px var(--cp-magenta);
+}
+.neon-frame {
+  border: 1px solid var(--cp-cyan);
+  box-shadow:
+    0 0 14px rgba(0, 240, 255, 0.25),
+    inset 0 0 14px rgba(0, 240, 255, 0.07);
+}
+.neon-frame-m {
+  border: 1px solid var(--cp-magenta);
+  box-shadow:
+    0 0 14px rgba(255, 46, 196, 0.24),
+    inset 0 0 14px rgba(255, 46, 196, 0.07);
+}
+
+/* vaporwave：镭射渐变字 + 透视网格海面（放在 overflow-hidden 容器里用） */
+.chrome-text {
+  background: var(--vw-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.vapor-floor {
+  background-image:
+    linear-gradient(rgba(1, 205, 254, 0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(1, 205, 254, 0.4) 1px, transparent 1px);
+  background-size: 44px 44px;
+  transform: perspective(340px) rotateX(58deg) scale(1.8);
+  transform-origin: top center;
+}
+.vapor-sun {
+  background: linear-gradient(180deg, #ffe14d 0%, #ff71ce 55%, #b967ff 100%);
+  border-radius: 9999px;
+  mask-image: linear-gradient(180deg, #000 55%, transparent 78%);
+  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 78%);
+}
+
+/* y2k：金属面板边 + 气泡按钮 */
+.k2-panel {
+  background: var(--k2-metal);
+  border: 1px solid rgba(26, 36, 64, 0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 2px 6px rgba(26, 36, 64, 0.12);
+}
+.bubble-btn {
+  background: radial-gradient(120% 120% at 30% 22%, #9dc0ff 0%, var(--primary) 55%, #1e4dc4 100%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow:
+    inset 0 2px 5px rgba(255, 255, 255, 0.55),
+    0 4px 12px rgba(47, 109, 246, 0.35);
+}
+
+/* cassette：机架面板（自带左上/右下螺丝）+ 琥珀屏 + 刻字铭牌 */
+.rack-panel {
+  position: relative;
+  border: 1px solid var(--border-strong);
+  background: var(--card-bg);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -2px 0 rgba(43, 38, 32, 0.1);
+}
+.rack-panel::before,
+.rack-panel::after {
+  content: "";
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 35% 35%, #f5efe0, #6b6353);
+  pointer-events: none;
+}
+.rack-panel::before {
+  top: 7px;
+  left: 7px;
+}
+.rack-panel::after {
+  bottom: 7px;
+  right: 7px;
+}
+.amber-screen {
+  background: var(--cs-screen);
+  color: var(--cs-amber);
+  text-shadow: 0 0 6px rgba(255, 179, 64, 0.45);
+  box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.7);
+}
+.plate-label {
+  font-family: var(--font-mono-stack);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
 }
 
 .glitch-text:hover {
@@ -579,6 +1309,7 @@ html.bg-decor-on body::after {
   .anim-spin-60,
   .marquee-track,
   .caret,
+  .flicker,
   .theme-panel {
     animation: none !important;
   }
