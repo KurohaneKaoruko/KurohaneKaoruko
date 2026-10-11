@@ -35,6 +35,14 @@ function GithubMark({ className }: { className?: string }) {
 export default function Navigation() {
   const { theme } = useTheme();
   const brutalist = theme === "brutalist";
+  const glacial = theme === "glacial";
+  const maximal = theme === "maximal";
+  const glitch = theme === "glitch";
+  const minimal = theme === "minimal";
+  const cyberpunk = theme === "cyberpunk";
+  const vaporwave = theme === "vaporwave";
+  // 极简 / Y2K / 卡带共用「常驻实底发丝线」栏，配色差异交给令牌
+  const solidLight = theme === "minimal" || theme === "y2k" || theme === "cassette";
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -137,9 +145,25 @@ export default function Navigation() {
       <header
         className={cn(
           "fixed left-0 right-0 top-0 z-50 border-b py-3 transition-all duration-300",
-          isScrolled
-            ? "border-border bg-background/90 backdrop-blur-md"
-            : "border-transparent bg-transparent"
+          // 极繁：常驻实底 + 2px 粗线；故障：暗栏 + 红蓝色差线；
+          // 赛博：暗栏 + 霓虹青线；蒸汽波：暗栏 + 镭射青线；
+          // 极境：常驻发丝线 + 磨砂；极简/Y2K/卡带：常驻实底发丝线；
+          // 终端：滚动前透明、滚动后浮现
+          maximal || theme === "swiss"
+            ? "border-b-2 border-foreground bg-background"
+            : glitch
+              ? "border-border bg-background/90 shadow-[0_1px_0_0_var(--primary),0_3px_0_0_var(--secondary)] backdrop-blur-md"
+              : cyberpunk
+                ? "border-border bg-background/90 shadow-[0_1px_0_0_var(--cp-cyan)] backdrop-blur-md"
+                : vaporwave
+                  ? "border-border bg-background/85 shadow-[0_1px_0_0_var(--secondary)] backdrop-blur-md"
+                  : glacial
+                    ? "border-border bg-background/85 backdrop-blur-md"
+                    : solidLight
+                      ? "border-border bg-background"
+                      : isScrolled
+                        ? "border-border bg-background/90 backdrop-blur-md"
+                        : "border-transparent bg-transparent"
         )}
       >
         <div className="container mx-auto px-4 md:px-6">
@@ -148,10 +172,22 @@ export default function Navigation() {
               {/* 标识 */}
               <Link href="/" onClick={handleHomeLinkClick} className="flex items-center gap-2">
                 <div className="flex flex-col">
-                  <span className="text-sm font-bold leading-none tracking-widest text-foreground">
+                  <span
+                    className={cn(
+                      "text-sm font-bold leading-none tracking-widest",
+                      maximal
+                        ? "bg-primary px-2 py-1 text-primary-foreground"
+                        : "text-foreground"
+                    )}
+                  >
                     {SITE.short}
                   </span>
-                  <span className="font-mono text-[10px] leading-none tracking-[0.2em] text-text-muted">
+                  <span
+                    className={cn(
+                      "font-mono text-[10px] leading-none tracking-[0.2em] text-text-muted",
+                      maximal && "mt-1"
+                    )}
+                  >
                     PORTFOLIO
                   </span>
                 </div>

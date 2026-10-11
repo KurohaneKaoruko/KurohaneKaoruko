@@ -3,6 +3,8 @@
  * 避免同一份信息散落在 layout / Nav / Footer / README 里各写一遍。
  */
 
+import { THEMES } from "@/lib/themes";
+
 export const SITE = {
   name: "Kurohane Kaoruko",
   handle: "KurohaneKaoruko",
@@ -10,8 +12,7 @@ export const SITE = {
   short: "K.H.KAORUKO",
   version: "1.0.0",
   tagline: "COMPILE THIS WORLD.",
-  description:
-    "GitHub 开源项目索引：按语言筛选与排序，仓库数据实时拉取；终端与粗野两套主题，静态导出零后端。",
+  description: `GitHub 开源项目索引：按语言筛选与排序，仓库数据实时拉取；${THEMES.length} 套可切换站点主题，静态导出零后端。`,
   /** 仓库名与 GitHub Pages 项目页前缀保持一致 */
   repo: "KurohaneKaoruko",
   url: "https://kurohanekaoruko.github.io/KurohaneKaoruko",
