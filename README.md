@@ -1,6 +1,6 @@
 <p align="center">
   <img
-    src="https://capsule-render.vercel.app/api?type=waving&amp;color=gradient&amp;height=200&amp;section=header&amp;text=Kurohane%20Kaoruko&amp;fontSize=56&amp;fontColor=ffffff&amp;fontAlign=50&amp;fontAlignY=42&amp;desc=Artificial%20Intelligence%20%C2%B7%20Games%20and%20Tools&amp;descAlign=50&amp;descAlignY=62&amp;descSize=18"
+    src="https://capsule-render.vercel.app/api?type=waving&amp;color=gradient&amp;height=200&amp;section=header&amp;text=Kurohane%20Kaoruko&amp;fontSize=56&amp;fontColor=ffffff&amp;fontAlign=50&amp;fontAlignY=50"
     alt="Kurohane Kaoruko"
     width="100%"
   />
@@ -13,7 +13,7 @@
 
 <p align="center">
   <img
-    src="https://readme-typing-svg.demolab.com?font=Fira+Code&amp;size=22&amp;pause=1200&amp;color=58A6FF&amp;center=true&amp;vCenter=true&amp;repeat=true&amp;width=960&amp;lines=Artificial+Intelligence;Games+and+Tools;Rust+%2B+Python+%2B+TypeScript"
+    src="https://readme-typing-svg.demolab.com?font=Fira+Code&amp;size=22&amp;pause=1200&amp;color=58A6FF&amp;center=true&amp;vCenter=true&amp;repeat=true&amp;width=960&amp;lines=Artificial+Intelligence;Rust+%2B+Python+%2B+TypeScript"
     alt="Typing SVG intro for KurohaneKaoruko"
   />
 </p>
