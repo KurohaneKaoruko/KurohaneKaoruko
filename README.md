@@ -1,6 +1,6 @@
 <p align="center">
   <img
-    src="https://capsule-render.vercel.app/api?type=waving&amp;color=gradient&amp;height=200&amp;section=header&amp;text=Kurohane%20Kaoruko&amp;fontSize=56&amp;fontColor=ffffff&amp;fontAlign=50&amp;fontAlignY=42&amp;desc=Artificial%20Intelligence%20%C2%B7%20Games%20%26%20Tools&amp;descAlign=50&amp;descAlignY=62&amp;descSize=18"
+    src="https://capsule-render.vercel.app/api?type=waving&amp;color=gradient&amp;height=200&amp;section=header&amp;text=Kurohane%20Kaoruko&amp;fontSize=56&amp;fontColor=ffffff&amp;fontAlign=50&amp;fontAlignY=42&amp;desc=Artificial%20Intelligence%20%C2%B7%20Games%20and%20Tools&amp;descAlign=50&amp;descAlignY=62&amp;descSize=18"
     alt="Kurohane Kaoruko"
     width="100%"
   />
