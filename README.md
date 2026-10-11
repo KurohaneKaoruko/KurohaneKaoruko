@@ -1,6 +1,6 @@
 <p align="center">
   <img
-    src="https://capsule-render.vercel.app/api?type=waving&amp;color=gradient&amp;height=200&amp;section=header&amp;text=Kurohane%20Kaoruko&amp;fontSize=56&amp;fontColor=ffffff&amp;fontAlign=50&amp;fontAlignY=50"
+    src="https://capsule-render.vercel.app/api?type=waving&amp;color=gradient&amp;height=200&amp;section=header&amp;text=Kurohane%20Kaoruko&amp;fontSize=56&amp;fontColor=ffffff&amp;fontAlign=50&amp;fontAlignY=38&amp;desc=%E4%B8%93%E6%B3%A8%E4%BA%8E%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E4%B8%8E%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE&amp;descAlign=50&amp;descAlignY=60&amp;descSize=20"
     alt="Kurohane Kaoruko"
     width="100%"
   />
