@@ -1,12 +1,10 @@
 <p align="center">
   <img
-    src="https://capsule-render.vercel.app/api?type=waving&amp;color=gradient&amp;height=140&amp;section=header"
-    alt=""
+    src="https://capsule-render.vercel.app/api?type=waving&amp;color=gradient&amp;height=200&amp;section=header&amp;text=Kurohane%20Kaoruko&amp;fontSize=56&amp;fontColor=ffffff&amp;fontAlign=50&amp;fontAlignY=42&amp;desc=Artificial%20Intelligence%20%C2%B7%20Games%20%26%20Tools&amp;descAlign=50&amp;descAlignY=62&amp;descSize=18"
+    alt="Kurohane Kaoruko"
     width="100%"
   />
 </p>
-
-<h1 align="center">Kurohane Kaoruko</h1>
 
 <p align="center">
   专注于人工智能领域，致力于用技术解决问题。<br />
