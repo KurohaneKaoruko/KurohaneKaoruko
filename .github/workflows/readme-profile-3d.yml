@@ -1,4 +1,4 @@
-name: Generate 3D contribution graph
+name: Generate README 3D contribution graph
 
 on:
   schedule:
@@ -21,6 +21,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           USERNAME: KurohaneKaoruko
 
+      # 上游 action 固定输出到仓库根目录的 profile-3d-contrib/，
+      # 生成后移入 .github/readme-assets/ 统一收纳 README 资产
+      - name: Move SVGs into .github/readme-assets/
+        run: |
+          mkdir -p .github/readme-assets
+          rm -rf .github/readme-assets/profile-3d-contrib
+          mv profile-3d-contrib .github/readme-assets/
+
       - name: Commit & push
         run: |
           git config user.name "github-actions[bot]"
@@ -29,6 +37,6 @@ jobs:
           if git diff --quiet --cached; then
             echo "No changes to commit."
           else
-            git commit -m "chore: regenerate 3D contribution graph [skip ci]"
+            git commit -m "chore(readme): regenerate 3D contribution graph [skip ci]"
             git push
           fi
