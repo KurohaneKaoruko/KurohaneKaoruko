@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" font-family="'SF Mono','JetBrains Mono',Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC','Source Han Sans SC',sans-serif">
+<style>
+@keyframes tw{0%,100%{opacity:.14}50%{opacity:.5}}
+.st{animation:tw 3.6s ease-in-out infinite}
+@keyframes rise{0%{transform:translateY(0);opacity:0}12%{opacity:.55}100%{transform:translateY(-230px);opacity:0}}
+.pt{animation:rise 7s linear infinite}
+@keyframes orbit{to{transform:rotate(360deg)}}
+.orb{transform-box:view-box;transform-origin:600px 400px;animation:orbit 26s linear infinite}
+@keyframes shine{0%,58%{transform:translateX(-950px)}88%,100%{transform:translateX(1500px)}}
+.shine{animation:shine 7.5s 2.2s cubic-bezier(.5,0,.3,.1) infinite}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+.blink{animation:blink 1.1s steps(1) infinite}
+@keyframes w1{0%{width:0}11%{width:282px}24%{width:282px}24.01%,100%{width:0}}
+@keyframes w2{0%,33.34%{width:0}44.34%{width:322px}57.34%{width:322px}57.35%,100%{width:0}}
+@keyframes w3{0%,66.67%{width:0}77.67%{width:242px}90.67%{width:242px}90.68%,100%{width:0}}
+@keyframes o1{0%{opacity:0}1.5%{opacity:1}24%{opacity:1}28%{opacity:0}100%{opacity:0}}
+@keyframes o2{0%,31%{opacity:0}34.5%{opacity:1}57.34%{opacity:1}61%{opacity:0}100%{opacity:0}}
+@keyframes o3{0%,64%{opacity:0}68%{opacity:1}90.67%{opacity:1}94%{opacity:0}100%{opacity:0}}
+@keyframes curx{0%{transform:translateX(282px)}24%{transform:translateX(282px)}33.33%{transform:translateX(0px)}44.34%{transform:translateX(322px)}57.34%{transform:translateX(322px)}66.66%{transform:translateX(0px)}77.67%{transform:translateX(242px)}90.67%{transform:translateX(242px)}100%{transform:translateX(242px)}}
+.cursor{animation:curx 13.5s cubic-bezier(.4,0,.6,1) infinite,blink 1.05s steps(1) infinite}
+</style>
+<defs>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#f8faff"/><stop offset=".55" stop-color="#eef4fe"/><stop offset="1" stop-color="#e2ecfc"/>
+</linearGradient>
+<radialGradient id="glow" cx="600" cy="400" r="470" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#1f6feb" stop-opacity=".10"/><stop offset=".5" stop-color="#1f6feb" stop-opacity=".04"/><stop offset="1" stop-color="#1f6feb" stop-opacity="0"/>
+</radialGradient>
+<linearGradient id="titleG" x1="0" y1="130" x2="0" y2="205" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#1d4ed8"/><stop offset=".5" stop-color="#3b82f6"/><stop offset="1" stop-color="#8b5cf6"/>
+</linearGradient>
+<linearGradient id="shineG" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="hzG" x1="0" y1="0" x2="1200" y2="0" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#3b82f6" stop-opacity="0"/><stop offset=".5" stop-color="#60a5fa"/><stop offset="1" stop-color="#3b82f6" stop-opacity="0"/>
+</linearGradient>
+<radialGradient id="orbG" cx="600" cy="392" r="88" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#dbeafe"/><stop offset=".35" stop-color="#60a5fa" stop-opacity=".8"/><stop offset=".7" stop-color="#60a5fa" stop-opacity=".15"/><stop offset="1" stop-color="#60a5fa" stop-opacity="0"/>
+</radialGradient>
+<filter id="soft" x="-40%" y="-60%" width="180%" height="220%"><feGaussianBlur stdDeviation="7"/></filter>
+<clipPath id="titleClip"><text x="600" y="196" text-anchor="middle" font-size="58" font-weight="700" letter-spacing="10" fill="#fff">KUROHANE KAORUKO</text></clipPath>
+<clipPath id="c1"><rect x="426" y="262" width="0" height="30" style="animation:w1 13.5s cubic-bezier(.4,0,.6,1) infinite"/></clipPath>
+<clipPath id="c2"><rect x="426" y="262" width="0" height="30" style="animation:w2 13.5s cubic-bezier(.4,0,.6,1) infinite"/></clipPath>
+<clipPath id="c3"><rect x="426" y="262" width="0" height="30" style="animation:w3 13.5s cubic-bezier(.4,0,.6,1) infinite"/></clipPath>
+</defs>
+
+<rect width="1200" height="560" fill="url(#sky)"/>
+<rect width="1200" height="560" fill="url(#glow)"/>
+
+<g fill="#7fa3d4">
+<circle class="st" cx="88" cy="52" r="1.4" style="animation-delay:-.4s;animation-duration:3.1s"/>
+<circle class="st" cx="214" cy="96" r="0.9" style="animation-delay:-2.1s;animation-duration:4.2s"/>
+<circle class="st" cx="331" cy="40" r="1.6" style="animation-delay:-1.2s;animation-duration:3.6s"/>
+<circle class="st" cx="452" cy="120" r="0.7" style="animation-delay:-3.1s;animation-duration:2.8s"/>
+<circle class="st" cx="560" cy="58" r="1.1" style="animation-delay:-0.7s;animation-duration:4.6s"/>
+<circle class="st" cx="668" cy="102" r="0.8" style="animation-delay:-2.6s;animation-duration:3.3s"/>
+<circle class="st" cx="742" cy="44" r="1.5" style="animation-delay:-1.7s;animation-duration:4.0s"/>
+<circle class="st" cx="861" cy="88" r="0.9" style="animation-delay:-3.4s;animation-duration:2.6s"/>
+<circle class="st" cx="954" cy="52" r="1.2" style="animation-delay:-0.9s;animation-duration:3.8s"/>
+<circle class="st" cx="1042" cy="110" r="0.7" style="animation-delay:-2.2s;animation-duration:4.4s"/>
+<circle class="st" cx="1136" cy="64" r="1.4" style="animation-delay:-1.5s;animation-duration:3.0s"/>
+<circle class="st" cx="150" cy="168" r="0.8" style="animation-delay:-2.9s;animation-duration:4.1s"/>
+<circle class="st" cx="268" cy="208" r="1.0" style="animation-delay:-0.5s;animation-duration:3.4s"/>
+<circle class="st" cx="386" cy="158" r="0.7" style="animation-delay:-3.6s;animation-duration:2.7s"/>
+<circle class="st" cx="505" cy="222" r="1.2" style="animation-delay:-1.9s;animation-duration:4.7s"/>
+<circle class="st" cx="620" cy="150" r="0.9" style="animation-delay:-2.4s;animation-duration:3.2s"/>
+<circle class="st" cx="726" cy="196" r="1.5" style="animation-delay:-0.8s;animation-duration:3.9s"/>
+<circle class="st" cx="840" cy="150" r="0.7" style="animation-delay:-3.2s;animation-duration:2.9s"/>
+<circle class="st" cx="960" cy="212" r="1.1" style="animation-delay:-1.1s;animation-duration:4.3s"/>
+<circle class="st" cx="1078" cy="164" r="0.8" style="animation-delay:-2.7s;animation-duration:3.5s"/>
+<circle class="st" cx="118" cy="252" r="1.2" style="animation-delay:-1.4s;animation-duration:4.0s"/>
+<circle class="st" cx="340" cy="262" r="0.9" style="animation-delay:-3.0s;animation-duration:3.1s"/>
+<circle class="st" cx="566" cy="272" r="0.7" style="animation-delay:-0.6s;animation-duration:4.5s"/>
+<circle class="st" cx="792" cy="254" r="1.3" style="animation-delay:-2.3s;animation-duration:3.7s"/>
+<circle class="st" cx="1010" cy="268" r="0.9" style="animation-delay:-1.8s;animation-duration:2.8s"/>
+<circle class="st" cx="1160" cy="240" r="1.1" style="animation-delay:-3.3s;animation-duration:4.2s"/>
+</g>
+
+<path d="M28,44 L28,28 L44,28" fill="none" stroke="#b9cdea" stroke-width="1.5"/>
+<path d="M1156,28 L1172,28 L1172,44" fill="none" stroke="#b9cdea" stroke-width="1.5"/>
+<path d="M28,516 L28,532 L44,532" fill="none" stroke="#b9cdea" stroke-width="1.5"/>
+<path d="M1156,532 L1172,532 L1172,516" fill="none" stroke="#b9cdea" stroke-width="1.5"/>
+
+<rect x="440" y="40" width="320" height="38" rx="19" fill="#ffffff" stroke="#c8d9f2" stroke-width="1"/>
+<circle class="blink" cx="464" cy="59" r="3.5" fill="#16a34a"/>
+<text x="480" y="65" font-size="15" letter-spacing="1" fill="#1d4ed8">$ whoami --profile</text>
+
+<text x="600" y="196" text-anchor="middle" font-size="58" font-weight="700" letter-spacing="10" fill="#3b82f6" opacity=".18" filter="url(#soft)">KUROHANE KAORUKO</text>
+<text x="600" y="196" text-anchor="middle" font-size="58" font-weight="700" letter-spacing="10" fill="url(#titleG)">KUROHANE KAORUKO</text>
+<g clip-path="url(#titleClip)"><rect class="shine" x="-260" y="130" width="260" height="86" fill="url(#shineG)" transform="skewX(-16)"/></g>
+
+<text x="600" y="238" text-anchor="middle" font-size="13" letter-spacing="6" fill="#4a5f7f">AI ENGINEER · TOOLMAKER · NIGHT OWL</text>
+
+<rect x="0" y="399" width="1200" height="2" fill="url(#hzG)"/>
+
+<g stroke="#b7ccee" stroke-width="1">
+<line x1="528" y1="400" x2="-300" y2="560" opacity=".55"/>
+<line x1="532.8" y1="400" x2="-240" y2="560" opacity=".55"/>
+<line x1="537.6" y1="400" x2="-180" y2="560" opacity=".55"/>
+<line x1="542.4" y1="400" x2="-120" y2="560" opacity=".55"/>
+<line x1="547.2" y1="400" x2="-60" y2="560" opacity=".55"/>
+<line x1="552" y1="400" x2="0" y2="560" opacity=".55"/>
+<line x1="556.8" y1="400" x2="60" y2="560" opacity=".55"/>
+<line x1="561.6" y1="400" x2="120" y2="560" opacity=".55"/>
+<line x1="566.4" y1="400" x2="180" y2="560" opacity=".55"/>
+<line x1="571.2" y1="400" x2="240" y2="560" opacity=".55"/>
+<line x1="576" y1="400" x2="300" y2="560" opacity=".55"/>
+<line x1="580.8" y1="400" x2="360" y2="560" opacity=".55"/>
+<line x1="585.6" y1="400" x2="420" y2="560" opacity=".55"/>
+<line x1="590.4" y1="400" x2="480" y2="560" opacity=".55"/>
+<line x1="595.2" y1="400" x2="540" y2="560" opacity=".55"/>
+<line x1="600" y1="400" x2="600" y2="560" opacity=".55"/>
+<line x1="604.8" y1="400" x2="660" y2="560" opacity=".55"/>
+<line x1="609.6" y1="400" x2="720" y2="560" opacity=".55"/>
+<line x1="614.4" y1="400" x2="780" y2="560" opacity=".55"/>
+<line x1="619.2" y1="400" x2="840" y2="560" opacity=".55"/>
+<line x1="624" y1="400" x2="900" y2="560" opacity=".55"/>
+<line x1="628.8" y1="400" x2="960" y2="560" opacity=".55"/>
+<line x1="633.6" y1="400" x2="1020" y2="560" opacity=".55"/>
+<line x1="638.4" y1="400" x2="1080" y2="560" opacity=".55"/>
+<line x1="643.2" y1="400" x2="1140" y2="560" opacity=".55"/>
+<line x1="648" y1="400" x2="1200" y2="560" opacity=".55"/>
+<line x1="652.8" y1="400" x2="1260" y2="560" opacity=".55"/>
+<line x1="657.6" y1="400" x2="1320" y2="560" opacity=".55"/>
+<line x1="662.4" y1="400" x2="1380" y2="560" opacity=".55"/>
+<line x1="0" y1="406" x2="1200" y2="406" opacity=".5"/>
+<line x1="0" y1="414" x2="1200" y2="414" opacity=".45"/>
+<line x1="0" y1="426" x2="1200" y2="426" opacity=".38"/>
+<line x1="0" y1="444" x2="1200" y2="444" opacity=".3"/>
+<line x1="0" y1="470" x2="1200" y2="470" opacity=".22"/>
+<line x1="0" y1="506" x2="1200" y2="506" opacity=".15"/>
+<line x1="0" y1="540" x2="1200" y2="540" opacity=".09"/>
+</g>
+
+<circle cx="600" cy="400" r="44" fill="url(#orbG)"/>
+<circle cx="600" cy="400" r="52" fill="none" stroke="#3b82f6" stroke-width="1.2" opacity=".45"/>
+<g class="orb">
+<circle cx="600" cy="400" r="66" fill="none" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="3 9" opacity=".3"/>
+<circle cx="600" cy="400" r="80" fill="none" stroke="#3b82f6" stroke-width="1" stroke-dasharray="2 14" opacity=".22"/>
+<circle cx="666" cy="400" r="3.5" fill="#8b5cf6"/>
+</g>
+
+<text x="400" y="286" font-size="19" font-weight="700" fill="#15803d">&gt;</text>
+<text x="426" y="286" font-size="19" fill="#1e293b" clip-path="url(#c1)" style="animation:o1 13.5s infinite">AI engineer &amp; toolmaker</text>
+<text x="426" y="286" font-size="19" fill="#1e293b" clip-path="url(#c2)" style="animation:o2 13.5s infinite">rust · python · typescript</text>
+<text x="426" y="286" font-size="19" fill="#b45309" clip-path="url(#c3)" style="animation:o3 13.5s infinite">COMPILE THIS WORLD.</text>
+<rect class="cursor" x="426" y="272" width="9.5" height="20" rx="1.5" fill="#2563eb"/>
+
+<g opacity=".55">
+<circle class="pt" cx="120" cy="520" r="1.4" fill="#3b82f6" style="animation-delay:-0.5s;animation-duration:6.2s"/>
+<circle class="pt" cx="210" cy="540" r="1.0" fill="#8b5cf6" style="animation-delay:-2.8s;animation-duration:7.1s"/>
+<circle class="pt" cx="305" cy="512" r="1.6" fill="#3b82f6" style="animation-delay:-4.4s;animation-duration:5.8s"/>
+<circle class="pt" cx="392" cy="548" r="0.9" fill="#22c55e" style="animation-delay:-1.6s;animation-duration:6.9s"/>
+<circle class="pt" cx="470" cy="524" r="1.2" fill="#8b5cf6" style="animation-delay:-3.5s;animation-duration:6.0s"/>
+<circle class="pt" cx="556" cy="542" r="1.5" fill="#3b82f6" style="animation-delay:-0.9s;animation-duration:7.4s"/>
+<circle class="pt" cx="640" cy="516" r="0.9" fill="#3b82f6" style="animation-delay:-2.2s;animation-duration:5.5s"/>
+<circle class="pt" cx="726" cy="546" r="1.3" fill="#8b5cf6" style="animation-delay:-4.9s;animation-duration:6.6s"/>
+<circle class="pt" cx="812" cy="520" r="1.0" fill="#3b82f6" style="animation-delay:-1.1s;animation-duration:7.0s"/>
+<circle class="pt" cx="900" cy="540" r="1.6" fill="#3b82f6" style="animation-delay:-3.8s;animation-duration:5.9s"/>
+<circle class="pt" cx="985" cy="514" r="0.9" fill="#8b5cf6" style="animation-delay:-0.3s;animation-duration:6.4s"/>
+<circle class="pt" cx="1068" cy="544" r="1.2" fill="#3b82f6" style="animation-delay:-2.6s;animation-duration:7.2s"/>
+<circle class="pt" cx="1152" cy="522" r="1.4" fill="#8b5cf6" style="animation-delay:-4.2s;animation-duration:6.1s"/>
+<circle class="pt" cx="60" cy="534" r="1.0" fill="#3b82f6" style="animation-delay:-1.9s;animation-duration:6.8s"/>
+</g>
+</svg>

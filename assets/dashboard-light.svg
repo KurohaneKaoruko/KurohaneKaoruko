@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" font-family="'SF Mono','JetBrains Mono',Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC','Source Han Sans SC',sans-serif">
+<defs>
+<linearGradient id="dbg" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f4f7fd"/>
+</linearGradient>
+<path id="star" d="M0,-4.6 L1.35,-1.5 L4.5,-1.4 L2.1,0.8 L2.8,4.2 L0,2.2 L-2.8,4.2 L-2.1,0.8 L-4.5,-1.4 L-1.35,-1.5 Z"/>
+</defs>
+
+<rect width="1200" height="360" rx="20" fill="url(#dbg)" stroke="#d5e0f0" stroke-width="1"/>
+
+<text x="40" y="52" font-size="22" font-weight="700" fill="#1d4ed8">telemetry</text>
+<text x="1160" y="52" text-anchor="end" font-size="14" fill="#5b6b85">// snapshot · 2026-10</text>
+
+<g>
+<rect x="40" y="72" width="268" height="92" rx="12" fill="#ffffff" stroke="#dbe6f5"/>
+<text x="58" y="102" font-size="11" letter-spacing="2" fill="#5b6b85">PUBLIC REPOS</text>
+<text x="58" y="144" font-size="27" font-weight="700" fill="#1d4ed8">15</text>
+
+<rect x="324" y="72" width="268" height="92" rx="12" fill="#ffffff" stroke="#dbe6f5"/>
+<text x="342" y="102" font-size="11" letter-spacing="2" fill="#5b6b85">TOTAL STARS</text>
+<text x="342" y="144" font-size="27" font-weight="700" fill="#b45309">45</text>
+
+<rect x="608" y="72" width="268" height="92" rx="12" fill="#ffffff" stroke="#dbe6f5"/>
+<text x="626" y="102" font-size="11" letter-spacing="2" fill="#5b6b85">TOP LANGUAGE</text>
+<text x="626" y="144" font-size="27" font-weight="700" fill="#7c3aed">TypeScript</text>
+
+<rect x="892" y="72" width="268" height="92" rx="12" fill="#ffffff" stroke="#dbe6f5"/>
+<text x="910" y="102" font-size="11" letter-spacing="2" fill="#5b6b85">CURRENT FOCUS</text>
+<text x="910" y="144" font-size="27" font-weight="700" fill="#15803d">AI Agents</text>
+</g>
+
+<text x="40" y="202" font-size="11" letter-spacing="2" fill="#5b6b85">LANGUAGE MIX</text>
+<rect x="40" y="214" width="1120" height="14" rx="7" fill="#e6eefb"/>
+<rect x="40" y="214" width="590" height="14" rx="3" fill="#3178c6"/>
+<rect x="633" y="214" width="221" height="14" rx="3" fill="#dea584"/>
+<rect x="857" y="214" width="147" height="14" rx="3" fill="#f1e05a"/>
+<rect x="1007" y="214" width="74" height="14" rx="3" fill="#da5b0b"/>
+<rect x="1084" y="214" width="76" height="14" rx="3" fill="#57606a"/>
+
+<g font-size="12" fill="#5b6b85">
+<rect x="40" y="244" width="10" height="10" rx="2" fill="#3178c6"/><text x="56" y="253">TypeScript 53%</text>
+<rect x="190" y="244" width="10" height="10" rx="2" fill="#dea584"/><text x="206" y="253">Rust 20%</text>
+<rect x="296" y="244" width="10" height="10" rx="2" fill="#f1e05a"/><text x="312" y="253">JavaScript 13%</text>
+<rect x="454" y="244" width="10" height="10" rx="2" fill="#da5b0b"/><text x="470" y="253">Jupyter 7%</text>
+<rect x="570" y="244" width="10" height="10" rx="2" fill="#57606a"/><text x="586" y="253">Other 7%</text>
+</g>
+
+<text x="40" y="292" font-size="11" letter-spacing="2" fill="#5b6b85">TOP REPOS BY STARS</text>
+
+<g>
+<text x="40" y="316" font-size="13" font-weight="700" fill="#16202e">Novel-IDE</text>
+<rect x="40" y="326" width="208" height="6" rx="3" fill="#e6eefb"/>
+<rect x="40" y="326" width="208" height="6" rx="3" fill="#3b82f6"/>
+<use href="#star" transform="translate(228,330)" fill="#b45309"/><text x="238" y="334" font-size="12" fill="#b45309">8</text>
+</g>
+<g>
+<text x="268" y="316" font-size="13" font-weight="700" fill="#16202e">DSH-Novelist</text>
+<rect x="268" y="326" width="208" height="6" rx="3" fill="#e6eefb"/>
+<rect x="268" y="326" width="208" height="6" rx="3" fill="#3b82f6"/>
+<use href="#star" transform="translate(456,330)" fill="#b45309"/><text x="466" y="334" font-size="12" fill="#b45309">8</text>
+</g>
+<g>
+<text x="496" y="316" font-size="13" font-weight="700" fill="#16202e">ScreepsDashboard</text>
+<rect x="496" y="326" width="208" height="6" rx="3" fill="#e6eefb"/>
+<rect x="496" y="326" width="208" height="6" rx="3" fill="#3b82f6"/>
+<use href="#star" transform="translate(684,330)" fill="#b45309"/><text x="694" y="334" font-size="12" fill="#b45309">8</text>
+</g>
+<g>
+<text x="724" y="316" font-size="13" font-weight="700" fill="#16202e">screeps-tools-nextjs</text>
+<rect x="724" y="326" width="208" height="6" rx="3" fill="#e6eefb"/>
+<rect x="724" y="326" width="156" height="6" rx="3" fill="#3b82f6"/>
+<use href="#star" transform="translate(912,330)" fill="#b45309"/><text x="922" y="334" font-size="12" fill="#b45309">6</text>
+</g>
+<g>
+<text x="952" y="316" font-size="13" font-weight="700" fill="#16202e">MiniTools-Rust</text>
+<rect x="952" y="326" width="208" height="6" rx="3" fill="#e6eefb"/>
+<rect x="952" y="326" width="104" height="6" rx="3" fill="#3b82f6"/>
+<use href="#star" transform="translate(1140,330)" fill="#b45309"/><text x="1150" y="334" font-size="12" fill="#b45309">4</text>
+</g>
+</svg>

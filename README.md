@@ -1,155 +1,76 @@
-<p align="center">
-  <img
-    src="https://capsule-render.vercel.app/api?type=waving&amp;color=gradient&amp;height=200&amp;section=header&amp;text=Kurohane%20Kaoruko&amp;fontSize=56&amp;fontColor=ffffff&amp;fontAlign=50&amp;fontAlignY=38&amp;desc=%E4%B8%93%E6%B3%A8%E4%BA%8E%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E4%B8%8E%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE&amp;descAlign=50&amp;descAlignY=60&amp;descSize=20"
-    alt="Kurohane Kaoruko"
-    width="100%"
-  />
+<div align="center">
+
+<!-- ============ HERO ============ -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="assets/hero-light.svg" />
+  <img src="assets/hero-dark.svg" width="100%" alt="Kurohane Kaoruko — AI engineer and toolmaker, night scene banner" />
+</picture>
+
+<p>
+  <img src="https://img.shields.io/github/followers/KurohaneKaoruko?style=flat&amp;logo=github&amp;label=Followers&amp;color=24292F" alt="GitHub followers" />
+  <img src="https://img.shields.io/badge/GitHub.io-kurohanekaoruko.github.io-ff3333?style=flat&amp;logo=github&amp;logoColor=white" alt="Personal website on GitHub Pages" />
+  <img src="https://img.shields.io/badge/Cloudflare-kurohanekaoruko.pages.dev-F38020?style=flat&amp;logo=cloudflare&amp;logoColor=white" alt="Personal website on Cloudflare Pages" />
+  <img src="https://img.shields.io/badge/Vercel-kurohanekaoruko.vercel.app-000000?style=flat&amp;logo=vercel&amp;logoColor=white" alt="Personal website on Vercel" />
 </p>
 
-<p align="center">
-  专注于人工智能领域，致力于用技术解决问题。<br />
-  偶尔写一些小工具，或者是有趣、好玩的项目。
+<!-- ============ ABOUT / STACK ============ -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/about-dark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="assets/about-light.svg" />
+  <img src="assets/about-dark.svg" width="100%" alt="whoami: AI engineer and toolmaker, focused on LLM Agents, Swarm Intelligence, dev tools and games; stack in Rust, Python, TypeScript, Next.js and Tauri" />
+</picture>
+
+<!-- ============ PROJECTS ============ -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/projects-dark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="assets/projects-light.svg" />
+  <img src="assets/projects-dark.svg" width="100%" alt="Featured projects: Novel-IDE, DSH-Novelist, ScreepsDashboard, screeps-tools-nextjs, MiniTools-Rust, ExMachina" />
+</picture>
+
+<!-- ============ TELEMETRY SNAPSHOT ============ -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/dashboard-dark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="assets/dashboard-light.svg" />
+  <img src="assets/dashboard-dark.svg" width="100%" alt="Telemetry snapshot: 15 public repos, 45 stars, top language TypeScript, current focus AI Agents" />
+</picture>
+
+<p><code>// LIVE TELEMETRY — 实时统计</code></p>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com?user=KurohaneKaoruko&amp;theme=transparent&amp;hide_border=true" />
+  <source media="(prefers-color-scheme: light)" srcset="https://streak-stats.demolab.com?user=KurohaneKaoruko&amp;theme=transparent&amp;hide_border=true" />
+  <img src="https://streak-stats.demolab.com?user=KurohaneKaoruko&amp;theme=transparent&amp;hide_border=true" width="80%" alt="GitHub contribution streak for KurohaneKaoruko" />
+</picture>
+
+<p>
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=KurohaneKaoruko&amp;theme=transparent" width="49%" alt="GitHub summary stats" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=KurohaneKaoruko&amp;theme=transparent&amp;utcOffset=8" width="49%" alt="Productive time card" />
+</p>
+<p>
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=KurohaneKaoruko&amp;theme=transparent" width="49%" alt="Repositories by language" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=KurohaneKaoruko&amp;theme=transparent" width="49%" alt="Most commit language" />
 </p>
 
-<p align="center">
-  <img
-    src="https://readme-typing-svg.demolab.com?font=Fira+Code&amp;size=22&amp;pause=1200&amp;color=58A6FF&amp;center=true&amp;vCenter=true&amp;repeat=true&amp;width=960&amp;lines=Artificial+Intelligence;Rust+%2B+Python+%2B+TypeScript"
-    alt="Typing SVG intro for KurohaneKaoruko"
-  />
-</p>
+<p><code>// CONTRIBUTION GRAPH — 贡献图谱</code></p>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&amp;logo=python&amp;logoColor=white" alt="Python" />
-  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&amp;logo=typescript&amp;logoColor=white" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/Rust-DEA584?style=for-the-badge&amp;logo=rust&amp;logoColor=black" alt="Rust" />
-</p>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/output/github-snake-dark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/output/github-snake.svg" />
+  <img src="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/output/github-snake.svg" width="100%" alt="Contribution snake animation" />
+</picture>
 
-<p align="center">
-  <img
-    src="https://img.shields.io/github/followers/KurohaneKaoruko?style=for-the-badge&amp;logo=github&amp;label=Followers&amp;color=24292F"
-    alt="GitHub followers for KurohaneKaoruko"
-  />
-</p>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/main/.github/readme-assets/profile-3d-contrib/profile-night-rainbow.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/main/.github/readme-assets/profile-3d-contrib/profile-green-animate.svg" />
+  <img src="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/main/.github/readme-assets/profile-3d-contrib/profile-green-animate.svg" width="100%" alt="3D contribution graph" />
+</picture>
 
-## Personal Website
+<!-- ============ FOOTER ============ -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/footer-dark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="assets/footer-light.svg" />
+  <img src="assets/footer-dark.svg" width="100%" alt="COMPILE THIS WORLD. — Kurohane Kaoruko" />
+</picture>
 
-<p align="center">
-  <a href="https://kurohanekaoruko.github.io/KurohaneKaoruko/">
-    <img
-      src="https://img.shields.io/badge/GitHub.io-kurohanekaoruko.github.io-ff3333?style=for-the-badge&amp;logo=github&amp;logoColor=white"
-      alt="Kurohane Kaoruko's personal website"
-    />
-  </a>
-</p>
-
-<p align="center">
-  <a href="https://kurohanekaoruko.pages.dev/">
-    <img
-      src="https://img.shields.io/badge/Cloudflare-kurohanekaoruko.pages.dev-F38020?style=for-the-badge&amp;logo=cloudflare&amp;logoColor=white"
-      alt="Kurohane Kaoruko's personal website on Cloudflare Pages"
-    />
-  </a>
-</p>
-
-<p align="center">
-  <a href="https://kurohanekaoruko.vercel.app/">
-    <img
-      src="https://img.shields.io/badge/Vercel-kurohanekaoruko.vercel.app-000000?style=for-the-badge&amp;logo=vercel&amp;logoColor=white"
-      alt="Kurohane Kaoruko's personal website on Vercel"
-    />
-  </a>
-</p>
-
-## GitHub Stats
-
-<p align="center">
-  <img
-    src="https://streak-stats.demolab.com?user=KurohaneKaoruko&amp;theme=transparent&amp;hide_border=true"
-    alt="GitHub streak for KurohaneKaoruko"
-    width="80%"
-  />
-</p>
-
-<p align="center">
-  <picture>
-    <source
-      media="(prefers-color-scheme: dark)"
-      srcset="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/output/github-snake-dark.svg"
-    />
-    <source
-      media="(prefers-color-scheme: light)"
-      srcset="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/output/github-snake.svg"
-    />
-    <img
-      src="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/output/github-snake.svg"
-      alt="Contribution snake animation for KurohaneKaoruko"
-      width="100%"
-    />
-  </picture>
-</p>
-
-## More Insights
-
-<p align="center">
-  <img
-    src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=KurohaneKaoruko&amp;theme=transparent"
-    alt="Profile details for KurohaneKaoruko"
-    width="100%"
-  />
-</p>
-
-<p align="center">
-  <img
-    src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=KurohaneKaoruko&amp;theme=transparent"
-    alt="GitHub summary stats for KurohaneKaoruko"
-    width="49%"
-  />
-  <img
-    src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=KurohaneKaoruko&amp;theme=transparent&amp;utcOffset=8"
-    alt="Productive time card for KurohaneKaoruko"
-    width="49%"
-  />
-</p>
-
-<p align="center">
-  <img
-    src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=KurohaneKaoruko&amp;theme=transparent"
-    alt="Repositories by language for KurohaneKaoruko"
-    width="49%"
-  />
-  <img
-    src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=KurohaneKaoruko&amp;theme=transparent"
-    alt="Most commit language for KurohaneKaoruko"
-    width="49%"
-  />
-</p>
-
-<p align="center">
-  <picture>
-    <source
-      media="(prefers-color-scheme: dark)"
-      srcset="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/main/.github/readme-assets/profile-3d-contrib/profile-night-rainbow.svg"
-    />
-    <source
-      media="(prefers-color-scheme: light)"
-      srcset="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/main/.github/readme-assets/profile-3d-contrib/profile-green-animate.svg"
-    />
-    <img
-      src="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/main/.github/readme-assets/profile-3d-contrib/profile-green-animate.svg"
-      alt="3D contribution graph for KurohaneKaoruko"
-      width="100%"
-    />
-  </picture>
-</p>
-
-## Note
-
-> COMPILE THIS WORLD.
-
-<p align="center">
-  <img
-    src="https://capsule-render.vercel.app/api?type=waving&amp;color=gradient&amp;height=120&amp;section=footer"
-    alt=""
-    width="100%"
-  />
-</p>
+</div>
