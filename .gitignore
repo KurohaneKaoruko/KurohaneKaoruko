@@ -1,9 +1,13 @@
+# 统一排除各级隐藏目录（.next/、缓存、IDE 目录等），仅放行 .github/
+.*/
+!.github/
+
+# 依赖与构建产物
 node_modules/
-.next/
 out/
 next-env.d.ts
 *.tsbuildinfo
 .DS_Store
-.npm-cache/
-.workbuddy/
-/_source/
+
+# 本地素材：站点 404 动画源 GIF，仅本地保留
+_source/

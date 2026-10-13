@@ -128,14 +128,14 @@
   <picture>
     <source
       media="(prefers-color-scheme: dark)"
-      srcset="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/main/profile-3d-contrib/profile-night-rainbow.svg"
+      srcset="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/main/.github/readme-assets/profile-3d-contrib/profile-night-rainbow.svg"
     />
     <source
       media="(prefers-color-scheme: light)"
-      srcset="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/main/profile-3d-contrib/profile-green-animate.svg"
+      srcset="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/main/.github/readme-assets/profile-3d-contrib/profile-green-animate.svg"
     />
     <img
-      src="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/main/profile-3d-contrib/profile-green-animate.svg"
+      src="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/main/.github/readme-assets/profile-3d-contrib/profile-green-animate.svg"
       alt="3D contribution graph for KurohaneKaoruko"
       width="100%"
     />
