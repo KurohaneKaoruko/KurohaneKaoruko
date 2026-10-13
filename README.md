@@ -61,9 +61,9 @@
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/main/.github/readme-assets/profile-3d-contrib/profile-night-rainbow.svg" />
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/main/.github/readme-assets/profile-3d-contrib/profile-green-animate.svg" />
-  <img src="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/main/.github/readme-assets/profile-3d-contrib/profile-green-animate.svg" width="100%" alt="3D contribution graph" />
+  <source media="(prefers-color-scheme: dark)" srcset="assets/profile-3d-contrib/profile-night-rainbow.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="assets/profile-3d-contrib/profile-green-animate.svg" />
+  <img src="assets/profile-3d-contrib/profile-green-animate.svg" width="100%" alt="3D contribution graph" />
 </picture>
 
 <!-- ============ FOOTER ============ -->
