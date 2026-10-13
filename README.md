@@ -9,9 +9,15 @@
 
 <p>
   <img src="https://img.shields.io/github/followers/KurohaneKaoruko?style=flat&amp;logo=github&amp;label=Followers&amp;color=24292F" alt="GitHub followers" />
-  <img src="https://img.shields.io/badge/GitHub.io-kurohanekaoruko.github.io-ff3333?style=flat&amp;logo=github&amp;logoColor=white" alt="Personal website on GitHub Pages" />
-  <img src="https://img.shields.io/badge/Cloudflare-kurohanekaoruko.pages.dev-F38020?style=flat&amp;logo=cloudflare&amp;logoColor=white" alt="Personal website on Cloudflare Pages" />
-  <img src="https://img.shields.io/badge/Vercel-kurohanekaoruko.vercel.app-000000?style=flat&amp;logo=vercel&amp;logoColor=white" alt="Personal website on Vercel" />
+  <a href="https://kurohanekaoruko.github.io/KurohaneKaoruko/">
+    <img src="https://img.shields.io/badge/GitHub.io-kurohanekaoruko.github.io-ff3333?style=flat&amp;logo=github&amp;logoColor=white" alt="Personal website on GitHub Pages" />
+  </a>
+  <a href="https://kurohanekaoruko.pages.dev/">
+    <img src="https://img.shields.io/badge/Cloudflare-kurohanekaoruko.pages.dev-F38020?style=flat&amp;logo=cloudflare&amp;logoColor=white" alt="Personal website on Cloudflare Pages" />
+  </a>
+  <a href="https://kurohanekaoruko.vercel.app/">
+    <img src="https://img.shields.io/badge/Vercel-kurohanekaoruko.vercel.app-000000?style=flat&amp;logo=vercel&amp;logoColor=white" alt="Personal website on Vercel" />
+  </a>
 </p>
 
 <!-- ============ ABOUT / STACK ============ -->
