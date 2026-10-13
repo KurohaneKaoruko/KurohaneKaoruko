@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" font-family="'SF Mono','JetBrains Mono',Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC','Source Han Sans SC',sans-serif">
+<style>
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+.blink{animation:blink 1.1s steps(1) infinite}
+</style>
+<defs>
+<linearGradient id="abg" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#0d1428"/><stop offset="1" stop-color="#0b1020"/>
+</linearGradient>
+</defs>
+
+<rect width="1200" height="360" rx="20" fill="url(#abg)" stroke="#22345c" stroke-width="1"/>
+
+<rect x="24" y="24" width="576" height="312" rx="14" fill="#0e1734" stroke="#22345c" stroke-width="1"/>
+<text x="48" y="68" font-size="20" font-weight="700" fill="#58a6ff">&gt; whoami</text>
+<text x="48" y="104" font-size="15"><tspan fill="#7cc7ff">kurohane-kaoruko</tspan><tspan fill="#8fa3c8"> — AI engineer &amp; toolmaker</tspan></text>
+<text x="48" y="134" font-size="15"><tspan fill="#a371f7">focus</tspan><tspan fill="#8fa3c8"> LLM Agents · Swarm Intelligence · Dev Tools · Games</tspan></text>
+<text x="48" y="164" font-size="15"><tspan fill="#a371f7">stack</tspan><tspan fill="#8fa3c8"> rust python typescript next.js tauri</tspan></text>
+<text x="48" y="194" font-size="15"><tspan fill="#3fb950">$ sudo make world</tspan><tspan fill="#8fa3c8"> [ OK ] compiling the world...</tspan></text>
+<text x="48" y="224" font-size="15"><tspan fill="#e3b341">motto</tspan><tspan fill="#e3b341"> COMPILE THIS WORLD.</tspan></text>
+<rect class="blink" x="276" y="212" width="9" height="16" rx="1.5" fill="#58a6ff"/>
+
+<rect x="616" y="24" width="560" height="312" rx="14" fill="#0e1734" stroke="#22345c" stroke-width="1"/>
+<text x="640" y="68" font-size="20" font-weight="700" fill="#58a6ff">stack <tspan fill="#6f89b8" font-weight="400">// 技术栈</tspan></text>
+
+<g>
+<rect x="640" y="88" width="119" height="34" rx="9" fill="#101a38" stroke="#2b4a7a"/>
+<circle cx="658" cy="105" r="4" fill="#3178c6"/><text x="670" y="110" font-size="13" fill="#cfe3ff">TypeScript</text>
+<rect x="771" y="88" width="119" height="34" rx="9" fill="#101a38" stroke="#2b4a7a"/>
+<circle cx="789" cy="105" r="4" fill="#dea584"/><text x="801" y="110" font-size="13" fill="#cfe3ff">Rust</text>
+<rect x="902" y="88" width="119" height="34" rx="9" fill="#101a38" stroke="#2b4a7a"/>
+<circle cx="920" cy="105" r="4" fill="#ffd43b"/><text x="932" y="110" font-size="13" fill="#cfe3ff">Python</text>
+<rect x="1033" y="88" width="119" height="34" rx="9" fill="#101a38" stroke="#2b4a7a"/>
+<circle cx="1051" cy="105" r="4" fill="#f1e05a"/><text x="1063" y="110" font-size="13" fill="#cfe3ff">JavaScript</text>
+<rect x="640" y="132" width="119" height="34" rx="9" fill="#101a38" stroke="#2b4a7a"/>
+<circle cx="658" cy="149" r="4" fill="#e8f0ff"/><text x="670" y="154" font-size="13" fill="#cfe3ff">Next.js</text>
+<rect x="771" y="132" width="119" height="34" rx="9" fill="#101a38" stroke="#2b4a7a"/>
+<circle cx="789" cy="149" r="4" fill="#61dafb"/><text x="801" y="154" font-size="13" fill="#cfe3ff">React</text>
+<rect x="902" y="132" width="119" height="34" rx="9" fill="#101a38" stroke="#2b4a7a"/>
+<circle cx="920" cy="149" r="4" fill="#ffc131"/><text x="932" y="154" font-size="13" fill="#cfe3ff">Tauri</text>
+<rect x="1033" y="132" width="119" height="34" rx="9" fill="#101a38" stroke="#2b4a7a"/>
+<circle cx="1051" cy="149" r="4" fill="#3c873a"/><text x="1063" y="154" font-size="13" fill="#cfe3ff">Node.js</text>
+</g>
+
+<text x="640" y="196" font-size="12" letter-spacing="2" fill="#6f89b8">REPOS BY LANGUAGE</text>
+<rect x="640" y="210" width="512" height="10" rx="5" fill="#1a2748"/>
+<rect x="640" y="210" width="268" height="10" rx="2" fill="#3178c6"/>
+<rect x="910" y="210" width="100" height="10" rx="2" fill="#dea584"/>
+<rect x="1012" y="210" width="67" height="10" rx="2" fill="#f1e05a"/>
+<rect x="1081" y="210" width="33" height="10" rx="2" fill="#da5b0b"/>
+<rect x="1116" y="210" width="36" height="10" rx="2" fill="#57606a"/>
+
+<g font-size="12" fill="#8fa3c8">
+<rect x="640" y="234" width="10" height="10" rx="2" fill="#3178c6"/><text x="656" y="243">TypeScript 53%</text>
+<rect x="790" y="234" width="10" height="10" rx="2" fill="#dea584"/><text x="806" y="243">Rust 20%</text>
+<rect x="890" y="234" width="10" height="10" rx="2" fill="#f1e05a"/><text x="906" y="243">JavaScript 13%</text>
+<rect x="640" y="258" width="10" height="10" rx="2" fill="#da5b0b"/><text x="656" y="267">Jupyter 7%</text>
+<rect x="790" y="258" width="10" height="10" rx="2" fill="#57606a"/><text x="806" y="267">Other 7%</text>
+</g>
+
+<text x="1152" y="306" text-anchor="end" font-size="11" fill="#4a5f7f">snapshot of 15 public repos</text>
+</svg>
