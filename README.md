@@ -41,7 +41,11 @@
   <img src="assets/dashboard-dark.svg" width="100%" alt="Telemetry snapshot: 15 public repos, 45 stars, top language TypeScript, current focus AI Agents" />
 </picture>
 
-<p><code>// LIVE TELEMETRY — 实时统计</code></p>
+<p align="center">
+  <img
+    src="https://capsule-render.vercel.app/api?type=waving&amp;color=gradient&amp;height=200&amp;section=header&amp;fontSize=56&amp;fontColor=ffffff&amp;fontAlign=50&amp;fontAlignY=38&amp;descAlign=50&amp;descAlignY=60&amp;descSize=20"
+    width="100%"
+  />
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com?user=KurohaneKaoruko&amp;theme=transparent&amp;hide_border=true" />
@@ -73,10 +77,12 @@
 </picture>
 
 <!-- ============ FOOTER ============ -->
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/footer-dark.svg" />
-  <source media="(prefers-color-scheme: light)" srcset="assets/footer-light.svg" />
-  <img src="assets/footer-dark.svg" width="100%" alt="COMPILE THIS WORLD. — Kurohane Kaoruko" />
-</picture>
 
+<p align="center">
+  <img
+    src="https://capsule-render.vercel.app/api?type=waving&amp;color=gradient&amp;height=120&amp;section=footer"
+    alt=""
+    width="100%"
+  />
+</p>
 </div>
