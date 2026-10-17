@@ -408,6 +408,43 @@
   color-scheme: light;
 }
 
+/* -------- deconstruct：新闻纸 + 墨黑 + 朱砂，错版印刷的断裂版面 -------- */
+[data-theme="deconstruct"] {
+  --background: #f2efe8;
+  --foreground: #1a1712;
+
+  --primary: #d33b1f;
+  --primary-foreground: #fbf7ee;
+  --secondary: #2f4a6d;
+  --accent: #d33b1f;
+  --brand-hover: #d33b1f;
+
+  --card-bg: #faf7f0;
+  --border: rgba(26, 23, 18, 0.26);
+  --border-strong: #1a1712;
+  --border-active: #d33b1f;
+
+  --text-muted: #4f4840;
+  --text-dim: #8a8175;
+
+  --grid-color: rgba(26, 23, 18, 0.055);
+  --grid-size: 56px;
+  --decor-ring-a: rgba(211, 59, 31, 0.05);
+  --decor-ring-b: rgba(47, 74, 109, 0.045);
+  --decor-dot: rgba(26, 23, 18, 0.1);
+  --body-gradient: linear-gradient(to top, #e9e4d9 0%, #f2efe8 45%, #f7f4ec 100%);
+
+  --nav-h: 64px;
+
+  --hard-shadow: none;
+
+  /* 解构专属：错版两色的实际值，工具类直接引用 */
+  --dc-red: #d33b1f;
+  --dc-blue: #2f4a6d;
+
+  color-scheme: light;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -699,6 +736,22 @@ html[data-theme="swiss"].bg-decor-on body::after {
   display: none;
 }
 
+/* deconstruct：两道非正交的斜栅 —— 页面上没有一条可靠的水平轴，
+   点阵只在斜向的一条带子里透出来，像被裁剩的一块 */
+html[data-theme="deconstruct"].bg-decor-on body::before {
+  background-image:
+    repeating-linear-gradient(74deg, rgba(26, 23, 18, 0.045) 0 1px, transparent 1px 168px),
+    repeating-linear-gradient(106deg, rgba(211, 59, 31, 0.05) 0 1px, transparent 1px 232px);
+  animation: none;
+}
+html[data-theme="deconstruct"].bg-decor-on body::after {
+  background-image: radial-gradient(rgba(26, 23, 18, 0.085) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: linear-gradient(115deg, transparent 14%, #000 52%, transparent 88%);
+  -webkit-mask-image: linear-gradient(115deg, transparent 14%, #000 52%, transparent 88%);
+  opacity: 0.5;
+}
+
 /* ==========================================================================
    版式
    ========================================================================== */
@@ -741,6 +794,10 @@ html[data-theme="swiss"].bg-decor-on body::after {
 [data-theme="cassette"] .display-title {
   font-weight: 650;
   letter-spacing: 0.01em;
+}
+[data-theme="deconstruct"] .display-title {
+  font-weight: 900;
+  letter-spacing: -0.055em;
 }
 
 .eyebrow {
@@ -1133,11 +1190,62 @@ html[data-theme="swiss"].bg-decor-on body::after {
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
 }
 
+/* deconstruct：碎片切角 —— 不规则四边形，像被裁纸刀划开后随手摆回去 */
+.dc-frag {
+  clip-path: polygon(0 2.5%, 100% 0, 98.4% 97.5%, 1.6% 100%);
+}
+.dc-frag-alt {
+  clip-path: polygon(1.2% 0, 100% 3.5%, 99% 100%, 0 96.5%);
+}
+/* 实色斜片：只做装饰，不承载文字 */
+.dc-shard {
+  clip-path: polygon(0 100%, 30% 0, 62% 54%, 100% 14%, 100% 100%);
+}
+/* 错版双框：本体边框 + 右上偏移的第二印 */
+.dc-ghost {
+  position: relative;
+}
+.dc-ghost::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translate(7px, -6px);
+  border: 1px solid var(--border-strong);
+  pointer-events: none;
+}
+/* 错版文字：朱砂色的第二印压在正文右下 */
+.dc-misprint {
+  text-shadow: 3px 2px 0 color-mix(in srgb, var(--primary) 30%, transparent);
+}
+/* 断裂细线：一条墨线，被错位的朱砂线接走后半段 */
+.dc-rule {
+  position: relative;
+  height: 1px;
+  background: var(--foreground);
+}
+.dc-rule::after {
+  content: "";
+  position: absolute;
+  left: 34%;
+  right: -14px;
+  top: 3px;
+  height: 1px;
+  background: var(--primary);
+}
+/* 裁切线：断续的虚线，用于碎片之间 */
+.dc-cutline {
+  height: 1px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--border-strong) 0 8px,
+    transparent 8px 15px
+  );
+}
+
 .glitch-text:hover {
   animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
   color: var(--primary);
-}
-@keyframes glitch {
+}@keyframes glitch {
   0% { transform: translate(0); }
   20% { transform: translate(-2px, 2px); }
   40% { transform: translate(-2px, -2px); }

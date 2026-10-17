@@ -40,7 +40,7 @@ export default function SwissHome() {
           {/* 海报头信息行 */}
           <div className="grid grid-cols-2 gap-4 border-b-2 border-foreground pb-3 font-mono text-[10px] uppercase tracking-[0.25em] text-text-muted sm:grid-cols-4">
             <span className="font-bold text-foreground">{SITE.short}</span>
-            <span>AI · Tools · Games</span>
+            <span>AI · Tools</span>
             <span className="hidden sm:block">github.com/{SITE.handle}</span>
             <span className="text-right">
               <span className="mr-2 inline-block h-2.5 w-2.5 bg-primary align-middle" />
@@ -57,7 +57,7 @@ export default function SwissHome() {
           <div className="mt-10 flex items-start gap-6">
             <span className="mt-1 hidden h-24 w-16 bg-primary sm:block" />
             <p className="max-w-xl text-lg leading-relaxed text-text-muted">
-              开源工具、AI 智能体与游戏 —— 全部来自真实的 GitHub 仓库，按语言筛选与排序。
+              开源工具与 AI 智能体，按语言筛选与排序。
             </p>
           </div>
 

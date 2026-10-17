@@ -21,7 +21,8 @@ export type ThemeId =
   | "vaporwave"
   | "y2k"
   | "cassette"
-  | "swiss";
+  | "swiss"
+  | "deconstruct";
 
 export type ThemeMeta = {
   id: ThemeId;
@@ -124,6 +125,14 @@ export const THEMES: ThemeMeta[] = [
     desc: "国际主义排版：外露模数网格、竖排贴边与瑞士红，像一张构成主义海报。",
     swatch: ["#ffffff", "#e30613"],
     status: "GRID & RED",
+  },
+  {
+    id: "deconstruct",
+    name: "Deconstruct",
+    label: "解构",
+    desc: "断裂的版面：错版双框、被裁开的碎片与被拆散的大标题，结构裸露在外。",
+    swatch: ["#f2efe8", "#d33b1f"],
+    status: "FORM FOLLOWS FRACTURE",
   },
 ];
 

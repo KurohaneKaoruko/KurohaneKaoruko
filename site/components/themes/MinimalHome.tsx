@@ -58,7 +58,7 @@ export default function MinimalHome() {
             用技术解决问题。
           </h1>
           <p className="mt-6 text-lg font-light leading-relaxed text-text-muted">
-            开源工具、AI 智能体与游戏，全部来自真实的 GitHub 仓库。
+            开源工具与 AI 智能体。
           </p>
           <div className="mt-10 flex flex-wrap gap-x-10 gap-y-2 text-sm">
             <Link

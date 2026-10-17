@@ -54,12 +54,8 @@ export default function GlitchHome() {
           {/* 解码日志式导语 */}
           <div className="mt-8 max-w-xl space-y-1 font-mono text-sm leading-relaxed text-text-muted">
             <p>
-              <span className="text-secondary">&gt;</span> 用技术解决问题 —— 开源工具、AI
-              智能体与游戏。
-            </p>
-            <p>
-              <span className="text-secondary">&gt;</span> 全部来自真实的 GitHub 仓库，
-              <span className="text-primary">数据实时拉取</span>。
+              <span className="text-secondary">&gt;</span> 用技术解决问题 —— 开源工具与 AI
+              智能体。
             </p>
           </div>
 

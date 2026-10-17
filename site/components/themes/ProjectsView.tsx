@@ -18,7 +18,7 @@ function BrutalistProjects() {
         项目
       </h1>
       <p className="mt-6 max-w-xl leading-relaxed text-text-muted">
-        来自 GitHub 的真实仓库 —— 用技术解决问题的痕迹。
+        用技术解决问题的痕迹。
       </p>
 
       <div className="mt-14 flex flex-wrap items-center justify-between gap-6 border-b-2 border-foreground pb-5 font-mono text-[11px] uppercase tracking-[0.25em]">
@@ -76,7 +76,7 @@ function TerminalProjects() {
         <SubPageHeader
           eyebrow="REPOSITORIES"
           title="项目库"
-          description="按语言筛选、按星标或名称排序。全部条目都指向真实的 GitHub 仓库。"
+          description="按语言筛选、按星标或名称排序。"
         />
       </Reveal>
 
@@ -204,7 +204,7 @@ function MaximalProjects() {
           项目<span className="marker-hl">目录</span>
         </h1>
         <p className="mt-5 max-w-xl border-l-4 border-secondary pl-5 leading-relaxed text-text-muted">
-          全部 {repos.length} 个真实 GitHub 仓库，按星标排序。
+          全部 {repos.length} 个仓库，按星标排序。
         </p>
       </Reveal>
 
@@ -362,7 +362,7 @@ function MinimalProjects() {
           项目库
         </h1>
         <p className="mt-6 text-lg font-light leading-relaxed text-text-muted">
-          来自 GitHub 的真实仓库。
+          全部 {repos.length} 个仓库，按星标排序。
         </p>
       </Reveal>
 
@@ -498,7 +498,7 @@ function VaporwaveProjects() {
             <span className="chrome-text">项目库</span>
           </h1>
           <p className="mx-auto mt-5 max-w-md leading-relaxed text-text-muted">
-            来自 GitHub 的真实仓库，按星标排序。
+            全部 {repos.length} 个仓库，按星标排序。
           </p>
         </div>
       </Reveal>
@@ -616,7 +616,7 @@ function CassetteProjects() {
           </div>
           <h1 className="display-title mt-5 text-3xl text-foreground">项目库</h1>
           <p className="mt-3 leading-relaxed text-text-muted">
-            来自 GitHub 的真实仓库，按星标排序。
+            全部 {repos.length} 个仓库，按星标排序。
           </p>
         </div>
       </Reveal>
@@ -683,7 +683,7 @@ function SwissProjects() {
         </h1>
         <div className="mt-6 flex flex-wrap items-center justify-between gap-x-8 gap-y-4">
           <p className="max-w-xl leading-relaxed text-text-muted">
-            全部 {repos.length} 个真实 GitHub 仓库，按星标排序，对齐到网格。
+            全部 {repos.length} 个仓库，按星标排序，对齐到网格。
           </p>
           <SyncBadge />
         </div>
@@ -724,6 +724,74 @@ function SwissProjects() {
   );
 }
 
+/** 解构：碎片目录 —— 每一条都被挪开了一点，序号仍是原始位置 */
+function DeconstructProjects() {
+  const { repos } = useRepos();
+  const sorted = [...repos].sort((a, b) => b.stars - a.stars || a.name.localeCompare(b.name));
+  const totalStars = repos.reduce((sum, p) => sum + p.stars, 0);
+
+  return (
+    <section className="container mx-auto px-6 py-16 sm:py-20">
+      <Reveal>
+        <div className="flex flex-wrap items-baseline justify-between gap-3 font-mono text-[10px] uppercase tracking-[0.3em] text-text-dim">
+          <span className="font-bold text-foreground">Projects — 全部</span>
+          <span>
+            {repos.length} Entries · {totalStars} Stars
+          </span>
+        </div>
+        <div className="dc-rule mt-3" />
+
+        <h1 className="display-title dc-misprint mt-8 text-[clamp(2.6rem,7vw,5rem)] text-foreground">
+          项目库
+        </h1>
+
+        <div className="mt-5 flex flex-wrap items-center justify-between gap-x-8 gap-y-4">
+          <p className="max-w-lg leading-relaxed text-text-muted">
+            全部 {repos.length} 个仓库，按星标排序 —— 都是自己写的，没有 fork。
+          </p>
+          <SyncBadge />
+        </div>
+      </Reveal>
+
+      <div className="mt-12 space-y-3">
+        {sorted.map((p, i) => (
+          <Reveal key={p.name} delay={Math.min(i * 0.02, 0.2)}>
+            <a
+              href={p.url}
+              target="_blank"
+              rel="noreferrer"
+              style={{ marginLeft: (i % 3) * 16 }}
+              className={
+                "dc-frag-alt group grid items-baseline gap-x-5 gap-y-2 border border-border bg-card-bg px-5 py-5 " +
+                "transition-all duration-300 hover:-translate-y-0.5 hover:rotate-0 hover:border-foreground hover:bg-foreground hover:text-background " +
+                "sm:grid-cols-[3rem_minmax(0,1fr)_auto] " +
+                (i % 2 ? "rotate-[0.25deg]" : "rotate-[-0.25deg]")
+              }
+            >
+              <span className="font-mono text-lg font-bold text-primary">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+
+              <span className="min-w-0">
+                <span className="block truncate text-base font-bold tracking-tight">{p.name}</span>
+                <span className="mt-1 line-clamp-2 block text-sm leading-relaxed text-text-muted transition-colors group-hover:text-background/75">
+                  {p.desc}
+                </span>
+              </span>
+
+              <span className="flex shrink-0 items-baseline gap-4 font-mono text-[10px] uppercase tracking-[0.2em] text-text-dim transition-colors group-hover:text-background/70">
+                <span>{p.lang || "—"}</span>
+                <span className="font-bold">★ {p.stars}</span>
+                <span className="transition-transform group-hover:translate-x-1">↗</span>
+              </span>
+            </a>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export default function ProjectsView() {
   const { theme } = useTheme();
   if (theme === "brutalist") return <BrutalistProjects />;
@@ -736,5 +804,6 @@ export default function ProjectsView() {
   if (theme === "y2k") return <Y2KProjects />;
   if (theme === "cassette") return <CassetteProjects />;
   if (theme === "swiss") return <SwissProjects />;
+  if (theme === "deconstruct") return <DeconstructProjects />;
   return <TerminalProjects />;
 }

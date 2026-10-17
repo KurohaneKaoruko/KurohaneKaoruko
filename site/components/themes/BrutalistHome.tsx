@@ -82,7 +82,7 @@ export default function BrutalistHome() {
           <div className="container mx-auto flex flex-wrap gap-x-12 gap-y-2 px-6 py-5 font-mono text-[11px] uppercase tracking-[0.25em] text-foreground">
             <span>{repos.length} Repos</span>
             <span>{totalStars} Stars</span>
-            <span>AI · Tools · Games</span>
+            <span>AI · Tools</span>
             <span className="text-text-muted">Rust / Python / TypeScript</span>
           </div>
         </div>
