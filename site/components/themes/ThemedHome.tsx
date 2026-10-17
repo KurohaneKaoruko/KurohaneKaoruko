@@ -4,6 +4,7 @@ import { useTheme } from "@/components/theme/ThemeProvider";
 import BrutalistHome from "@/components/themes/BrutalistHome";
 import CassetteHome from "@/components/themes/CassetteHome";
 import CyberpunkHome from "@/components/themes/CyberpunkHome";
+import DeconstructHome from "@/components/themes/DeconstructHome";
 import GlacialHome from "@/components/themes/GlacialHome";
 import GlitchHome from "@/components/themes/GlitchHome";
 import MaximalHome from "@/components/themes/MaximalHome";
@@ -36,5 +37,6 @@ export default function ThemedHome() {
   if (theme === "y2k") return <Y2KHome />;
   if (theme === "cassette") return <CassetteHome />;
   if (theme === "swiss") return <SwissHome />;
+  if (theme === "deconstruct") return <DeconstructHome />;
   return <TerminalHome />;
 }

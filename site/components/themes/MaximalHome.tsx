@@ -55,7 +55,7 @@ export default function MaximalHome() {
                 Open Source
               </span>
               <span className="rotate-1 border-2 border-foreground bg-secondary px-4 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-primary-foreground shadow-[3px_3px_0_var(--foreground)]">
-                AI · Tools · Games
+                AI · Tools
               </span>
               <span className="rotate-3 border-2 border-foreground bg-accent px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-primary-foreground shadow-[3px_3px_0_var(--foreground)]">
                 ★ Live Data
@@ -78,7 +78,7 @@ export default function MaximalHome() {
             </h1>
 
             <p className="mt-8 max-w-lg border-l-4 border-[var(--max-sun)] pl-5 leading-relaxed text-primary-foreground/85">
-              开源工具、AI 智能体与游戏 —— 全部来自真实的 GitHub 仓库，数据实时拉取。
+              开源工具与 AI 智能体。
             </p>
 
             <div className="mt-10 flex flex-wrap gap-5">

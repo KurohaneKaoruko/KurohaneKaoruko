@@ -178,7 +178,7 @@ function GlacialAbout() {
                 {[
                   ["NAME", SITE.name],
                   ["HANDLE", "@" + SITE.handle],
-                  ["FOCUS", "AI · Tools · Games"],
+                  ["FOCUS", "AI · Tools"],
                 ].map(([k, v]) => (
                   <div
                     key={k}
@@ -284,7 +284,7 @@ function MaximalAbout() {
             @{SITE.handle}
           </span>
           <span className="rotate-3 border-2 border-foreground bg-accent px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-primary-foreground shadow-[3px_3px_0_var(--foreground)]">
-            ★ AI · Tools · Games
+            ★ AI · Tools
           </span>
         </div>
         <h1 className="mt-8 text-[clamp(2.5rem,7vw,5rem)] font-black uppercase leading-[0.95] tracking-[-0.05em] text-foreground">
@@ -311,7 +311,7 @@ function MaximalAbout() {
               </span>
             </div>
             <div className="mx-auto mt-8 max-w-xs border-2 border-foreground bg-card-bg lg:mx-0">
-              {[["NAME", SITE.name], ["FOCUS", "AI · Tools · Games"], ["BASE", "GitHub"]].map(
+              {[["NAME", SITE.name], ["FOCUS", "AI · Tools"], ["BASE", "GitHub"]].map(
                 ([k, v], i) => (
                   <div
                     key={k}
@@ -442,7 +442,7 @@ function GlitchAbout() {
                 {[
                   ["NAME", SITE.name],
                   ["HANDLE", "@" + SITE.handle],
-                  ["FOCUS", "AI · Tools · Games"],
+                  ["FOCUS", "AI · Tools"],
                 ].map(([k, v]) => (
                   <div
                     key={k}
@@ -583,9 +583,8 @@ function MinimalAbout() {
           <div className="space-y-5 text-lg font-light leading-loose text-text-muted">
             <p>
               AI engineer &amp; toolmaker。用 TypeScript、Python 与 Rust 做工具，
-              关注 LLM Agents、Swarm Intelligence 与游戏。
+              关注 LLM Agents 与 Swarm Intelligence。
             </p>
-            <p>这个站点是静态导出的，没有后端 —— 数据在构建之外实时拉取。</p>
           </div>
         </div>
       </Reveal>
@@ -692,7 +691,7 @@ function CyberpunkAbout() {
                 {[
                   ["NAME", SITE.name],
                   ["HANDLE", "@" + SITE.handle],
-                  ["FOCUS", "AI · Tools · Games"],
+                  ["FOCUS", "AI · Tools"],
                 ].map(([k, v]) => (
                   <div key={k} className="flex items-baseline justify-between gap-4 border-b border-border py-2.5 last:border-b-0">
                     <dt className="font-mono text-[10px] uppercase tracking-[0.25em] text-text-dim">{k}</dt>
@@ -785,7 +784,7 @@ function VaporwaveAbout() {
           </div>
           <p className="mt-8 leading-loose text-text-muted">
             AI engineer &amp; toolmaker。用 TypeScript、Python 与 Rust 做工具，
-            关注 LLM Agents、Swarm Intelligence 与游戏。
+            关注 LLM Agents 与 Swarm Intelligence。
           </p>
         </div>
       </Reveal>
@@ -867,7 +866,7 @@ function Y2KAbout() {
                 <h1 className="display-title text-3xl text-foreground">关于我</h1>
                 <p className="text-sm leading-relaxed text-text-muted">
                   AI engineer &amp; toolmaker。用 TypeScript、Python 与 Rust 做工具，
-                  关注 LLM Agents、Swarm Intelligence 与游戏。
+                  关注 LLM Agents 与 Swarm Intelligence。
                 </p>
               </div>
             </div>
@@ -931,12 +930,12 @@ function CassetteAbout() {
               <h1 className="display-title text-3xl text-foreground">关于我</h1>
               <p className="mt-4 leading-relaxed text-text-muted">
                 AI engineer &amp; toolmaker。用 TypeScript、Python 与 Rust 做工具，
-                关注 LLM Agents、Swarm Intelligence 与游戏。
+                关注 LLM Agents 与 Swarm Intelligence。
               </p>
               <dl className="mt-5">
                 {[
                   ["NAME", SITE.name],
-                  ["FOCUS", "AI · Tools · Games"],
+                  ["FOCUS", "AI · Tools"],
                 ].map(([k, v]) => (
                   <div key={k} className="flex items-baseline justify-between gap-6 border-b border-border py-2 last:border-b-0">
                     <dt className="plate-label text-[9px]">{k}</dt>
@@ -1030,7 +1029,7 @@ function SwissAbout() {
               {[
                 ["NAME", SITE.name],
                 ["HANDLE", "@" + SITE.handle],
-                ["FOCUS", "AI · Tools · Games"],
+                ["FOCUS", "AI · Tools"],
               ].map(([k, v]) => (
                 <div
                   key={k}
@@ -1118,6 +1117,130 @@ function SwissAbout() {
   );
 }
 
+/** 解构：拆开的档案 —— 照片被裁掉一角，技能是三层各自挪开的碎片 */
+function DeconstructAbout() {
+  return (
+    <section className="container mx-auto px-6 py-16 sm:py-20">
+      <Reveal>
+        <div className="flex flex-wrap items-baseline justify-between gap-3 font-mono text-[10px] uppercase tracking-[0.3em] text-text-dim">
+          <span className="font-bold text-foreground">03 — About</span>
+          <span>{SITE.handle}</span>
+        </div>
+        <div className="dc-rule mt-3" />
+
+        <h1 className="display-title dc-misprint mt-8 text-[clamp(2.6rem,7vw,5rem)] text-foreground">
+          关于我
+        </h1>
+      </Reveal>
+
+      <div className="mt-10 grid gap-10 lg:grid-cols-12 lg:gap-8">
+        {/* 档案照：裁掉一角的碎片 + 偏出去的第二印 */}
+        <Reveal className="lg:col-span-4">
+          <div className="relative">
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute -left-3 -top-3 block h-full w-full bg-primary/20"
+            />
+            <img
+              src="/logo.jpg"
+              alt={SITE.name}
+              className="dc-frag relative w-full rotate-[-1.2deg] border border-foreground object-cover"
+            />
+          </div>
+
+          <dl className="mt-7 border-t border-border">
+            {[
+              ["NAME", SITE.name],
+              ["HANDLE", "@" + SITE.handle],
+              ["FOCUS", "AI · Tools"],
+            ].map(([k, v]) => (
+              <div
+                key={k}
+                className="flex items-baseline justify-between gap-4 border-b border-border py-2.5"
+              >
+                <dt className="font-mono text-[9px] uppercase tracking-[0.3em] text-text-dim">{k}</dt>
+                <dd className="truncate font-mono text-xs text-foreground">{v}</dd>
+              </div>
+            ))}
+          </dl>
+        </Reveal>
+
+        {/* 技能：三层碎片，左边缘逐层缩进，像被推开的纸堆 */}
+        <Reveal className="lg:col-span-8" delay={0.05}>
+          <div className="space-y-4">
+            {SKILL_GROUPS.map((g, gi) => (
+              <div
+                key={g.title}
+                style={{ marginLeft: gi * 14 }}
+                className="dc-frag-alt border border-border bg-card-bg p-5"
+              >
+                <h3 className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary">
+                  {String(gi + 1).padStart(2, "0")} / {g.title}
+                </h3>
+                <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-foreground">
+                  {g.items.map((it) => (
+                    <li key={it} className="border-b border-border pb-0.5">
+                      {it}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <div className="dc-frag mt-6 border border-border bg-card-bg p-5">
+            <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-text-dim">
+              GitHub Insights
+            </p>
+            <div className="mt-4 flex justify-center">
+              <img
+                src="https://streak-stats.demolab.com?user=KurohaneKaoruko&theme=transparent&hide_border=true"
+                alt="GitHub 连续提交统计"
+                loading="lazy"
+                className="w-full max-w-2xl"
+              />
+            </div>
+            <div className="mt-3 grid grid-cols-1 items-start justify-items-center gap-3 sm:grid-cols-2">
+              <img
+                src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=KurohaneKaoruko&theme=transparent"
+                alt="各语言仓库数"
+                loading="lazy"
+                className="w-full max-w-md"
+              />
+              <img
+                src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=KurohaneKaoruko&theme=transparent"
+                alt="提交最多的语言"
+                loading="lazy"
+                className="w-full max-w-md"
+              />
+            </div>
+          </div>
+        </Reveal>
+      </div>
+
+      <Reveal className="mt-10">
+        <div className="dc-cutline mb-8" />
+        <div className="flex flex-wrap items-center gap-4">
+          <a
+            href={SITE.github}
+            target="_blank"
+            rel="noreferrer"
+            className="dc-frag bg-foreground px-7 py-3.5 font-mono text-xs uppercase tracking-[0.25em] text-background transition-colors hover:bg-primary hover:text-primary-foreground"
+          >
+            访问 GitHub ↗
+          </a>
+          <a
+            href={"mailto:" + SITE.email}
+            className="border border-foreground px-7 py-3.5 font-mono text-xs uppercase tracking-[0.25em] text-foreground transition-colors hover:border-primary hover:text-primary"
+          >
+            {SITE.email}
+          </a>
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
 export default function AboutView() {
   const { theme } = useTheme();
   if (theme === "brutalist") return <BrutalistAbout />;
@@ -1130,5 +1253,6 @@ export default function AboutView() {
   if (theme === "y2k") return <Y2KAbout />;
   if (theme === "cassette") return <CassetteAbout />;
   if (theme === "swiss") return <SwissAbout />;
+  if (theme === "deconstruct") return <DeconstructAbout />;
   return <TerminalAbout />;
 }

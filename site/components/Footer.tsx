@@ -246,6 +246,46 @@ export default function Footer() {
     );
   }
 
+  if (theme === "deconstruct") {
+    return (
+      <footer className="border-t border-border">
+        <div className="container mx-auto px-6 py-12">
+          <div className="dc-rule" />
+          <div className="mt-8 grid gap-8 lg:grid-cols-12">
+            <div className="lg:col-span-7">
+              <p className="display-title dc-misprint text-2xl text-foreground sm:text-4xl">
+                {SITE.tagline}
+              </p>
+              <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.28em] text-text-dim">
+                © {new Date().getFullYear()} · {SITE.name}
+              </p>
+            </div>
+
+            <nav className="flex flex-wrap items-start gap-x-6 gap-y-2 font-mono text-[11px] uppercase tracking-[0.22em] text-foreground lg:col-span-5 lg:border-l lg:border-border lg:pl-8">
+              {NAV_ITEMS.filter((i) => i.href !== "/").map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="border-b border-transparent pb-0.5 transition-colors hover:border-primary hover:text-primary"
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <a
+                href={SITE.github}
+                target="_blank"
+                rel="noreferrer"
+                className="border-b border-transparent pb-0.5 transition-colors hover:border-primary hover:text-primary"
+              >
+                GitHub ↗
+              </a>
+            </nav>
+          </div>
+        </div>
+      </footer>
+    );
+  }
+
   if (minimal) {
     return (
       <footer className="border-t border-border">

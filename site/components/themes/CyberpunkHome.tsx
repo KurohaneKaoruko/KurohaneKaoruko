@@ -47,8 +47,7 @@ export default function CyberpunkHome() {
 
           <p className="mt-8 max-w-xl leading-relaxed text-text-muted">
             <span className="neon-text-m font-mono text-sm">&gt;&gt;</span>{" "}
-            开源工具、AI 智能体与游戏 —— 全部来自真实的 GitHub 仓库，
-            <span className="neon-text">数据实时拉取</span>。
+            开源工具与 AI 智能体。
           </p>
 
           <div className="mt-10 flex flex-wrap gap-5">

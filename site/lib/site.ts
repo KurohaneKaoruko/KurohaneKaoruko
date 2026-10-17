@@ -12,7 +12,7 @@ export const SITE = {
   short: "K.H.KAORUKO",
   version: "1.0.0",
   tagline: "COMPILE THIS WORLD.",
-  description: `GitHub 开源项目索引：按语言筛选与排序，仓库数据实时拉取；${THEMES.length} 套可切换站点主题，静态导出零后端。`,
+  description: `GitHub 开源项目索引：按语言筛选与排序；${THEMES.length} 套可切换站点主题，静态导出零后端。`,
   /** 仓库名与 GitHub Pages 项目页前缀保持一致 */
   repo: "KurohaneKaoruko",
   url: "https://kurohanekaoruko.github.io/KurohaneKaoruko",
@@ -43,7 +43,7 @@ export const SKILL_GROUPS = [
 /** 首页终端面板里逐行打出来的会话记录 */
 export const TERMINAL_SESSION = [
   { cmd: "whoami", out: "kurohane-kaoruko — AI engineer & toolmaker" },
-  { cmd: "cat focus.txt", out: "LLM Agents · Swarm Intelligence · Dev Tools · Games" },
+  { cmd: "cat focus.txt", out: "LLM Agents · Swarm Intelligence · Dev Tools" },
   { cmd: "ls ~/stack", out: "rust  python  typescript  next.js  tauri" },
   { cmd: "sudo make world", out: "[ OK ] compiling the world..." },
 ];

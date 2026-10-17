@@ -41,6 +41,8 @@ export default function Navigation() {
   const minimal = theme === "minimal";
   const cyberpunk = theme === "cyberpunk";
   const vaporwave = theme === "vaporwave";
+  // 解构：墨线栏 + 下方偏出去的一道朱砂线（错版）
+  const deconstruct = theme === "deconstruct";
   // 极简 / Y2K / 卡带共用「常驻实底发丝线」栏，配色差异交给令牌
   const solidLight = theme === "minimal" || theme === "y2k" || theme === "cassette";
   const [isScrolled, setIsScrolled] = useState(false);
@@ -151,7 +153,9 @@ export default function Navigation() {
           // 终端：滚动前透明、滚动后浮现
           maximal || theme === "swiss"
             ? "border-b-2 border-foreground bg-background"
-            : glitch
+            : deconstruct
+              ? "border-b border-foreground bg-background shadow-[0_2px_0_0_var(--primary)]"
+              : glitch
               ? "border-border bg-background/90 shadow-[0_1px_0_0_var(--primary),0_3px_0_0_var(--secondary)] backdrop-blur-md"
               : cyberpunk
                 ? "border-border bg-background/90 shadow-[0_1px_0_0_var(--cp-cyan)] backdrop-blur-md"
@@ -177,7 +181,8 @@ export default function Navigation() {
                       "text-sm font-bold leading-none tracking-widest",
                       maximal
                         ? "bg-primary px-2 py-1 text-primary-foreground"
-                        : "text-foreground"
+                        : "text-foreground",
+                      deconstruct && "dc-misprint"
                     )}
                   >
                     {SITE.short}

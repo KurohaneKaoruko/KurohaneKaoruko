@@ -50,7 +50,7 @@ export default function Y2KHome() {
               COMPILE THIS <span className="text-primary">WORLD</span>
             </h1>
             <p className="mx-auto mt-5 max-w-md text-sm leading-relaxed text-text-muted sm:text-base">
-              开源工具、AI 智能体与游戏 —— 全部来自真实的 GitHub 仓库。
+              开源工具与 AI 智能体。
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Link
