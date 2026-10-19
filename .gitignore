@@ -11,3 +11,6 @@ next-env.d.ts
 
 # 本地素材：站点 404 动画源 GIF，仅本地保留
 _source/
+
+# CI 产物由 output 分支承载，本地生成的不入库
+assets/profile-3d-contrib/
