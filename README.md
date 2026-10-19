@@ -65,9 +65,9 @@
 <p><code>// CONTRIBUTION GRAPH — 贡献图谱</code></p>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/output/github-snake-dark.svg" />
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/output/github-snake.svg" />
-  <img src="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/output/github-snake.svg" width="100%" alt="Contribution snake animation" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/output/assets/snake/github-snake-dark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/output/assets/snake/github-snake.svg" />
+  <img src="https://raw.githubusercontent.com/KurohaneKaoruko/KurohaneKaoruko/output/assets/snake/github-snake.svg" width="100%" alt="Contribution snake animation" />
 </picture>
 
 <picture>
