@@ -1,91 +1,47 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" font-family="'SF Mono','JetBrains Mono',Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC','Source Han Sans SC',sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="492" viewBox="0 0 1200 492" font-family="'SF Mono','JetBrains Mono',Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC','Source Han Sans SC',sans-serif">
+<style>
+@keyframes sweep{0%{transform:translateY(-200px)}100%{transform:translateY(492px)}}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:.12}}
+@keyframes bar{0%,100%{opacity:.22}50%{opacity:.95}}
+@keyframes card{0%,100%{stroke-opacity:.35}50%{stroke-opacity:1}}
+.sweep{animation:sweep 8s linear infinite}
+.blink{animation:blink 1.5s steps(1) infinite}
+.bar{animation:bar 2.6s ease-in-out infinite}
+.card{animation:card 5s ease-in-out infinite}
+</style>
 <defs>
-<linearGradient id="pbg" x1="0" y1="0" x2="0" y2="1">
-<stop offset="0" stop-color="#0d1428"/><stop offset="1" stop-color="#0b1020"/>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#0d1428"/><stop offset="1" stop-color="#0b1020"/>
 </linearGradient>
-<path id="star" d="M0,-4.6 L1.35,-1.5 L4.5,-1.4 L2.1,0.8 L2.8,4.2 L0,2.2 L-2.8,4.2 L-2.1,0.8 L-4.5,-1.4 L-1.35,-1.5 Z"/>
-<path id="arrow" d="M0,0 L7,0 M3.4,-3.4 L7,0 L3.4,3.4" fill="none" stroke="#58a6ff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+<linearGradient id="sweepG" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#58a6ff" stop-opacity="0"/>
+  <stop offset=".5" stop-color="#58a6ff" stop-opacity="0.13"/>
+  <stop offset="1" stop-color="#58a6ff" stop-opacity="0"/>
+</linearGradient>
+<radialGradient id="glow" cx="600" cy="240" r="560" gradientUnits="userSpaceOnUse">
+  <stop offset="0" stop-color="#58a6ff" stop-opacity="0.16"/>
+  <stop offset="1" stop-color="#58a6ff" stop-opacity="0"/>
+</radialGradient>
+<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+  <path d="M40 0H0V40" fill="none" stroke="#22345c" stroke-width="1"/>
+</pattern>
+<clipPath id="clip"><rect width="1200" height="492" rx="18"/></clipPath>
 </defs>
-
-<rect width="1200" height="620" rx="20" fill="url(#pbg)" stroke="#22345c" stroke-width="1"/>
-
-<text x="40" y="58" font-size="22" font-weight="700" fill="#58a6ff">featured projects</text>
-<text x="1160" y="58" text-anchor="end" font-size="14" fill="#6f89b8">// sorted by stars · 15 public repos</text>
-
-<g>
-<rect x="40" y="88" width="362" height="240" rx="14" fill="#0e1734" stroke="#22345c"/>
-<rect x="60" y="110" width="40" height="4" rx="2" fill="#3178c6"/>
-<circle cx="106" cy="114" r="4" fill="#3178c6"/><text x="116" y="118" font-size="13" fill="#8fa3c8">TypeScript</text>
-<use href="#star" transform="translate(332,114)" fill="#e3b341"/><text x="342" y="118" text-anchor="end" font-size="13" fill="#e3b341">8</text>
-<text x="60" y="162" font-size="21" font-weight="700" fill="#e8f0ff">Novel-IDE</text>
-<text x="60" y="192" font-size="14" fill="#8fa3c8">AI 大模型写小说的</text>
-<text x="60" y="216" font-size="14" fill="#8fa3c8">类 IDE 软件</text>
-<line x1="60" y1="238" x2="382" y2="238" stroke="#1c2c4e"/>
-<text x="60" y="264" font-size="12" fill="#58a6ff">AI · Novel</text>
-<use href="#arrow" transform="translate(370,260)"/>
+<g clip-path="url(#clip)">
+<rect width="1200" height="492" fill="url(#bg)"/>
+<rect width="1200" height="492" fill="url(#grid)" opacity="0.22"/>
+<rect width="1200" height="492" fill="url(#glow)"/>
+<g class="sweep"><rect x="0" y="-200" width="1200" height="200" fill="url(#sweepG)"/></g>
+<line x1="0" y1="52" x2="1200" y2="52" stroke="#22345c" stroke-opacity=".7"/>
+<text x="44" y="35" font-size="18" font-weight="700" fill="#58a6ff" letter-spacing=".5">&gt; projects</text>
+<circle class="blink" cx="1022" cy="29" r="4.5" fill="#3fb950"/>
+<text x="1156" y="34" text-anchor="end" font-size="11" letter-spacing="2.4" fill="#6f89b8">FEATURED</text>
+<g fill="none" stroke="#58a6ff" stroke-opacity=".5" stroke-width="1.5">
+<path d="M20 44V22a2 2 0 0 1 2-2h22"/>
+<path d="M1180 44V22a2 2 0 0 0-2-2h-22"/>
+<path d="M20 448v22a2 2 0 0 0 2 2h22"/>
+<path d="M1180 448v22a2 2 0 0 1-2 2h-22"/>
 </g>
-
-<g>
-<rect x="422" y="88" width="362" height="240" rx="14" fill="#0e1734" stroke="#22345c"/>
-<rect x="442" y="110" width="40" height="4" rx="2" fill="#f1e05a"/>
-<circle cx="488" cy="114" r="4" fill="#f1e05a"/><text x="498" y="118" font-size="13" fill="#8fa3c8">JavaScript</text>
-<use href="#star" transform="translate(714,114)" fill="#e3b341"/><text x="724" y="118" text-anchor="end" font-size="13" fill="#e3b341">8</text>
-<text x="442" y="162" font-size="21" font-weight="700" fill="#e8f0ff">DSH-Novelist</text>
-<text x="442" y="192" font-size="14" fill="#8fa3c8">小说作家智能体预设，在</text>
-<text x="442" y="216" font-size="14" fill="#8fa3c8">DeepSeek Harness 里写小说</text>
-<line x1="442" y1="238" x2="764" y2="238" stroke="#1c2c4e"/>
-<text x="442" y="264" font-size="12" fill="#58a6ff">DeepSeek · AI</text>
-<use href="#arrow" transform="translate(752,260)"/>
-</g>
-
-<g>
-<rect x="804" y="88" width="362" height="240" rx="14" fill="#0e1734" stroke="#22345c"/>
-<rect x="824" y="110" width="40" height="4" rx="2" fill="#3178c6"/>
-<circle cx="870" cy="114" r="4" fill="#3178c6"/><text x="880" y="118" font-size="13" fill="#8fa3c8">TypeScript</text>
-<use href="#star" transform="translate(1096,114)" fill="#e3b341"/><text x="1106" y="118" text-anchor="end" font-size="13" fill="#e3b341">8</text>
-<text x="824" y="162" font-size="21" font-weight="700" fill="#e8f0ff">ScreepsDashboard</text>
-<text x="824" y="196" font-size="14" fill="#8fa3c8">Screeps 的数据面板软件</text>
-<line x1="824" y1="238" x2="1146" y2="238" stroke="#1c2c4e"/>
-<text x="824" y="264" font-size="12" fill="#58a6ff">Screeps · Dashboard</text>
-<use href="#arrow" transform="translate(1134,260)"/>
-</g>
-
-<g>
-<rect x="40" y="352" width="362" height="240" rx="14" fill="#0e1734" stroke="#22345c"/>
-<rect x="60" y="374" width="40" height="4" rx="2" fill="#3178c6"/>
-<circle cx="106" cy="378" r="4" fill="#3178c6"/><text x="116" y="382" font-size="13" fill="#8fa3c8">TypeScript</text>
-<use href="#star" transform="translate(332,378)" fill="#e3b341"/><text x="342" y="382" text-anchor="end" font-size="13" fill="#e3b341">6</text>
-<text x="60" y="426" font-size="21" font-weight="700" fill="#e8f0ff">screeps-tools-nextjs</text>
-<text x="60" y="456" font-size="14" fill="#8fa3c8">用 Next.js 编写的 Screeps</text>
-<text x="60" y="480" font-size="14" fill="#8fa3c8">工具合集网站</text>
-<line x1="60" y1="502" x2="382" y2="502" stroke="#1c2c4e"/>
-<text x="60" y="528" font-size="12" fill="#58a6ff">Screeps · Next.js</text>
-<use href="#arrow" transform="translate(370,524)"/>
-</g>
-
-<g>
-<rect x="422" y="352" width="362" height="240" rx="14" fill="#0e1734" stroke="#22345c"/>
-<rect x="442" y="374" width="40" height="4" rx="2" fill="#dea584"/>
-<circle cx="488" cy="378" r="4" fill="#dea584"/><text x="498" y="382" font-size="13" fill="#8fa3c8">Rust</text>
-<use href="#star" transform="translate(714,378)" fill="#e3b341"/><text x="724" y="382" text-anchor="end" font-size="13" fill="#e3b341">4</text>
-<text x="442" y="426" font-size="21" font-weight="700" fill="#e8f0ff">MiniTools-Rust</text>
-<text x="442" y="460" font-size="14" fill="#8fa3c8">用 Rust 写的一些小工具</text>
-<line x1="442" y1="502" x2="764" y2="502" stroke="#1c2c4e"/>
-<text x="442" y="528" font-size="12" fill="#58a6ff">CLI · Tools</text>
-<use href="#arrow" transform="translate(752,524)"/>
-</g>
-
-<g>
-<rect x="804" y="352" width="362" height="240" rx="14" fill="#0e1734" stroke="#22345c"/>
-<rect x="824" y="374" width="40" height="4" rx="2" fill="#dea584"/>
-<circle cx="870" cy="378" r="4" fill="#dea584"/><text x="880" y="382" font-size="13" fill="#8fa3c8">Rust</text>
-<use href="#star" transform="translate(1096,378)" fill="#e3b341"/><text x="1106" y="382" text-anchor="end" font-size="13" fill="#e3b341">2</text>
-<text x="824" y="426" font-size="21" font-weight="700" fill="#e8f0ff">ExMachina</text>
-<text x="824" y="456" font-size="14" fill="#8fa3c8">以集体智能与集群协作为核心的</text>
-<text x="824" y="480" font-size="14" fill="#8fa3c8">AI Agent 系统</text>
-<line x1="824" y1="502" x2="1146" y2="502" stroke="#1c2c4e"/>
-<text x="824" y="528" font-size="12" fill="#58a6ff">AI Agents · Swarm</text>
-<use href="#arrow" transform="translate(1134,524)"/>
-</g>
+<rect x="48" y="76" width="352" height="176" rx="14" fill="#0e1734" stroke="#22345c" stroke-opacity=".9"/><rect class="card" style="animation-delay:0.0s" x="48" y="76" width="352" height="176" rx="14" fill="none" stroke="#f1e05a" stroke-opacity=".5"/><circle cx="74" cy="106" r="4" fill="#f1e05a"/><text x="88" y="110" font-size="11" letter-spacing="1.8" fill="#8fa3c8">JAVASCRIPT</text><path d="M378 92h8v8" fill="none" stroke="#f1e05a" stroke-width="1.5" stroke-opacity=".55"/><text x="74" y="152" font-size="19" font-weight="700" fill="#cfe3ff">DSH-Novelist</text><rect x="74" y="164" width="30" height="2.5" rx="1.2" fill="#f1e05a" opacity=".9"/><text x="74" y="190" font-size="13" fill="#8fa3c8">DeepSeek Harness 的小说写作智能体预设。</text><rect class="bar" style="animation-delay:0.00s" x="74" y="228" width="3" height="8" rx="1.5" fill="#f1e05a" opacity=".5"/><rect class="bar" style="animation-delay:0.13s" x="86" y="224" width="3" height="12" rx="1.5" fill="#f1e05a" opacity=".5"/><rect class="bar" style="animation-delay:0.26s" x="98" y="230" width="3" height="6" rx="1.5" fill="#f1e05a" opacity=".5"/><rect class="bar" style="animation-delay:0.39s" x="110" y="221" width="3" height="15" rx="1.5" fill="#f1e05a" opacity=".5"/><rect class="bar" style="animation-delay:0.52s" x="122" y="227" width="3" height="9" rx="1.5" fill="#f1e05a" opacity=".5"/><rect class="bar" style="animation-delay:0.65s" x="134" y="219" width="3" height="17" rx="1.5" fill="#f1e05a" opacity=".5"/><rect class="bar" style="animation-delay:0.78s" x="146" y="229" width="3" height="7" rx="1.5" fill="#f1e05a" opacity=".5"/><rect class="bar" style="animation-delay:0.91s" x="158" y="225" width="3" height="11" rx="1.5" fill="#f1e05a" opacity=".5"/><rect class="bar" style="animation-delay:1.04s" x="170" y="222" width="3" height="14" rx="1.5" fill="#f1e05a" opacity=".5"/><rect class="bar" style="animation-delay:1.17s" x="182" y="230" width="3" height="6" rx="1.5" fill="#f1e05a" opacity=".5"/><rect class="bar" style="animation-delay:1.30s" x="194" y="226" width="3" height="10" rx="1.5" fill="#f1e05a" opacity=".5"/><rect class="bar" style="animation-delay:1.43s" x="206" y="220" width="3" height="16" rx="1.5" fill="#f1e05a" opacity=".5"/><rect x="424" y="76" width="352" height="176" rx="14" fill="#0e1734" stroke="#22345c" stroke-opacity=".9"/><rect class="card" style="animation-delay:0.4s" x="424" y="76" width="352" height="176" rx="14" fill="none" stroke="#3178c6" stroke-opacity=".5"/><circle cx="450" cy="106" r="4" fill="#3178c6"/><text x="464" y="110" font-size="11" letter-spacing="1.8" fill="#8fa3c8">TYPESCRIPT</text><path d="M754 92h8v8" fill="none" stroke="#3178c6" stroke-width="1.5" stroke-opacity=".55"/><text x="450" y="152" font-size="19" font-weight="700" fill="#cfe3ff">N.I.C.E.</text><rect x="450" y="164" width="30" height="2.5" rx="1.2" fill="#3178c6" opacity=".9"/><text x="450" y="190" font-size="13" fill="#8fa3c8">面向 AI 小说的集成创作环境。</text><rect class="bar" style="animation-delay:0.20s" x="450" y="228" width="3" height="8" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:0.33s" x="462" y="224" width="3" height="12" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:0.46s" x="474" y="230" width="3" height="6" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:0.59s" x="486" y="221" width="3" height="15" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:0.72s" x="498" y="227" width="3" height="9" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:0.85s" x="510" y="219" width="3" height="17" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:0.98s" x="522" y="229" width="3" height="7" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:1.11s" x="534" y="225" width="3" height="11" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:1.24s" x="546" y="222" width="3" height="14" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:1.37s" x="558" y="230" width="3" height="6" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:1.50s" x="570" y="226" width="3" height="10" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:1.63s" x="582" y="220" width="3" height="16" rx="1.5" fill="#3178c6" opacity=".5"/><rect x="800" y="76" width="352" height="176" rx="14" fill="#0e1734" stroke="#22345c" stroke-opacity=".9"/><rect class="card" style="animation-delay:0.8s" x="800" y="76" width="352" height="176" rx="14" fill="none" stroke="#3178c6" stroke-opacity=".5"/><circle cx="826" cy="106" r="4" fill="#3178c6"/><text x="840" y="110" font-size="11" letter-spacing="1.8" fill="#8fa3c8">TYPESCRIPT</text><path d="M1130 92h8v8" fill="none" stroke="#3178c6" stroke-width="1.5" stroke-opacity=".55"/><text x="826" y="152" font-size="19" font-weight="700" fill="#cfe3ff">ScreepsDashboard</text><rect x="826" y="164" width="30" height="2.5" rx="1.2" fill="#3178c6" opacity=".9"/><text x="826" y="190" font-size="13" fill="#8fa3c8">Screeps 的数据面板。</text><rect class="bar" style="animation-delay:0.40s" x="826" y="228" width="3" height="8" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:0.53s" x="838" y="224" width="3" height="12" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:0.66s" x="850" y="230" width="3" height="6" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:0.79s" x="862" y="221" width="3" height="15" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:0.92s" x="874" y="227" width="3" height="9" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:1.05s" x="886" y="219" width="3" height="17" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:1.18s" x="898" y="229" width="3" height="7" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:1.31s" x="910" y="225" width="3" height="11" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:1.44s" x="922" y="222" width="3" height="14" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:1.57s" x="934" y="230" width="3" height="6" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:1.70s" x="946" y="226" width="3" height="10" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:1.83s" x="958" y="220" width="3" height="16" rx="1.5" fill="#3178c6" opacity=".5"/><rect x="48" y="272" width="352" height="176" rx="14" fill="#0e1734" stroke="#22345c" stroke-opacity=".9"/><rect class="card" style="animation-delay:1.2s" x="48" y="272" width="352" height="176" rx="14" fill="none" stroke="#3178c6" stroke-opacity=".5"/><circle cx="74" cy="302" r="4" fill="#3178c6"/><text x="88" y="306" font-size="11" letter-spacing="1.8" fill="#8fa3c8">TYPESCRIPT</text><path d="M378 288h8v8" fill="none" stroke="#3178c6" stroke-width="1.5" stroke-opacity=".55"/><text x="74" y="348" font-size="19" font-weight="700" fill="#cfe3ff">Screeps-Tools</text><rect x="74" y="360" width="30" height="2.5" rx="1.2" fill="#3178c6" opacity=".9"/><text x="74" y="386" font-size="13" fill="#8fa3c8">用 Next.js 编写的 Screeps 工具合集网站。</text><rect class="bar" style="animation-delay:0.60s" x="74" y="424" width="3" height="8" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:0.73s" x="86" y="420" width="3" height="12" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:0.86s" x="98" y="426" width="3" height="6" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:0.99s" x="110" y="417" width="3" height="15" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:1.12s" x="122" y="423" width="3" height="9" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:1.25s" x="134" y="415" width="3" height="17" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:1.38s" x="146" y="425" width="3" height="7" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:1.51s" x="158" y="421" width="3" height="11" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:1.64s" x="170" y="418" width="3" height="14" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:1.77s" x="182" y="426" width="3" height="6" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:1.90s" x="194" y="422" width="3" height="10" rx="1.5" fill="#3178c6" opacity=".5"/><rect class="bar" style="animation-delay:2.03s" x="206" y="416" width="3" height="16" rx="1.5" fill="#3178c6" opacity=".5"/><rect x="424" y="272" width="352" height="176" rx="14" fill="#0e1734" stroke="#22345c" stroke-opacity=".9"/><rect class="card" style="animation-delay:1.6s" x="424" y="272" width="352" height="176" rx="14" fill="none" stroke="#dea584" stroke-opacity=".5"/><circle cx="450" cy="302" r="4" fill="#dea584"/><text x="464" y="306" font-size="11" letter-spacing="1.8" fill="#8fa3c8">RUST</text><path d="M754 288h8v8" fill="none" stroke="#dea584" stroke-width="1.5" stroke-opacity=".55"/><text x="450" y="348" font-size="19" font-weight="700" fill="#cfe3ff">ExMachina</text><rect x="450" y="360" width="30" height="2.5" rx="1.2" fill="#dea584" opacity=".9"/><text x="450" y="386" font-size="13" fill="#8fa3c8">以集体智能与集群协作为核心的 Agent 系统。</text><rect class="bar" style="animation-delay:0.80s" x="450" y="424" width="3" height="8" rx="1.5" fill="#dea584" opacity=".5"/><rect class="bar" style="animation-delay:0.93s" x="462" y="420" width="3" height="12" rx="1.5" fill="#dea584" opacity=".5"/><rect class="bar" style="animation-delay:1.06s" x="474" y="426" width="3" height="6" rx="1.5" fill="#dea584" opacity=".5"/><rect class="bar" style="animation-delay:1.19s" x="486" y="417" width="3" height="15" rx="1.5" fill="#dea584" opacity=".5"/><rect class="bar" style="animation-delay:1.32s" x="498" y="423" width="3" height="9" rx="1.5" fill="#dea584" opacity=".5"/><rect class="bar" style="animation-delay:1.45s" x="510" y="415" width="3" height="17" rx="1.5" fill="#dea584" opacity=".5"/><rect class="bar" style="animation-delay:1.58s" x="522" y="425" width="3" height="7" rx="1.5" fill="#dea584" opacity=".5"/><rect class="bar" style="animation-delay:1.71s" x="534" y="421" width="3" height="11" rx="1.5" fill="#dea584" opacity=".5"/><rect class="bar" style="animation-delay:1.84s" x="546" y="418" width="3" height="14" rx="1.5" fill="#dea584" opacity=".5"/><rect class="bar" style="animation-delay:1.97s" x="558" y="426" width="3" height="6" rx="1.5" fill="#dea584" opacity=".5"/><rect class="bar" style="animation-delay:2.10s" x="570" y="422" width="3" height="10" rx="1.5" fill="#dea584" opacity=".5"/><rect class="bar" style="animation-delay:2.23s" x="582" y="416" width="3" height="16" rx="1.5" fill="#dea584" opacity=".5"/><rect x="800" y="272" width="352" height="176" rx="14" fill="#0e1734" stroke="#22345c" stroke-opacity=".9"/><rect class="card" style="animation-delay:2.0s" x="800" y="272" width="352" height="176" rx="14" fill="none" stroke="#dea584" stroke-opacity=".5"/><circle cx="826" cy="302" r="4" fill="#dea584"/><text x="840" y="306" font-size="11" letter-spacing="1.8" fill="#8fa3c8">RUST</text><path d="M1130 288h8v8" fill="none" stroke="#dea584" stroke-width="1.5" stroke-opacity=".55"/><text x="826" y="348" font-size="19" font-weight="700" fill="#cfe3ff">MiniTools-Rust</text><rect x="826" y="360" width="30" height="2.5" rx="1.2" fill="#dea584" opacity=".9"/><text x="826" y="386" font-size="13" fill="#8fa3c8">用 Rust 编写的命令行小工具集。</text><rect class="bar" style="animation-delay:1.00s" x="826" y="424" width="3" height="8" rx="1.5" fill="#dea584" opacity=".5"/><rect class="bar" style="animation-delay:1.13s" x="838" y="420" width="3" height="12" rx="1.5" fill="#dea584" opacity=".5"/><rect class="bar" style="animation-delay:1.26s" x="850" y="426" width="3" height="6" rx="1.5" fill="#dea584" opacity=".5"/><rect class="bar" style="animation-delay:1.39s" x="862" y="417" width="3" height="15" rx="1.5" fill="#dea584" opacity=".5"/><rect class="bar" style="animation-delay:1.52s" x="874" y="423" width="3" height="9" rx="1.5" fill="#dea584" opacity=".5"/><rect class="bar" style="animation-delay:1.65s" x="886" y="415" width="3" height="17" rx="1.5" fill="#dea584" opacity=".5"/><rect class="bar" style="animation-delay:1.78s" x="898" y="425" width="3" height="7" rx="1.5" fill="#dea584" opacity=".5"/><rect class="bar" style="animation-delay:1.91s" x="910" y="421" width="3" height="11" rx="1.5" fill="#dea584" opacity=".5"/><rect class="bar" style="animation-delay:2.04s" x="922" y="418" width="3" height="14" rx="1.5" fill="#dea584" opacity=".5"/><rect class="bar" style="animation-delay:2.17s" x="934" y="426" width="3" height="6" rx="1.5" fill="#dea584" opacity=".5"/><rect class="bar" style="animation-delay:2.30s" x="946" y="422" width="3" height="10" rx="1.5" fill="#dea584" opacity=".5"/><rect class="bar" style="animation-delay:2.43s" x="958" y="416" width="3" height="16" rx="1.5" fill="#dea584" opacity=".5"/></g>
+<rect x=".5" y=".5" width="1199" height="491" rx="18" fill="none" stroke="#22345c" stroke-opacity=".9"/>
 </svg>
