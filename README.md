@@ -5,19 +5,7 @@
   <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg" />
   <source media="(prefers-color-scheme: light)" srcset="assets/hero-light.svg" />
   <img src="assets/hero-dark.svg" width="100%" alt="KUROHANE KAORUKO — AI engineer and toolmaker" />
-</picture>
-
-<p>
-  <a href="https://kurohanekaoruko.github.io/KurohaneKaoruko/">
-    <img src="https://img.shields.io/badge/GitHub.io-kurohanekaoruko.github.io-ff3333?style=flat&amp;logo=github&amp;logoColor=white" alt="Personal website on GitHub Pages" />
-  </a>
-  <a href="https://kurohanekaoruko.pages.dev/">
-    <img src="https://img.shields.io/badge/Cloudflare-kurohanekaoruko.pages.dev-F38020?style=flat&amp;logo=cloudflare&amp;logoColor=white" alt="Personal website on Cloudflare Pages" />
-  </a>
-  <a href="https://kurohanekaoruko.vercel.app/">
-    <img src="https://img.shields.io/badge/Vercel-kurohanekaoruko.vercel.app-000000?style=flat&amp;logo=vercel&amp;logoColor=white" alt="Personal website on Vercel" />
-  </a>
-</p>
+</picture><a href="https://kurohanekaoruko.github.io/KurohaneKaoruko/"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/sites/github-dark.svg" /><source media="(prefers-color-scheme: light)" srcset="assets/sites/github-light.svg" /><img src="assets/sites/github-dark.svg" width="33.33%" alt="kurohanekaoruko.github.io" /></picture></a><a href="https://kurohanekaoruko.pages.dev/"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/sites/cloudflare-dark.svg" /><source media="(prefers-color-scheme: light)" srcset="assets/sites/cloudflare-light.svg" /><img src="assets/sites/cloudflare-dark.svg" width="33.33%" alt="kurohanekaoruko.pages.dev" /></picture></a><a href="https://kurohanekaoruko.vercel.app/"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/sites/vercel-dark.svg" /><source media="(prefers-color-scheme: light)" srcset="assets/sites/vercel-light.svg" /><img src="assets/sites/vercel-dark.svg" width="33.34%" alt="kurohanekaoruko.vercel.app" /></picture></a>
 
 <!-- ============ FOCUS ============ -->
 <picture>
