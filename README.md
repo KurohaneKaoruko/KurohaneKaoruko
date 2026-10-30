@@ -4,7 +4,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg" />
   <source media="(prefers-color-scheme: light)" srcset="assets/hero-light.svg" />
-  <img src="assets/hero-dark.svg" width="100%" alt="KUROHANE KAORUKO — AI engineer and toolmaker" />
+  <img src="assets/hero-dark.svg" width="100%" alt="KUROHANE KAORUKO" />
 </picture><a href="https://kurohanekaoruko.github.io/KurohaneKaoruko/"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/sites/github-dark.svg" /><source media="(prefers-color-scheme: light)" srcset="assets/sites/github-light.svg" /><img src="assets/sites/github-dark.svg" width="33.33%" alt="kurohanekaoruko.github.io" /></picture></a><a href="https://kurohanekaoruko.pages.dev/"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/sites/cloudflare-dark.svg" /><source media="(prefers-color-scheme: light)" srcset="assets/sites/cloudflare-light.svg" /><img src="assets/sites/cloudflare-dark.svg" width="33.33%" alt="kurohanekaoruko.pages.dev" /></picture></a><a href="https://kurohanekaoruko.vercel.app/"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/sites/vercel-dark.svg" /><source media="(prefers-color-scheme: light)" srcset="assets/sites/vercel-light.svg" /><img src="assets/sites/vercel-dark.svg" width="33.34%" alt="kurohanekaoruko.vercel.app" /></picture></a>
 
 <!-- ============ FOCUS ============ -->
