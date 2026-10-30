@@ -4,6 +4,7 @@ import Link from "next/link";
 import { createPortal } from "react-dom";
 import { useEffect, useRef, useState } from "react";
 import { ASCII_COLS, ASCII_FPS, ASCII_FRAME0, ASCII_ROWS } from "./ascii-frames";
+import { BASE } from "@/lib/site";
 import "@fontsource-variable/roboto-mono"; // v65: 字符画字体按路由级引入，不进 globals.css（其它页面仍用 IBM Plex Mono）
 import "./not-found.scss";
 
@@ -295,7 +296,7 @@ export default function NotFound() {
       framesCtrl = ctrl;
       const timer = window.setTimeout(() => ctrl.abort(), 3000);
       try {
-        const res = await fetch("/ascii-frames.bin.gz?v=136x146swap01", { signal: ctrl.signal }); // v= 随数据版本递增，击穿 bin.gz 的浏览器缓存
+        const res = await fetch(`${BASE}/ascii-frames.bin.gz?v=136x146swap01`, { signal: ctrl.signal }); // v= 随数据版本递增，击穿 bin.gz 的浏览器缓存
         if (!res.ok || !res.body) throw new Error(`HTTP ${res.status}`);
         const text = await new Response(res.body.pipeThrough(new DecompressionStream("gzip"))).text();
         const lines = text.split("\n");

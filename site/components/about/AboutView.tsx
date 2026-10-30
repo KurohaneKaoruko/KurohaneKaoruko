@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { SectionHead } from "@/components/ui/SectionHead";
 import { Reveal } from "@/components/ui/Reveal";
-import { CURATOR, SITE } from "@/lib/site";
+import { BASE, CURATOR, SITE } from "@/lib/site";
 import { projects } from "@/lib/data";
 
 /**
@@ -75,7 +75,7 @@ export function AboutView() {
               <figure className="portrait-frame relative border border-line p-2">
                 <div className="relative overflow-hidden">
                   <img
-                    src="/logo.jpg"
+                    src={`${BASE}/logo.jpg`}
                     alt="Kurohane Kaoruko"
                     width={600}
                     height={600}

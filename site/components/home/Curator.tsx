@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHead } from "@/components/ui/SectionHead";
-import { CURATOR } from "@/lib/site";
+import { BASE, CURATOR } from "@/lib/site";
 
 /**
  * 作者。
@@ -27,7 +27,7 @@ export function Curator() {
             <figure className="portrait-frame relative border border-line p-2">
               <div className="relative overflow-hidden">
                 <img
-                  src="/logo.jpg"
+                  src={`${BASE}/logo.jpg`}
                   alt="Kurohane Kaoruko"
                   width={600}
                   height={600}

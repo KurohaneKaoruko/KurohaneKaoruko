@@ -15,7 +15,7 @@ import Header from "@/components/layout/Header";
 import { BootScript } from "@/components/layout/BootScript";
 import { ReposProvider } from "@/components/ReposProvider";
 import { LoadingProvider } from "@/context/LoadingContext";
-import { SITE } from "@/lib/site";
+import { BASE, SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -59,9 +59,9 @@ export const metadata: Metadata = {
     "supported-color-schemes": "dark",
   },
   icons: {
-    icon: [{ url: "/logo.jpg", type: "image/jpeg" }],
-    shortcut: [{ url: "/logo.jpg", type: "image/jpeg" }],
-    apple: [{ url: "/logo.jpg", type: "image/jpeg" }],
+    icon: [{ url: `${BASE}/logo.jpg`, type: "image/jpeg" }],
+    shortcut: [{ url: `${BASE}/logo.jpg`, type: "image/jpeg" }],
+    apple: [{ url: `${BASE}/logo.jpg`, type: "image/jpeg" }],
   },
 };
 

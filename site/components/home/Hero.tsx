@@ -124,7 +124,7 @@ export function Hero() {
           <div className="lg:col-span-7 lg:pr-10">
             <p className="label hero-rise" style={{ "--d": "40ms" } as React.CSSProperties}>
               <span className="mr-2 text-signal">//</span>
-              Operator file · K.K.
+              Operator file · K.H.K.
               <span className="ml-3 hidden text-faint md:inline">EST. {SITE.build}</span>
             </p>
 

@@ -25,6 +25,15 @@ export const SITE = {
   build: "2026.10",
 } as const;
 
+/**
+ * 静态资源的前缀。GitHub Pages 项目页部署在仓库子路径下，
+ * next.config 的 basePath 只作用于路由与 _next/ 资源，
+ * public/ 下的文件（favicon、图片、预取数据）要自己带上这段前缀。
+ * 根路径部署（Vercel / Cloudflare）时为空串。
+ */
+export const BASE =
+  process.env.DEPLOY_TARGET === "pages" ? "/KurohaneKaoruko" : "";
+
 export type NavItem = {
   href: string;
   /** 中文主标 */
