@@ -34,6 +34,7 @@ export function Cursor() {
     };
 
     let running = false;
+    let coordDirty = false;
 
     const loop = () => {
       const dx = x - rx;
@@ -43,8 +44,16 @@ export function Cursor() {
       if (ringRef.current) {
         ringRef.current.style.transform = `translate3d(${rx - x}px, ${ry - y}px, 0)`;
       }
-      // 环追上指针就停掉循环，空闲时不再占用主线程
-      if (Math.abs(dx) < 0.2 && Math.abs(dy) < 0.2) {
+      // 坐标读数合批到帧里再写：pointermove 一秒能来几百次，逐次改文本
+      // 会让光标层不停失效——弹窗的遮罩开着时它叠在全屏 backdrop blur
+      // 之上，每次失效都要把模糊重新采样一遍，卡顿就是这么来的。
+      if (coordDirty && coordRef.current) {
+        coordDirty = false;
+        coordRef.current.textContent =
+          String(Math.round(x)).padStart(4, "0") + ":" + String(Math.round(y)).padStart(4, "0");
+      }
+      // 环追上指针、坐标也写完，就停掉循环，空闲时不再占用主线程
+      if (Math.abs(dx) < 0.2 && Math.abs(dy) < 0.2 && !coordDirty) {
         running = false;
         return;
       }
@@ -74,8 +83,7 @@ export function Cursor() {
         }
       }
       if (coordRef.current) {
-        coordRef.current.textContent =
-          String(Math.round(x)).padStart(4, "0") + ":" + String(Math.round(y)).padStart(4, "0");
+        coordDirty = true; // 真正写入交给 rAF 帧合批
       }
       kick();
     };

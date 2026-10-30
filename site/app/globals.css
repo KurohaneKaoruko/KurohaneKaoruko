@@ -607,10 +607,16 @@ body {
   position: fixed;
   inset: 0;
   z-index: 100;
-  background: rgba(4, 5, 5, 0.72);
-  backdrop-filter: blur(5px);
+  background: rgba(4, 5, 5, 0.82);
+  backdrop-filter: blur(3px);
   opacity: 0;
   animation: scrim-in 0.25s ease forwards;
+  /*
+   * 模糊半径刻意压得很小：遮罩叠在整页之上，而页面上的自定义光标
+   * 每帧都在动，backdrop-filter 没有缓存，光标每动一下全屏模糊就
+   * 得重新采样一遍，弹窗里的指针就会发涩。半径减半 + 底色略加深，
+   * 观感几乎不变，合成开销大幅下降。
+   */
 }
 @keyframes scrim-in {
   to {
