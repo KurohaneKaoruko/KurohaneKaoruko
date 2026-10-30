@@ -11,13 +11,37 @@ $ink: #0b0b0b; // 正文黑 / 深色按钮底
 $field-ink: #141414; // 字符画笔触
 $glitch-red: #ff2a2a;
 $glitch-blue: #2f6dff;
-$mono: var(--font-roboto-mono), ui-monospace, monospace;
+$mono: "Roboto Mono Variable", "Roboto Mono", var(--font-mono), ui-monospace, monospace; // v65: 字符画按 Roboto Mono 度量标定（0.6em 步进 / 0/1 墨量互换），字体由 not-found.tsx 路由级引入
 
 /* 红蓝故障副本层：两者只有关键帧名与时长不同 */
 @mixin glitch-layer($name, $duration) {
   position: absolute;
   inset: 0;
   animation: $name $duration steps(1, end) infinite;
+}
+
+/* ==========================================================================
+   404 期间的外壳隔离
+   ==========================================================================
+   SSR 静态壳里，黑幕垫底（not-found.tsx 未挂载期的 fixed inset-0 z-[80]）
+   被包在 .route-in 里，而 .route-in 的入场动画（fill-mode: both + transform
+   关键帧）让它永久保持 stacking context —— z-80 出不了这个局部上下文，
+   根层 fixed 的页眉（z-50）和文档流的页脚全画在黑幕上面：刷新瞬间
+   「网站其它内容」先于字符画出现。
+
+   用 body:has([data-nf-shell]) 识别：黑幕壳存在的整个期间（首帧 → portal
+   接管）都压住外壳；壳一卸载规则自动解除，水合时序无关，无 JS 参与。
+   ========================================================================== */
+body:has([data-nf-shell]) .site-header,
+body:has([data-nf-shell]) .rail,
+body:has([data-nf-shell]) .route-scan,
+body:has([data-nf-shell]) .cursor-plate {
+  visibility: hidden !important;
+}
+/* 页脚没有独立类名，用结构定位；黑底上 visibility:hidden 不留缝 */
+body:has([data-nf-shell]) > footer,
+body:has([data-nf-shell]) > * > footer {
+  visibility: hidden !important;
 }
 
 .nf {

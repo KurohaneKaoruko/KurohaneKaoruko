@@ -1,108 +1,69 @@
 "use client";
 
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  type ReactNode,
-} from "react";
-import { projects as CURATED } from "@/lib/data";
-import { fetchRepos, readCache, type Repo } from "@/lib/repos";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { SNAPSHOT, fetchRepos, readCache, type Repo } from "@/lib/repos";
 
-type ReposContextValue = {
+type Status = "snapshot" | "syncing" | "live" | "offline";
+
+type ReposValue = {
   repos: Repo[];
-  /** static = 站内手写快照；live = 这一份来自 GitHub 实时接口 */
-  source: "static" | "live";
-  /** 上次同步成功的时间戳（毫秒） */
+  status: Status;
   syncedAt: number | null;
-  /** 正在同步 */
-  pending: boolean;
-  /** 最近一次同步失败（限额用尽 / 离线 / 超时都算） */
-  failed: boolean;
-  sync: () => void;
 };
 
-const ReposContext = createContext<ReposContextValue | undefined>(undefined);
+const ReposContext = createContext<ReposValue>({
+  repos: SNAPSHOT,
+  status: "snapshot",
+  syncedAt: null,
+});
 
 /**
- * 仓库数据的实时来源。
+ * 仓库数据源。
  *
- * 首屏用站内手写快照渲染 —— 这既是服务端导出的内容，也是接口挂掉时的兜底，
- * 所以服务端与客户端首次渲染完全一致，不存在水合不一致。
- * 挂载后（以及在缓存过期时）再从浏览器直连 GitHub 换成实时数据。
- *
- * 缓存放在 localStorage，TTL 见 lib/repos.ts：未认证限额只有 60 次/小时/IP，
- * 不做缓存的话反复刷新很容易把自己限流。
+ * 初始值是构建内置的策展兜底清单（SSR 首屏有完整内容）；挂载后读
+ * localStorage 缓存，再向 GitHub 实时同步一次，成功即覆盖（星标、描述、
+ * 数量以实时为准），失败则停留在兜底数据上。纯实时获取，没有定时打包：
+ * 站点只在代码变化时重新构建，仓库数据随每次访问刷新。
  */
 export function ReposProvider({ children }: { children: ReactNode }) {
-  const [repos, setRepos] = useState<Repo[]>(CURATED);
-  const [source, setSource] = useState<"static" | "live">("static");
-  const [syncedAt, setSyncedAt] = useState<number | null>(null);
-  const [pending, setPending] = useState(false);
-  const [failed, setFailed] = useState(false);
-
-  /** 同一时刻只允许一个请求在飞，避免连点刷新把限额打光 */
-  const inFlightRef = useRef<AbortController | null>(null);
-  const mountedRef = useRef(true);
-
-  useEffect(() => {
-    mountedRef.current = true;
-    return () => {
-      mountedRef.current = false;
-      inFlightRef.current?.abort();
-    };
-  }, []);
-
-  const sync = useCallback(() => {
-    if (inFlightRef.current) return;
-    const controller = new AbortController();
-    inFlightRef.current = controller;
-    setPending(true);
-
-    fetchRepos(controller.signal)
-      .then((result) => {
-        if (!mountedRef.current) return;
-        setRepos(result.repos);
-        setSyncedAt(result.syncedAt);
-        setSource("live");
-        setFailed(false);
-      })
-      .catch(() => {
-        // 拉不到就继续用快照：星标可能不是最新的，但页面不能因此空掉或报错
-        if (!mountedRef.current) return;
-        setFailed(true);
-      })
-      .finally(() => {
-        if (inFlightRef.current === controller) inFlightRef.current = null;
-        if (mountedRef.current) setPending(false);
-      });
-  }, []);
+  const [value, setValue] = useState<ReposValue>({
+    repos: SNAPSHOT,
+    status: "snapshot",
+    syncedAt: null,
+  });
 
   useEffect(() => {
     const cached = readCache();
     if (cached) {
-      setRepos(cached.repos);
-      setSyncedAt(cached.syncedAt);
-      setSource("live");
-      return;
+      setValue({ repos: cached.repos, status: "live", syncedAt: cached.syncedAt });
     }
-    sync();
-  }, [sync]);
 
-  const value = useMemo(
-    () => ({ repos, source, syncedAt, pending, failed, sync }),
-    [repos, source, syncedAt, pending, failed, sync]
-  );
+    const controller = new AbortController();
+    setValue((v) => ({ ...v, status: v.syncedAt ? "live" : "syncing" }));
+
+    fetchRepos(controller.signal)
+      .then((result) => {
+        setValue({ repos: result.repos, status: "live", syncedAt: result.syncedAt });
+      })
+      .catch(() => {
+        setValue((v) => ({ ...v, status: v.syncedAt ? "live" : "offline" }));
+      });
+
+    return () => controller.abort();
+  }, []);
 
   return <ReposContext.Provider value={value}>{children}</ReposContext.Provider>;
 }
 
 export function useRepos() {
-  const context = useContext(ReposContext);
-  if (!context) throw new Error("useRepos 必须在 ReposProvider 内使用");
-  return context;
+  return useContext(ReposContext);
+}
+
+/** 汇总数字：标本数、星标、语言数、科属数 */
+export function useCollectionStats() {
+  const { repos } = useRepos();
+  const stars = repos.reduce((sum, r) => sum + r.stars, 0);
+  const langs = new Set(repos.map((r) => r.lang).filter(Boolean));
+  const families = new Set(repos.map((r) => r.family));
+  return { total: repos.length, stars, langs: langs.size, families: families.size };
 }

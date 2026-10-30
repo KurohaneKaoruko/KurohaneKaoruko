@@ -54,6 +54,14 @@ const PAPER = "#ffece6"; // 暖白（弹窗文字）
 const RED_HOT = "#ff5464"; // 弹窗黑底上的红（GROUND 的提亮档）
 
 const CSS = `
+/* v74: 500 视图的等宽字按 Roboto Mono 设计（v71/v73 时代 --font-mono 直指它）。
+   在根容器重定义 --stack-mono：Tailwind 的 .font-mono 编译为 var(--stack-mono)，
+   自定义属性沿子树继承 —— 一条规则覆盖整页 17 处等宽字（含 modal，
+   modal 也 portal 到 body，但作为 er-root 的子节点挂载，变量随元素树继承）。
+   字体文件由 app/500/page.tsx 路由级引入，不进 globals.css。 */
+.er-root {
+  --stack-mono: "Roboto Mono Variable", "Roboto Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
 .er-root ::selection { background: ${INK}; color: ${GROUND}; }
 
 /* 状态点呼吸 */
@@ -96,7 +104,7 @@ const CSS = `
 }
 .er-foam {
   position: absolute;
-  font-family: var(--font-roboto-mono), ui-monospace, monospace;
+  font-family: "Roboto Mono Variable", "Roboto Mono", var(--font-mono), ui-monospace, monospace;
   font-weight: 700;
   color: ${INK};
   animation: erFoam var(--d, 0.7s) ease-out both;

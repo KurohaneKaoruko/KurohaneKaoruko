@@ -1,25 +1,10 @@
 "use client";
 
-/* v63: 0/1 档位互换 —— 实测 Roboto Mono '0' 墨量(6092)是 '1'(2858) 的两倍+，最暗档改用 0；
-   v62: BLANK_SHARE 再收至 0.50；v61 曾为 0.52；最初 0.58 —— 脸部/眼周高光区吃进灰阶字符（用户反馈局部过亮）；
-   v60: 网格回部署版 136×146 + letterEm 0.3（fs ≈ 8.81px@1080p）—— 用户定稿：部署版的细密纹理观感最好；
-   v59: 素材换黑白柔和对比版（convert-source-bw.py --k 0.75 --hard 0）：对比接近部署版的自然层次，
-   无准二值化；
-   v56: 着色回退 13c8a48 方案 —— 10 档灰阶 charset （ .'"-_=+01 ）+ BLANK_SHARE 0.58，字符内容静态直出（无 0/1 随机变异）；
-   排版调整保留：96×103、letterEm 0.36（fs 11.71px@1080p）。v52: 用回彩色原片；
-   （间距加大、字号 12.49→11.71px@1080p）；v50-v51: 黑区随机闪烁 0/1 + '.' 灰度填充（charset " .01"），
-   墨水格的 0/1 运行时随机生成并持续变异（~90ms 翻转 22%）—— 固定图案观感死板。
-   v49: 源素材推到准二值（convert-source-bw.py 加 --hard 0.72 硬阈值混合，中间调 3.9% → 0.3%）——
-   发丝/水手服成实心黑字符块、脸部干净留白，对齐参考站的黑白构成；
-   重笔画字符 8.9% - 24.9%，中间调减半，黑白分明；网格/字号沿用 v47（96x103 / 12.49px@1080p）。
-   v47: 字符画网格 112x120 - 96x103（字号比 v4 原 136x146 +42%）；
-   bin.gz 的 fetch 加 ?v= 击穿浏览器缓存（上一轮 +22% 用户反馈「没放大」的疑因之一）；
-15 值字符集 + 首帧布局与 resize 同源（computeLayout 纯函数单源） */
-
 import Link from "next/link";
 import { createPortal } from "react-dom";
 import { useEffect, useRef, useState } from "react";
 import { ASCII_COLS, ASCII_FPS, ASCII_FRAME0, ASCII_ROWS } from "./ascii-frames";
+import "@fontsource-variable/roboto-mono"; // v65: 字符画字体按路由级引入，不进 globals.css（其它页面仍用 IBM Plex Mono）
 import "./not-found.scss";
 
 type MaskSpec = {
@@ -415,7 +400,10 @@ export default function NotFound() {
 
   
   if (!mounted) {
-    return <div className="fixed inset-0 z-[80] bg-black" />;
+    // 水合前的黑幕垫底。data-nf-shell 供 not-found.scss 的 body:has() 规则识别：
+    // 只要这个壳还在 DOM 里（= 字符画尚未接管），就压住 SSR 外壳的页眉/页脚，
+    // 避免「刷新时先看到网站其它内容」；壳卸载后规则自动解除，与 portal 无缝交接。
+    return <div data-nf-shell className="fixed inset-0 z-[80] bg-black" />;
   }
 
   return createPortal(

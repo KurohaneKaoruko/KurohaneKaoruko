@@ -1,10 +1,14 @@
 /**
- * 路由级加载态：只铺一层背景色，不出现任何"转圈"或骨架屏。
- *
- * 视觉入场全部交给启动屏与路由幕布，这里保持空白是刻意的 ——
- * 两个过渡系统同时演出只会互相打架。`route-loading` 标记供过渡层识别
- * "当前上屏的还只是 Suspense 空壳"。
+ * 路由级加载态：一行状态字，不做骨架屏。
+ * 静态导出的页面几乎是瞬间到达，骨架只会闪一下。
  */
 export default function Loading() {
-  return <div className="route-loading min-h-screen bg-background" />;
+  return (
+    <div className="flex min-h-[60vh] items-center justify-center">
+      <p className="label flex items-center gap-3">
+        <span className="status-dot" aria-hidden="true" />
+        LOADING
+      </p>
+    </div>
+  );
 }

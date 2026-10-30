@@ -1,36 +1,39 @@
 import type { Metadata, Viewport } from "next";
-import "@fontsource-variable/inter";
-import "@fontsource-variable/roboto-mono";
+import "@fontsource-variable/ibm-plex-sans";
+import "@fontsource-variable/noto-sans-sc";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
 import "./globals.css";
 
-import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
+import { Cursor } from "@/components/fx/Cursor";
+import { PointerFX } from "@/components/fx/PointerFX";
+import { RouteFX } from "@/components/fx/RouteFX";
 import SplashScreen from "@/components/features/SplashScreen";
 import { LoadingTrigger } from "@/components/features/LoadingTrigger";
-import TransitionProvider from "@/components/layout/TransitionProvider";
+import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
+import { BootScript } from "@/components/layout/BootScript";
 import { ReposProvider } from "@/components/ReposProvider";
-import { ThemeProvider } from "@/components/theme/ThemeProvider";
-import { ThemeScript } from "@/components/theme/ThemeScript";
-import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { LoadingProvider } from "@/context/LoadingContext";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: SITE.name,
+    default: `${SITE.name} — ${SITE.archive}`,
     template: "%s — " + SITE.name,
   },
   description: SITE.description,
   keywords: [
     "Kurohane Kaoruko",
-    "AI",
-    "LLM Agents",
+    "开源",
+    "AI Agents",
+    "LLM",
     "Rust",
     "TypeScript",
-    "Python",
     "Next.js",
-    "开源",
+    "Tauri",
+    "个人网站",
   ],
   authors: [{ name: SITE.name, url: SITE.github }],
   creator: SITE.name,
@@ -40,21 +43,16 @@ export const metadata: Metadata = {
     locale: "zh_CN",
     url: SITE.url,
     siteName: SITE.name,
-    title: SITE.name,
+    title: `${SITE.name} — ${SITE.archive}`,
     description: SITE.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: SITE.name,
+    title: `${SITE.name} — ${SITE.archive}`,
     description: SITE.description,
   },
   robots: { index: true, follow: true },
-  /**
-   * 全站是深色设计，但 QQ / UC / 华为这类浏览器的「智能反色」（X5 夜间模式）
-   * 只翻浅色元素、不动深色底，结果就是：黑底还在，白团和浅色按钮却被翻成深色，
-   * 页面直接花掉。`color-scheme: dark`（见下方 viewport）不足以阻止它，
-   * 还得靠这几个国内浏览器认的私有声明。
-   */
+  /** 站内自带深色界面，阻止国内浏览器的「智能反色」再翻一次 */
   other: {
     nightmode: "disable",
     "x5-nightmode": "disable",
@@ -68,43 +66,35 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#080808",
+  themeColor: "#070809",
   colorScheme: "dark",
+  width: "device-width",
+  initialScale: 1,
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="zh-CN" data-theme="terminal" suppressHydrationWarning>
-      <body className="min-h-screen antialiased">
-        {/* 必须最先执行：在水合前定好 <html data-theme>，否则会看到主题闪一下 */}
-        <ThemeScript />
+    <html lang="zh-CN" suppressHydrationWarning>
+      <body>
+        <BootScript />
+
+        <div id="top" />
+        <a href="#main" className="skip-link">
+          跳到主内容
+        </a>
 
         <LoadingProvider>
-          <ThemeProvider>
-            {/* 仓库数据：首屏用站内快照，挂载后换成浏览器直连 GitHub 的实时数据 */}
-            <ReposProvider>
-              <a href="#main" className="skip-link">
-                跳到主内容 / SKIP TO CONTENT
-              </a>
-
-              <SplashScreen />
-              <ScrollProgress />
-              <Nav />
-
-              <TransitionProvider>
-                <main id="main" className="relative z-10 pt-[var(--nav-h)]">
-                  {children}
-                </main>
-              </TransitionProvider>
-
-              <Footer />
-              <LoadingTrigger />
-            </ReposProvider>
-          </ThemeProvider>
+          <ReposProvider>
+            <SplashScreen />
+            <Header />
+            <main id="main" className="pt-[var(--nav-h)]">
+              <RouteFX>{children}</RouteFX>
+            </main>
+            <Footer />
+            <LoadingTrigger />
+            <Cursor />
+            <PointerFX />
+          </ReposProvider>
         </LoadingProvider>
       </body>
     </html>

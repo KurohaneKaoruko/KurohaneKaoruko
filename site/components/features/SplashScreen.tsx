@@ -147,7 +147,7 @@ export default function SplashScreen() {
         >
           {/* 上快门 */}
           <motion.div
-            className="absolute left-0 top-0 z-0 h-1/2 w-full border-b border-primary/20"
+            className="absolute left-0 top-0 z-0 h-1/2 w-full border-b border-signal/20"
             style={{ backgroundColor: "#0A0A0A" }}
             initial={{ y: 0 }}
             exit={{ y: "-100%", transition: { duration: SHUTTER_EXIT, ease: SHUTTER_EASE } }}
@@ -164,7 +164,7 @@ export default function SplashScreen() {
 
           {/* 下快门 */}
           <motion.div
-            className="absolute bottom-0 left-0 z-0 h-1/2 w-full border-t border-primary/20"
+            className="absolute bottom-0 left-0 z-0 h-1/2 w-full border-t border-signal/20"
             style={{ backgroundColor: "#0A0A0A" }}
             initial={{ y: 0 }}
             exit={{ y: "100%", transition: { duration: SHUTTER_EXIT, ease: SHUTTER_EASE } }}
@@ -200,7 +200,7 @@ export default function SplashScreen() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.1, duration: 0.5 }}
-              className="font-mono text-xs uppercase tracking-[0.2em] text-text-muted"
+              className="font-mono text-xs uppercase tracking-[0.2em] text-muted"
             >
               <ScrambleText
                 text="The World Initialization Sequence"
@@ -212,7 +212,7 @@ export default function SplashScreen() {
             </motion.div>
 
             {/* 进度条 */}
-            <div className="mt-8 flex w-full items-center gap-2 font-mono text-primary">
+            <div className="mt-8 flex w-full items-center gap-2 font-mono text-signal">
               <span className="text-sm">[</span>
               <div className="relative h-1 flex-1 overflow-hidden">
                 {/* 未加载段（虚线底） */}
@@ -225,7 +225,7 @@ export default function SplashScreen() {
                   }}
                 />
                 {/* 已加载段（实心条） */}
-                <div ref={barRef} className="relative z-10 h-full bg-primary" style={{ width: "0%" }}>
+                <div ref={barRef} className="relative z-10 h-full bg-signal" style={{ width: "0%" }}>
                   <div className="absolute bottom-0 right-0 top-0 w-2 bg-white shadow-[0_0_10px_#fff]" />
                 </div>
               </div>
@@ -235,7 +235,7 @@ export default function SplashScreen() {
             {/* 状态日志：当前状态在上（带百分比），显示过的往下堆叠保留。
                 固定预留 4 行高度 —— 不预留的话每长一行整列就重新居中一次，
                 标题和进度条会被挤着往上跳。 */}
-            <div className="h-[72px] w-full overflow-hidden font-mono text-[10px] uppercase leading-[18px] text-text-dim">
+            <div className="h-[72px] w-full overflow-hidden font-mono text-[10px] uppercase leading-[18px] text-faint">
               <div className="flex w-full justify-between">
                 <span>{statusLog[0]}</span>
                 <span ref={percentageRef}>0%</span>
@@ -250,11 +250,11 @@ export default function SplashScreen() {
 
           {/* 角部装饰——挂在快门上随之移动 */}
           <motion.div
-            className="absolute left-8 top-8 z-20 h-16 w-16 border-l border-t border-primary/50"
+            className="absolute left-8 top-8 z-20 h-16 w-16 border-l border-t border-signal/50"
             exit={{ y: "-200%", opacity: 0, transition: { duration: SHUTTER_EXIT } }}
           />
           <motion.div
-            className="absolute bottom-8 right-8 z-20 h-16 w-16 border-b border-r border-primary/50"
+            className="absolute bottom-8 right-8 z-20 h-16 w-16 border-b border-r border-signal/50"
             exit={{ y: "200%", opacity: 0, transition: { duration: SHUTTER_EXIT } }}
           />
         </div>

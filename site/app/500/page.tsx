@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ServerError from "@/components/ui/ServerError";
+import "@fontsource-variable/roboto-mono"; // v65: 500 视图字体按路由级引入，不进 globals.css
 
 /**
  * /500 —— 500 视图的常驻入口（v70 起从 dev-only 预览转正）。
