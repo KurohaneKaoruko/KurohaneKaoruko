@@ -27,7 +27,7 @@ PIN = []                 # names always placed first, in this order
 # Short hand-written blurbs. Anything not listed falls back to the repo
 # description from the API, wrapped to the card width.
 OVERRIDES = {
-    "N.I.C.E.": "面向 AI 小说的集成创作环境。",
+    "Iris-I.C.E.": "面向 AI 小说的集成创作环境。",
     "DSH-Novelist": "DeepSeek Harness 的小说写作智能体预设。",
     "ScreepsDashboard": "Screeps 的数据面板。",
     "Screeps-Tools": "用 Next.js 编写的 Screeps 工具合集网站。",
@@ -35,29 +35,35 @@ OVERRIDES = {
     "ExMachina": "以集体智能与集群协作为核心的 Agent 系统。",
 }
 
-# language -> (dark colour, light colour); light side is darkened for contrast
+# language -> (dark colour, light colour)
+# Dark side is deliberately desaturated: the README follows the site's
+# near-black HUD look, so colour only appears in tiny dots and never as a
+# large area. Light side keeps GitHub-ish colours for contrast on white.
 LANG_COLORS = {
-    "TypeScript": ("#3178c6", "#3178c6"),
-    "JavaScript": ("#f1e05a", "#9a6700"),
-    "Rust": ("#dea584", "#a05a2c"),
-    "Python": ("#3572A5", "#3572A5"),
-    "Dart": ("#00b4ab", "#00726c"),
-    "Go": ("#00add8", "#00708c"),
+    "TypeScript": ("#5a86ad", "#3178c6"),
+    "JavaScript": ("#b3a568", "#9a6700"),
+    "Rust": ("#a89384", "#a05a2c"),
+    "Python": ("#5b7d99", "#3572A5"),
+    "Dart": ("#5f9a94", "#00726c"),
+    "Go": ("#5f939f", "#00708c"),
     "C": ("#8b949e", "#57606a"),
-    "C++": ("#f34b7d", "#b32552"),
-    "Java": ("#b07219", "#8a5a13"),
-    "Shell": ("#89e051", "#3f7a1c"),
-    "HTML": ("#e34c26", "#b03a1c"),
-    "CSS": ("#563d7c", "#563d7c"),
-    "Vue": ("#41b883", "#2f8a60"),
-    "Jupyter Notebook": ("#da5b0b", "#a8480a"),
+    "C++": ("#ad6d81", "#b32552"),
+    "Java": ("#97825e", "#8a5a13"),
+    "Shell": ("#84a573", "#3f7a1c"),
+    "HTML": ("#a57462", "#b03a1c"),
+    "CSS": ("#776a8d", "#563d7c"),
+    "Vue": ("#6fa38c", "#2f8a60"),
+    "Jupyter Notebook": ("#a3775f", "#a8480a"),
 }
 FALLBACK_LANG = ("#8b949e", "#57606a")
 
-DARK = dict(bg1="#0d1428", bg2="#0b1020", stroke="#22345c", grid="#22345c",
-            gridop="0.22", text="#cfe3ff", muted="#8fa3c8", dim="#6f89b8",
-            blue="#58a6ff", green="#3fb950", sweep="0.13", glow="0.16",
-            cardfill="#0e1734", side=0)
+# Site-aligned dark palette: --bg #070809 / --fg #eef2ef / --muted #79837f
+# / --faint #5d6763 / --signal #ff453a. "blue" is the generic HUD accent and
+# reads as off-white; the signal red is reserved for tiny blinking dots.
+DARK = dict(bg1="#0a0b0c", bg2="#070809", stroke="#1f2224", grid="#1d1f21",
+            gridop="0.30", text="#eef2ef", muted="#79837f", dim="#5d6763",
+            blue="#eef2ef", green="#ff453a", sweep="0.07", glow="0.05",
+            cardfill="#0e0f10", side=0)
 
 LIGHT = dict(bg1="#ffffff", bg2="#f6f8fa", stroke="#d0d7de", grid="#d0d7de",
              gridop="0.38", text="#1f2328", muted="#57606a", dim="#8c959f",
