@@ -36,34 +36,36 @@ OVERRIDES = {
 }
 
 # language -> (dark colour, light colour)
-# Dark side is deliberately desaturated: the README follows the site's
-# near-black HUD look, so colour only appears in tiny dots and never as a
-# large area. Light side keeps GitHub-ish colours for contrast on white.
+# Dark side is desaturated to sit beside the GitHub dark canvas (#0d1117)
+# without glowing: colour shows up in tiny dots, never large areas, but each
+# hue is lifted enough to stay legible on the dark background. Light side
+# keeps GitHub-ish colours for contrast on white.
 LANG_COLORS = {
-    "TypeScript": ("#5a86ad", "#3178c6"),
-    "JavaScript": ("#b3a568", "#9a6700"),
-    "Rust": ("#a89384", "#a05a2c"),
-    "Python": ("#5b7d99", "#3572A5"),
-    "Dart": ("#5f9a94", "#00726c"),
-    "Go": ("#5f939f", "#00708c"),
+    "TypeScript": ("#6b96bd", "#3178c6"),
+    "JavaScript": ("#ab966f", "#9a6700"),
+    "Rust": ("#bda996", "#a05a2c"),
+    "Python": ("#6f95b3", "#3572A5"),
+    "Dart": ("#6ba39c", "#00726c"),
+    "Go": ("#6ba3ae", "#00708c"),
     "C": ("#8b949e", "#57606a"),
-    "C++": ("#ad6d81", "#b32552"),
-    "Java": ("#97825e", "#8a5a13"),
-    "Shell": ("#84a573", "#3f7a1c"),
-    "HTML": ("#a57462", "#b03a1c"),
-    "CSS": ("#776a8d", "#563d7c"),
-    "Vue": ("#6fa38c", "#2f8a60"),
-    "Jupyter Notebook": ("#a3775f", "#a8480a"),
+    "C++": ("#bd7d92", "#b32552"),
+    "Java": ("#a89062", "#8a5a13"),
+    "Shell": ("#8fb37e", "#3f7a1c"),
+    "HTML": ("#b5806d", "#b03a1c"),
+    "CSS": ("#8278a0", "#563d7c"),
+    "Vue": ("#79ae93", "#2f8a60"),
+    "Jupyter Notebook": ("#b08268", "#a8480a"),
 }
 FALLBACK_LANG = ("#8b949e", "#57606a")
 
-# Site-aligned dark palette: --bg #070809 / --fg #eef2ef / --muted #79837f
-# / --faint #5d6763 / --signal #ff453a. "blue" is the generic HUD accent and
-# reads as off-white; the signal red is reserved for tiny blinking dots.
-DARK = dict(bg1="#0a0b0c", bg2="#070809", stroke="#1f2224", grid="#1d1f21",
-            gridop="0.30", text="#eef2ef", muted="#79837f", dim="#5d6763",
-            blue="#eef2ef", green="#ff453a", sweep="0.07", glow="0.05",
-            cardfill="#0e0f10", side=0)
+# GitHub-dark-aligned palette: the README renders on GitHub's #0d1117 canvas,
+# so the panels blend into the page instead of punching black holes in it.
+# "blue" is the generic HUD accent and reads as off-white; the signal red is
+# reserved for tiny blinking dots.
+DARK = dict(bg1="#161c24", bg2="#0d1117", stroke="#30363d", grid="#21262d",
+            gridop="0.30", text="#e6edf3", muted="#8b949e", dim="#6e7681",
+            blue="#e6edf3", green="#ff453a", sweep="0.07", glow="0.05",
+            cardfill="#161b22", side=0)
 
 LIGHT = dict(bg1="#ffffff", bg2="#f6f8fa", stroke="#d0d7de", grid="#d0d7de",
              gridop="0.38", text="#1f2328", muted="#57606a", dim="#8c959f",

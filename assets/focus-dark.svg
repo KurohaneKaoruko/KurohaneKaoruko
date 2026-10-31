@@ -18,17 +18,17 @@
 </style>
 <defs>
 <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-  <stop offset="0" stop-color="#0a0b0c"/><stop offset="1" stop-color="#070809"/>
+  <stop offset="0" stop-color="#161c24"/><stop offset="1" stop-color="#0d1117"/>
 </linearGradient>
 <linearGradient id="accent" x1="0" y1="0" x2="0" y2="1">
   <stop offset="0" stop-color="#ff453a"/><stop offset="1" stop-color="#ff453a" stop-opacity="0"/>
 </linearGradient>
 <radialGradient id="glow" cx="600" cy="240" r="560" gradientUnits="userSpaceOnUse">
-  <stop offset="0" stop-color="#eef2ef" stop-opacity="0.05"/>
-  <stop offset="1" stop-color="#eef2ef" stop-opacity="0"/>
+  <stop offset="0" stop-color="#e6edf3" stop-opacity="0.05"/>
+  <stop offset="1" stop-color="#e6edf3" stop-opacity="0"/>
 </radialGradient>
 <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-  <path d="M40 0H0V40" fill="none" stroke="#1d1f21" stroke-width="1"/>
+  <path d="M40 0H0V40" fill="none" stroke="#21262d" stroke-width="1"/>
 </pattern>
 <clipPath id="fclip"><rect width="1200" height="384" rx="18"/></clipPath>
 </defs>
@@ -36,55 +36,55 @@
 <rect width="1200" height="384" fill="url(#bg)"/>
 <rect width="1200" height="384" fill="url(#grid)" opacity="0.22"/>
 <rect width="1200" height="384" fill="url(#glow)"/>
-<line x1="0" y1="52" x2="1200" y2="52" stroke="#1f2224" stroke-opacity=".7"/><text x="44" y="35" font-size="18" font-weight="700" fill="#eef2ef" letter-spacing=".5">&gt; focus</text><circle class="blink" cx="1022" cy="29" r="4.5" fill="#ff453a"/><text x="1156" y="34" text-anchor="end" font-size="11" letter-spacing="2.4" fill="#5d6763">SYSTEM ONLINE</text>
-<g fill="none" stroke="#eef2ef" stroke-opacity=".28" stroke-width="1.5"><path d="M20 44V22a2 2 0 0 1 2-2h22"/><path d="M1180 44V22a2 2 0 0 0-2-2h-22"/><path d="M20 340v22a2 2 0 0 0 2 2h22"/><path d="M1180 340v22a2 2 0 0 1-2 2h-22"/></g>
+<line x1="0" y1="52" x2="1200" y2="52" stroke="#30363d" stroke-opacity=".7"/><text x="44" y="35" font-size="18" font-weight="700" fill="#e6edf3" letter-spacing=".5">&gt; focus</text><circle class="blink" cx="1022" cy="29" r="4.5" fill="#ff453a"/><text x="1156" y="34" text-anchor="end" font-size="11" letter-spacing="2.4" fill="#6e7681">SYSTEM ONLINE</text>
+<g fill="none" stroke="#e6edf3" stroke-opacity=".28" stroke-width="1.5"><path d="M20 44V22a2 2 0 0 1 2-2h22"/><path d="M1180 44V22a2 2 0 0 0-2-2h-22"/><path d="M20 340v22a2 2 0 0 0 2 2h22"/><path d="M1180 340v22a2 2 0 0 1-2 2h-22"/></g>
 <rect x="68" y="82" width="2.5" height="34" rx="1.2" fill="url(#accent)" opacity=".9"/>
-<text x="44" y="104" font-size="12" letter-spacing="1" fill="#5d6763">01</text>
-<text x="88" y="103" font-size="17" font-weight="700" fill="#eef2ef">LLM Agents</text>
-<text x="88" y="123" font-size="13" fill="#79837f">让模型自主决定下一步，而不是只回答单轮问题</text>
-<line class="flow" x1="760" y1="100" x2="1118" y2="100" stroke="#5d6763" stroke-opacity=".35"/>
+<text x="44" y="104" font-size="12" letter-spacing="1" fill="#6e7681">01</text>
+<text x="88" y="103" font-size="17" font-weight="700" fill="#e6edf3">LLM Agents</text>
+<text x="88" y="123" font-size="13" fill="#8b949e">让模型自主决定下一步，而不是只回答单轮问题</text>
+<line class="flow" x1="760" y1="100" x2="1118" y2="100" stroke="#6e7681" stroke-opacity=".35"/>
 <circle class="led" style="animation-delay:0.00s" cx="1146" cy="100" r="3.2" fill="#ff453a"/>
-<line x1="44" y1="130" x2="1156" y2="130" stroke="#1f2224" stroke-opacity=".45"/>
+<line x1="44" y1="130" x2="1156" y2="130" stroke="#30363d" stroke-opacity=".45"/>
 <rect x="68" y="136" width="2.5" height="34" rx="1.2" fill="url(#accent)" opacity=".9"/>
-<text x="44" y="158" font-size="12" letter-spacing="1" fill="#5d6763">02</text>
-<text x="88" y="157" font-size="17" font-weight="700" fill="#eef2ef">Swarm Intelligence</text>
-<text x="88" y="177" font-size="13" fill="#79837f">多 Agent 协作、任务分配与集群行为</text>
-<line class="flow" x1="760" y1="154" x2="1118" y2="154" stroke="#5d6763" stroke-opacity=".35"/>
+<text x="44" y="158" font-size="12" letter-spacing="1" fill="#6e7681">02</text>
+<text x="88" y="157" font-size="17" font-weight="700" fill="#e6edf3">Swarm Intelligence</text>
+<text x="88" y="177" font-size="13" fill="#8b949e">多 Agent 协作、任务分配与集群行为</text>
+<line class="flow" x1="760" y1="154" x2="1118" y2="154" stroke="#6e7681" stroke-opacity=".35"/>
 <circle class="led" style="animation-delay:0.55s" cx="1146" cy="154" r="3.2" fill="#ff453a"/>
-<line x1="44" y1="184" x2="1156" y2="184" stroke="#1f2224" stroke-opacity=".45"/>
+<line x1="44" y1="184" x2="1156" y2="184" stroke="#30363d" stroke-opacity=".45"/>
 <rect x="68" y="190" width="2.5" height="34" rx="1.2" fill="url(#accent)" opacity=".9"/>
-<text x="44" y="212" font-size="12" letter-spacing="1" fill="#5d6763">03</text>
-<text x="88" y="211" font-size="17" font-weight="700" fill="#eef2ef">Dev Tools</text>
-<text x="88" y="231" font-size="13" fill="#79837f">把重复的操作做成工具</text>
-<line class="flow" x1="760" y1="208" x2="1118" y2="208" stroke="#5d6763" stroke-opacity=".35"/>
+<text x="44" y="212" font-size="12" letter-spacing="1" fill="#6e7681">03</text>
+<text x="88" y="211" font-size="17" font-weight="700" fill="#e6edf3">Dev Tools</text>
+<text x="88" y="231" font-size="13" fill="#8b949e">把重复的操作做成工具</text>
+<line class="flow" x1="760" y1="208" x2="1118" y2="208" stroke="#6e7681" stroke-opacity=".35"/>
 <circle class="led" style="animation-delay:1.10s" cx="1146" cy="208" r="3.2" fill="#ff453a"/>
-<line x1="44" y1="238" x2="1156" y2="238" stroke="#1f2224" stroke-opacity=".45"/>
+<line x1="44" y1="238" x2="1156" y2="238" stroke="#30363d" stroke-opacity=".45"/>
 <rect x="68" y="244" width="2.5" height="34" rx="1.2" fill="url(#accent)" opacity=".9"/>
-<text x="44" y="266" font-size="12" letter-spacing="1" fill="#5d6763">04</text>
-<text x="88" y="265" font-size="17" font-weight="700" fill="#eef2ef">Games</text>
-<text x="88" y="285" font-size="13" fill="#79837f">Screeps 自动化脚本与配套工具</text>
-<line class="flow" x1="760" y1="262" x2="1118" y2="262" stroke="#5d6763" stroke-opacity=".35"/>
+<text x="44" y="266" font-size="12" letter-spacing="1" fill="#6e7681">04</text>
+<text x="88" y="265" font-size="17" font-weight="700" fill="#e6edf3">Games</text>
+<text x="88" y="285" font-size="13" fill="#8b949e">Screeps 自动化脚本与配套工具</text>
+<line class="flow" x1="760" y1="262" x2="1118" y2="262" stroke="#6e7681" stroke-opacity=".35"/>
 <circle class="led" style="animation-delay:1.65s" cx="1146" cy="262" r="3.2" fill="#ff453a"/>
-<line x1="44" y1="304" x2="1156" y2="304" stroke="#1f2224" stroke-opacity=".8"/>
-<text x="44" y="336" font-size="11" letter-spacing="2.4" fill="#5d6763">STACK</text>
-<rect x="118" y="316" width="112" height="30" rx="9" fill="#0e0f10" stroke="#1f2224" stroke-opacity=".85"/>
-<circle cx="134" cy="331" r="3.5" fill="#a89384"/>
-<text x="146" y="336" font-size="12" fill="#eef2ef">Rust</text>
-<rect x="242" y="316" width="112" height="30" rx="9" fill="#0e0f10" stroke="#1f2224" stroke-opacity=".85"/>
-<circle cx="258" cy="331" r="3.5" fill="#5b7d99"/>
-<text x="270" y="336" font-size="12" fill="#eef2ef">Python</text>
-<rect x="366" y="316" width="112" height="30" rx="9" fill="#0e0f10" stroke="#1f2224" stroke-opacity=".85"/>
-<circle cx="382" cy="331" r="3.5" fill="#5a86ad"/>
-<text x="394" y="336" font-size="12" fill="#eef2ef">TypeScript</text>
-<rect x="490" y="316" width="112" height="30" rx="9" fill="#0e0f10" stroke="#1f2224" stroke-opacity=".85"/>
-<circle cx="506" cy="331" r="3.5" fill="#b9c3be"/>
-<text x="518" y="336" font-size="12" fill="#eef2ef">Next.js</text>
-<rect x="614" y="316" width="112" height="30" rx="9" fill="#0e0f10" stroke="#1f2224" stroke-opacity=".85"/>
-<circle cx="630" cy="331" r="3.5" fill="#a89a6b"/>
-<text x="642" y="336" font-size="12" fill="#eef2ef">Tauri</text>
-<rect x="738" y="316" width="112" height="30" rx="9" fill="#0e0f10" stroke="#1f2224" stroke-opacity=".85"/>
-<circle cx="754" cy="331" r="3.5" fill="#6f8a67"/>
-<text x="766" y="336" font-size="12" fill="#eef2ef">Node.js</text>
+<line x1="44" y1="304" x2="1156" y2="304" stroke="#30363d" stroke-opacity=".8"/>
+<text x="44" y="336" font-size="11" letter-spacing="2.4" fill="#6e7681">STACK</text>
+<rect x="118" y="316" width="112" height="30" rx="9" fill="#161b22" stroke="#30363d" stroke-opacity=".85"/>
+<circle cx="134" cy="331" r="3.5" fill="#bda996"/>
+<text x="146" y="336" font-size="12" fill="#e6edf3">Rust</text>
+<rect x="242" y="316" width="112" height="30" rx="9" fill="#161b22" stroke="#30363d" stroke-opacity=".85"/>
+<circle cx="258" cy="331" r="3.5" fill="#6f95b3"/>
+<text x="270" y="336" font-size="12" fill="#e6edf3">Python</text>
+<rect x="366" y="316" width="112" height="30" rx="9" fill="#161b22" stroke="#30363d" stroke-opacity=".85"/>
+<circle cx="382" cy="331" r="3.5" fill="#6b96bd"/>
+<text x="394" y="336" font-size="12" fill="#e6edf3">TypeScript</text>
+<rect x="490" y="316" width="112" height="30" rx="9" fill="#161b22" stroke="#30363d" stroke-opacity=".85"/>
+<circle cx="506" cy="331" r="3.5" fill="#c9d1d9"/>
+<text x="518" y="336" font-size="12" fill="#e6edf3">Next.js</text>
+<rect x="614" y="316" width="112" height="30" rx="9" fill="#161b22" stroke="#30363d" stroke-opacity=".85"/>
+<circle cx="630" cy="331" r="3.5" fill="#ab966f"/>
+<text x="642" y="336" font-size="12" fill="#e6edf3">Tauri</text>
+<rect x="738" y="316" width="112" height="30" rx="9" fill="#161b22" stroke="#30363d" stroke-opacity=".85"/>
+<circle cx="754" cy="331" r="3.5" fill="#83a075"/>
+<text x="766" y="336" font-size="12" fill="#e6edf3">Node.js</text>
 </g>
-<rect x=".5" y=".5" width="1199" height="383" rx="18" fill="none" stroke="#1f2224"/>
+<rect x=".5" y=".5" width="1199" height="383" rx="18" fill="none" stroke="#30363d"/>
 </svg>

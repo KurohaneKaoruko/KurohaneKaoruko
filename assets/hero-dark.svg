@@ -18,10 +18,10 @@
 </style>
 <defs>
 <linearGradient id="hbg" x1="0" y1="0" x2="0" y2="1">
-  <stop offset="0" stop-color="#0a0b0c"/><stop offset="1" stop-color="#070809"/>
+  <stop offset="0" stop-color="#161c24"/><stop offset="1" stop-color="#0d1117"/>
 </linearGradient>
 <linearGradient id="nameGrad" x1="0" y1="0" x2="1" y2=".6">
-  <stop offset="0" stop-color="#eef2ef"/><stop offset=".5" stop-color="#d9dfdb"/><stop offset="1" stop-color="#79837f"/>
+  <stop offset="0" stop-color="#e6edf3"/><stop offset=".5" stop-color="#adbac7"/><stop offset="1" stop-color="#8b949e"/>
 </linearGradient>
 <linearGradient id="shineG" x1="0" y1="0" x2="1" y2="0">
   <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
@@ -29,12 +29,12 @@
   <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
 </linearGradient>
 <linearGradient id="scanG" x1="0" y1="0" x2="0" y2="1">
-  <stop offset="0" stop-color="#eef2ef" stop-opacity="0"/>
-  <stop offset=".5" stop-color="#eef2ef" stop-opacity="0.07"/>
-  <stop offset="1" stop-color="#eef2ef" stop-opacity="0"/>
+  <stop offset="0" stop-color="#e6edf3" stop-opacity="0"/>
+  <stop offset=".5" stop-color="#e6edf3" stop-opacity="0.07"/>
+  <stop offset="1" stop-color="#e6edf3" stop-opacity="0"/>
 </linearGradient>
 <pattern id="hgrid" width="48" height="48" patternUnits="userSpaceOnUse">
-  <path d="M48 0H0V48" fill="none" stroke="#1d1f21" stroke-width="1"/>
+  <path d="M48 0H0V48" fill="none" stroke="#21262d" stroke-width="1"/>
 </pattern>
 <filter id="soft" x="-25%" y="-70%" width="150%" height="240%">
   <feGaussianBlur stdDeviation="16"/>
@@ -49,18 +49,18 @@
 <rect width="1200" height="360" fill="url(#hgrid)" opacity="0.22"/>
 <circle class="tw" style="animation-delay:0.00s" cx="96" cy="88" r="1.00" fill="#ffffff" opacity=".2"/><circle class="tw" style="animation-delay:0.37s" cx="188" cy="214" r="1.35" fill="#ffffff" opacity=".2"/><circle class="tw" style="animation-delay:0.74s" cx="262" cy="62" r="1.70" fill="#ffffff" opacity=".2"/><circle class="tw" style="animation-delay:1.11s" cx="352" cy="300" r="1.00" fill="#ffffff" opacity=".2"/><circle class="tw" style="animation-delay:1.48s" cx="438" cy="128" r="1.35" fill="#ffffff" opacity=".2"/><circle class="tw" style="animation-delay:1.85s" cx="512" cy="40" r="1.70" fill="#ffffff" opacity=".2"/><circle class="tw" style="animation-delay:2.22s" cx="596" cy="330" r="1.00" fill="#ffffff" opacity=".2"/><circle class="tw" style="animation-delay:2.59s" cx="676" cy="96" r="1.35" fill="#ffffff" opacity=".2"/><circle class="tw" style="animation-delay:2.96s" cx="742" cy="264" r="1.70" fill="#ffffff" opacity=".2"/><circle class="tw" style="animation-delay:3.33s" cx="836" cy="60" r="1.00" fill="#ffffff" opacity=".2"/><circle class="tw" style="animation-delay:3.70s" cx="908" cy="306" r="1.35" fill="#ffffff" opacity=".2"/><circle class="tw" style="animation-delay:4.07s" cx="1002" cy="140" r="1.70" fill="#ffffff" opacity=".2"/><circle class="tw" style="animation-delay:4.44s" cx="1064" cy="232" r="1.00" fill="#ffffff" opacity=".2"/><circle class="tw" style="animation-delay:4.81s" cx="1128" cy="78" r="1.35" fill="#ffffff" opacity=".2"/>
 <rect class="scan" x="0" y="-60" width="1200" height="60" fill="url(#scanG)"/>
-<text x="600" y="190" text-anchor="middle" font-size="76" font-weight="800" letter-spacing="10" fill="#eef2ef" opacity=".14" filter="url(#soft)">KUROHANE KAORUKO</text>
+<text x="600" y="190" text-anchor="middle" font-size="76" font-weight="800" letter-spacing="10" fill="#e6edf3" opacity=".14" filter="url(#soft)">KUROHANE KAORUKO</text>
 <g mask="url(#nm)">
   <rect width="1200" height="360" fill="url(#nameGrad)"/>
   <g class="shine"><path d="M-240 0 L-120 0 L-3 360 L-123 360 Z" fill="url(#shineG)"/></g>
 </g>
-<text x="44" y="46" font-size="11" letter-spacing="3.2" fill="#5d6763">// PROFILE</text>
+<text x="44" y="46" font-size="11" letter-spacing="3.2" fill="#6e7681">// PROFILE</text>
 <rect class="blink" x="154" y="37" width="7" height="10" rx="1" fill="#ff453a"/>
-<text x="1156" y="46" text-anchor="end" font-size="11" letter-spacing="3.2" fill="#5d6763">NIGHT OWL</text>
-<line x1="420" y1="226" x2="780" y2="226" stroke="#1f2224" stroke-opacity=".9"/>
+<text x="1156" y="46" text-anchor="end" font-size="11" letter-spacing="3.2" fill="#6e7681">NIGHT OWL</text>
+<line x1="420" y1="226" x2="780" y2="226" stroke="#30363d" stroke-opacity=".9"/>
 <line x1="600" y1="221" x2="600" y2="231" stroke="#ff453a" stroke-opacity=".9"/>
-<text x="600" y="258" text-anchor="middle" font-size="13" letter-spacing="6.5" fill="#79837f">AI ENGINEER · TOOLMAKER · NIGHT OWL</text>
+<text x="600" y="258" text-anchor="middle" font-size="13" letter-spacing="6.5" fill="#8b949e">AI ENGINEER · TOOLMAKER · NIGHT OWL</text>
 <text x="600" y="316" text-anchor="middle" font-size="12" letter-spacing="5.5" fill="#ff453a">COMPILE THIS WORLD.</text>
 </g>
-<rect x=".5" y=".5" width="1199" height="359" rx="18" fill="none" stroke="#1f2224"/>
+<rect x=".5" y=".5" width="1199" height="359" rx="18" fill="none" stroke="#30363d"/>
 </svg>

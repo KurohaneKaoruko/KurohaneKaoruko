@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="316" height="32" viewBox="0 0 316 32" font-family="'SF Mono','JetBrains Mono',Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC','Source Han Sans SC',sans-serif">
-<path d="M0 0.5H307.5Q315.5 0.5 315.5 8.5V23.5Q315.5 31.5 307.5 31.5H0Z" fill="#0e0f10"/>
-<path d="M0 0.5H307.5Q315.5 0.5 315.5 8.5V23.5Q315.5 31.5 307.5 31.5H0" fill="none" stroke="#1f2224"/>
+<path d="M0 0.5H307.5Q315.5 0.5 315.5 8.5V23.5Q315.5 31.5 307.5 31.5H0Z" fill="#161b22"/>
+<path d="M0 0.5H307.5Q315.5 0.5 315.5 8.5V23.5Q315.5 31.5 307.5 31.5H0" fill="none" stroke="#30363d"/>
 <svg x="54" y="9.5" width="13" height="13" viewBox="0 0 24 24">
-<path d="m12 1.608 12 20.784H0Z" fill="#b9c3be"/>
+<path d="m12 1.608 12 20.784H0Z" fill="#c9d1d9"/>
 </svg>
-<text x="75" y="20.5" font-size="12" fill="#eef2ef">kurohanekaoruko.vercel.app</text>
+<text x="75" y="20.5" font-size="12" fill="#e6edf3">kurohanekaoruko.vercel.app</text>
 </svg>
