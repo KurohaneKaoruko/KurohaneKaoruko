@@ -11,7 +11,10 @@ $ink: #0b0b0b; // 正文黑 / 深色按钮底
 $field-ink: #141414; // 字符画笔触
 $glitch-red: #ff2a2a;
 $glitch-blue: #2f6dff;
-$mono: "Roboto Mono Variable", "Roboto Mono", var(--font-mono), ui-monospace, monospace; // v65: 字符画按 Roboto Mono 度量标定（0.6em 步进 / 0/1 墨量互换），字体由 not-found.tsx 路由级引入
+// 字符画只需要一套等宽字体。这里原来引 @fontsource-variable/roboto-mono，
+// 那套包把 6 个 unicode-range 分片 + 2 份 CSS 塞进了每一页的 preload ——
+// 为一个错误页让全站买单不值得。站点自带的 IBM Plex Mono 已经够用。
+$mono: var(--font-mono), ui-monospace, "Cascadia Mono", Consolas, monospace;
 
 /* 红蓝故障副本层：两者只有关键帧名与时长不同 */
 @mixin glitch-layer($name, $duration) {

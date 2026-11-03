@@ -2,10 +2,19 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { ScrollProgress } from "@/components/fx/ScrollProgress";
-import { CommandPalette } from "@/components/layout/CommandPalette";
 import { NAV_ITEMS, SITE } from "@/lib/site";
+
+/**
+ * ⌘K 面板按需加载：它连带整个项目列表与 Portal，只有真按下快捷键或点
+ * 搜索时才需要。放在首屏包里纯属浪费 —— 大多数访客不会打开它。
+ */
+const CommandPalette = dynamic(
+  () => import("@/components/layout/CommandPalette").then((m) => m.CommandPalette),
+  { ssr: false },
+);
 
 function GithubMark({ className }: { className?: string }) {
   return (

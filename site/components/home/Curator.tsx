@@ -27,11 +27,14 @@ export function Curator() {
             <figure className="portrait-frame relative border border-line p-2">
               <div className="relative overflow-hidden">
                 <img
-                  src={`${BASE}/logo.jpg`}
+                  src={`${BASE}/portrait-480.jpg`}
+                  srcSet={`${BASE}/portrait-240.jpg 240w, ${BASE}/portrait-480.jpg 480w`}
+                  sizes="(max-width: 1024px) 100vw, 33vw"
                   alt="Kurohane Kaoruko"
-                  width={600}
-                  height={600}
+                  width={480}
+                  height={480}
                   loading="lazy"
+                  decoding="async"
                   className="aspect-square w-full object-cover"
                 />
                 <span className="portrait-scan" aria-hidden="true" />

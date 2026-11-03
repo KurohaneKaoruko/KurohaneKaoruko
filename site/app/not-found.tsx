@@ -5,7 +5,6 @@ import { createPortal } from "react-dom";
 import { useEffect, useRef, useState } from "react";
 import { ASCII_COLS, ASCII_FPS, ASCII_FRAME0, ASCII_ROWS } from "./ascii-frames";
 import { BASE } from "@/lib/site";
-import "@fontsource-variable/roboto-mono"; // v65: 字符画字体按路由级引入，不进 globals.css（其它页面仍用 IBM Plex Mono）
 import "./not-found.scss";
 
 type MaskSpec = {

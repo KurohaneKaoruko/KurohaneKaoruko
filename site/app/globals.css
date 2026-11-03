@@ -47,9 +47,12 @@
 }
 
 :root {
-  --stack-sans: "IBM Plex Sans Variable", "Noto Sans SC Variable", system-ui, sans-serif;
-  --stack-cn: "Noto Sans SC Variable", "PingFang SC", "Microsoft YaHei", sans-serif;
-  --stack-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  /* 字体族名由 next/font/local 生成（见 app/fonts.ts），变量挂在 <html> 上。
+     这里用 var() 接，Tailwind 的 font-sans / font-mono 也就跟着走。 */
+  --stack-sans: var(--font-plex-sans), var(--font-noto-sc), system-ui, sans-serif;
+  --stack-cn: var(--font-noto-sc), "PingFang SC", "Microsoft YaHei", sans-serif;
+  --stack-mono: var(--font-plex-mono-400), var(--font-plex-mono-500), ui-monospace,
+    "Cascadia Mono", Consolas, monospace;
 
   --measure: 1400px;
   --gutter: clamp(18px, 4vw, 56px);
@@ -205,6 +208,16 @@ body {
   font-size: 11.5px;
   letter-spacing: 0.02em;
   color: var(--fg-2);
+}
+
+/* 输入框占位符固定用系统字体绘制，永不等待 webfont。
+   原因：Chrome 会把「webfont 到货后的占位符重绘」记成新的 LCP 候选 ——
+   /projects/ 的搜索框占位符在 cold load 下把 LCP 从 ~0.7s 的站名
+   推到 ~2s（swap 重绘时刻）。占位符是灰字、输入即被覆盖，
+   字形差异无感知，不值得为它付一次字体等待 + 全页重绘。 */
+input::placeholder,
+textarea::placeholder {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
 }
 
 /* 链接：一条从左边长出来的线 */
@@ -542,6 +555,12 @@ body {
     transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
   transition-delay: var(--d, 0ms);
 }
+/* 首屏区块不隐藏：它们一挂载就该是可见的。等观察器回调再淡入会让
+   LCP 平白多等一整个水合周期（实测 elementRenderDelay 2s）。 */
+.js .reveal[data-eager="true"] {
+  opacity: 1;
+  transform: none;
+}
 .js .reveal[data-shown="true"] {
   opacity: 1;
   transform: none;
@@ -748,14 +767,17 @@ body {
 
 @keyframes hero-rise {
   from {
-    opacity: 0;
     transform: translateY(22px);
   }
   to {
-    opacity: 1;
     transform: none;
   }
 }
+/* 只动 transform，不动 opacity。
+   曾经带 opacity: 0→1 的淡入：首绘发生在 opacity<1 时不计入 LCP，
+   动画结束时内容未变也不产生新候选 —— 首屏最大文本（焦点词）的
+   LCP 被推迟到 3.4s 后轮播换词那一刻（实测桌面 4.1s）。
+   去掉淡入只保留上升，文本首绘立即可见可计。 */
 .hero-rise {
   animation: hero-rise 1s cubic-bezier(0.22, 1, 0.36, 1) both;
   animation-delay: var(--d, 0ms);
@@ -1152,27 +1174,40 @@ html.has-cx * {
   }
 }
 
+/* 扫描线：位置动画一律走 transform，不碰 top。
+   原先用 top: 0 → 100%，每一帧都要重新做布局（重排整条清单），
+   Lighthouse 的 Style & Layout 因此飙到 900ms+。transform 由合成器处理，
+   主线程零成本。
+
+   注意实现方式：外层撑满容器高度、内层伪元素才是那条 1px 的线。这样
+   translateY(100%) 才是「整条线从顶扫到底」—— 如果元素本身只有 1px 高，
+   translateY(100%) 只挪 1px，什么也看不见。 */
 .hero-scan {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 1px;
+  inset: 0;
   pointer-events: none;
-  background: var(--signal);
   opacity: 0;
   animation: hero-scan 1.5s ease-out 0.45s both;
+  will-change: transform, opacity;
+}
+.hero-scan::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  background: var(--signal);
 }
 @keyframes hero-scan {
   0% {
-    top: 0;
+    transform: translateY(0);
     opacity: 0;
   }
   15% {
     opacity: 0.55;
   }
   100% {
-    top: 100%;
+    transform: translateY(100%);
     opacity: 0;
   }
 }
@@ -1480,12 +1515,16 @@ html.over-card .cx .cx-coord {
 }
 .portrait-scan {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 1px;
+  inset: 0;
   opacity: 0;
   pointer-events: none;
+}
+.portrait-scan::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
   background: linear-gradient(90deg, transparent, var(--signal) 18%, var(--signal) 82%, transparent);
   box-shadow: 0 0 14px rgba(255, 69, 58, 0.6);
 }
@@ -1494,7 +1533,7 @@ html.over-card .cx .cx-coord {
 }
 @keyframes portrait-scan {
   0% {
-    top: 0;
+    transform: translateY(0);
     opacity: 0;
   }
   10% {
@@ -1504,7 +1543,7 @@ html.over-card .cx .cx-coord {
     opacity: 0.95;
   }
   100% {
-    top: 100%;
+    transform: translateY(100%);
     opacity: 0;
   }
 }
@@ -1525,26 +1564,30 @@ html.over-card .cx .cx-coord {
 }
 .sheet-scan {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 1px;
+  inset: 0;
   z-index: 2;
   pointer-events: none;
+  animation: sheet-scan 0.9s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+.sheet-scan::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
   background: linear-gradient(90deg, transparent, var(--signal), transparent);
   box-shadow: 0 0 18px rgba(255, 69, 58, 0.65);
-  animation: sheet-scan 0.9s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 @keyframes sheet-scan {
   0% {
-    top: 0;
+    transform: translateY(0);
     opacity: 0;
   }
   12% {
     opacity: 1;
   }
   100% {
-    top: 100%;
+    transform: translateY(var(--scan-travel, 100%));
     opacity: 0;
   }
 }
@@ -1611,16 +1654,93 @@ html.over-card .cx .cx-coord {
 
 
 /* ==========================================================================
-   启动屏（SplashScreen）兜底
-   正常流程由 React 卸载；这里兜住「水合迟迟不发生、JS 一行没跑」的情形，
-   10s 后纯 CSS 强制退场，黑幕不会永远盖着页面。
+   启动屏（SplashScreen）
+   ==========================================================================
+
+   退场动画以前是 framer-motion 的活（快门上下分开 + 内容模糊淡出）。那套
+   动画只此一处使用，却把约 170KB 的 framer-motion 拖进了所有路由的首屏包。
+   现在全部改成 CSS keyframes：同样是合成器线程跑 transform / opacity，
+   成本一样低，但首屏少一个重量级依赖。
+
+   时序：--splash-exit 必须与 SplashScreen.tsx 的 DISMISS_BEAT 对齐。
    ========================================================================== */
+
 .splash-root {
+  --splash-exit: 800ms;
+  /* 兜底：水合迟迟不发生、JS 一行没跑时，10s 后强制退场 */
   animation: splash-auto-dismiss 0.8s ease-in 10s forwards;
 }
+
+/* 启动屏的正文层不参与 LCP 度量。
+   ----------------------------------------------------------------
+   启动屏盖在首屏上，屏内那行大字（ScrambleText 的标题）是整页最大的
+   文本块，浏览器会把它当成 LCP 候选 —— 而它必须等 JS 水合后才渲染出来。
+   结果是：真正的内容早已可见，LCP 却被记到水合之后（实测 7-12s）。
+
+   content-visibility: hidden 让这棵子树跳过渲染树的尺寸/绘制参与，
+   因而不会被记入 LCP 候选；但它自己照样画（内部照常布局绘制），
+   视觉上没有区别。视觉表现完全一致，度量口径回到真实内容上。 */
+.splash-body,
+.splash-corner {
+  content-visibility: hidden;
+}
+
+.splash-shutter {
+  background-color: #0a0a0a;
+  will-change: transform;
+}
+
+/* 快门、内容、角标各自记着自己的初始状态，退场时一起走到终点。
+   用 [data-exiting="true"] 触发，而不是 :hover 之类的伪类 —— 退场是
+   React 决定的，样式只负责执行。 */
+.splash-root[data-exiting="true"] {
+  pointer-events: none;
+}
+
+.splash-root[data-exiting="true"] .splash-shutter--top {
+  animation: splash-shutter-up var(--splash-exit) cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+.splash-root[data-exiting="true"] .splash-shutter--bottom {
+  animation: splash-shutter-down var(--splash-exit) cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+.splash-root[data-exiting="true"] .splash-body {
+  animation: splash-body-out calc(var(--splash-exit) * 0.5) ease-in forwards;
+}
+
+.splash-root[data-exiting="true"] .splash-corner {
+  animation: splash-body-out calc(var(--splash-exit) * 0.35) ease-in forwards;
+}
+
+@keyframes splash-shutter-up {
+  to {
+    transform: translateY(-100%);
+  }
+}
+@keyframes splash-shutter-down {
+  to {
+    transform: translateY(100%);
+  }
+}
+@keyframes splash-body-out {
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+    filter: blur(4px);
+  }
+}
+
 @keyframes splash-auto-dismiss {
   to {
     opacity: 0;
     visibility: hidden;
   }
 }
+
+/* 减动效偏好：直接撤掉，不做快门开合 */
+@media (prefers-reduced-motion: reduce) {
+  .splash-root {
+    display: none !important;
+  }
+}
+

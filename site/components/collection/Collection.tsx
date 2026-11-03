@@ -2,13 +2,22 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useRepos } from "@/components/ReposProvider";
-import { SpecimenDialog } from "@/components/collection/SpecimenDialog";
 import { Portal } from "@/components/ui/Portal";
 import { Schematic } from "@/components/ui/Schematic";
 import { SchematicPlate } from "@/components/ui/SchematicPlate";
 import { accessionOf, FAMILIES, familyOf, type FamilyId } from "@/lib/data";
 import { pickFeatured, type Repo } from "@/lib/repos";
+
+/**
+ * 详情面板按需加载：带着 Schematic 与 Portal，只有点开某个项目才需要。
+ * 静态引入会让首屏为一次可能不发生的点击付出解析成本。
+ */
+const SpecimenDialog = dynamic(
+  () => import("@/components/collection/SpecimenDialog").then((m) => m.SpecimenDialog),
+  { ssr: false },
+);
 
 type SortKey = "curated" | "stars" | "name" | "pushed";
 type View = "index" | "grid";

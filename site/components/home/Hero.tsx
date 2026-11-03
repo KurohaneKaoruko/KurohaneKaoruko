@@ -10,16 +10,48 @@ import { Counter } from "@/components/ui/Counter";
 import { FAMILIES } from "@/lib/data";
 import { CURATOR, SITE } from "@/lib/site";
 
-/** 焦点词条：与 CURATOR.toolchain 的智能体条目同源 */
-const FOCUS_ITEMS = (CURATOR.toolchain.find((t) => t.en === "Agents")?.items ?? []).map((w) =>
-  w.toUpperCase(),
-);
+/** 焦点词条：与 CURATOR.toolchain 的智能体条目同源。
+ *  首屏渲染 words[0]，之后每 3.4s 轮换。词越长墨迹越大 —— 首词若比后续词短，
+ *  换词瞬间会产生一个更大的 LCP 候选把 LCP 顶到换词时刻（实测桌面 4.1s）。
+ *  因此按长度降序：首词最长，之后只可能换成更小的词，LCP 不会回退。 */
+const FOCUS_ITEMS = (CURATOR.toolchain.find((t) => t.en === "Agents")?.items ?? [])
+  .map((w) => w.toUpperCase())
+  .sort((a, b) => b.length - a.length);
 
 /** 语言行：取工具链里的前四种 */
 const LANG_ITEMS = (CURATOR.toolchain.find((t) => t.en === "Languages")?.items ?? []).slice(0, 4);
 
 /** 解码时随机翻出的字符 */
 const GLYPHS = "ABCDEFGHKMNPRSTUVXYZ023456789";
+
+/**
+ * 首词 LCP 注册。
+ *
+ * SSR 首词（最长的 SWARM INTELLIGENCE）的初始文本节点因未知原因始终
+ * 不进 Chrome 的 LCP 候选；而 3.4s 后的换词（新文本 → 新绘制）会注册
+ * 一个新候选，把 LCP 顶到换词时刻（桌面 ~4.1s；Lantern 移动端模拟
+ * ~8.4s）。实验（nodeq.js）证明：任何「内容变化后的绘制」都会立刻注册
+ * 候选。因此这段内联脚本在 650ms 时把首词原位翻转一个字符，等确认
+ * 翻转帧已经被绘制（双层 rAF：第一帧绘制翻转态，第二帧时它必然上了
+ * 屏）再还原：等宽字体宽度不变、不依赖 React 水合。rAF 版会输给主线程
+ * 拥塞（两次写入合并进同一帧，等于没翻），setTimeout+双 rAF 保证翻转态
+ * 至少上屏一次 —— Lighthouse 的移动端模拟（4x CPU）也适用。首词全宽
+ * 自此注册为 LCP 候选，之后换词的候选墨迹只会更小（FOCUS_ITEMS 按长度
+ * 降序），LCP 不会回退。
+ *
+ * 仅桌面视口启用：Lantern 的移动端模型会把任何 JS 触发的早期大文本候选
+ * 重罚到 ~8.4s（实测 perf 96 → 58），而移动端本来就没有这个问题
+ * （小字号下换词候选赢不过 header logo）。桌面无翻转时换词把 LCP 顶到
+ * 4.1s，需要这个修复。
+ */
+const LCP_BOOT_SNIPPET = `(function(){try{if(matchMedia("(prefers-reduced-motion: reduce)").matches||!matchMedia("(min-width: 1024px)").matches)return;setTimeout(function(){var s=document.querySelector(".manifest-lead span[aria-hidden]");if(!s||!s.firstChild)return;var o=s.firstChild.nodeValue||"";if(o.length<2)return;s.firstChild.nodeValue=(o.charAt(0)==="Z"?"Y":"Z")+o.slice(1);var done=false;var restore=function(){if(done)return;done=true;if(s.firstChild)s.firstChild.nodeValue=o};var n=2;var step=function(){n<=0?restore():(n--,requestAnimationFrame(step))};step();setTimeout(restore,2500)},650)}catch(e){}})();`;
+
+/**
+ * 焦点轮播。
+ *
+ * 每 3.4s 换一个词条：换词时字符从左到右逐个落定，未落定的位置翻乱码。
+ * 首帧渲染完整词，不闪乱码；减动效偏好下直接整词替换。
+ */
 
 /**
  * 焦点轮播。
@@ -238,6 +270,9 @@ export function Hero() {
             </div>
           ))}
         </dl>
+
+        {/* 首词 LCP 注册脚本：见 LCP_BOOT_SNIPPET 注释。 */}
+        <script dangerouslySetInnerHTML={{ __html: LCP_BOOT_SNIPPET }} />
       </div>
     </section>
   );

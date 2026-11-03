@@ -70,15 +70,18 @@ export function AboutView() {
       {/* 自述 */}
       <section className="shell">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
-          <Reveal className="lg:col-span-4" delay={40}>
+          <Reveal className="lg:col-span-4" delay={40} eager>
             <div className="lg:sticky lg:top-[calc(var(--nav-h)+28px)]">
               <figure className="portrait-frame relative border border-line p-2">
                 <div className="relative overflow-hidden">
                   <img
-                    src={`${BASE}/logo.jpg`}
+                    src={`${BASE}/portrait-480.jpg`}
+                    srcSet={`${BASE}/portrait-240.jpg 240w, ${BASE}/portrait-480.jpg 480w`}
+                    sizes="(max-width: 1024px) 100vw, 33vw"
                     alt="Kurohane Kaoruko"
-                    width={600}
-                    height={600}
+                    width={480}
+                    height={480}
+                    decoding="async"
                     className="aspect-square w-full object-cover"
                   />
                   <span className="portrait-scan" aria-hidden="true" />
@@ -109,7 +112,7 @@ export function AboutView() {
             </div>
           </Reveal>
 
-          <Reveal className="lg:col-span-8" delay={90}>
+          <Reveal className="lg:col-span-8" delay={90} eager>
             <div className="border-t border-line pt-5">
               <div className="flex items-center justify-between">
                 <p className="label">NOW</p>

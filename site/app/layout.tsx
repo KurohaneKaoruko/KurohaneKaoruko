@@ -1,9 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import "@fontsource-variable/ibm-plex-sans";
-import "@fontsource-variable/noto-sans-sc";
-import "@fontsource/ibm-plex-mono/400.css";
-import "@fontsource/ibm-plex-mono/500.css";
 import "./globals.css";
+import { notoSansSC, plexSans, plexMono400, plexMono500 } from "./fonts";
 
 import { Cursor } from "@/components/fx/Cursor";
 import { PointerFX } from "@/components/fx/PointerFX";
@@ -59,9 +56,12 @@ export const metadata: Metadata = {
     "supported-color-schemes": "dark",
   },
   icons: {
-    icon: [{ url: `${BASE}/logo.jpg`, type: "image/jpeg" }],
-    shortcut: [{ url: `${BASE}/logo.jpg`, type: "image/jpeg" }],
-    apple: [{ url: `${BASE}/logo.jpg`, type: "image/jpeg" }],
+    icon: [
+      { url: `${BASE}/favicon-32.png`, type: "image/png", sizes: "32x32" },
+      { url: `${BASE}/icon-192.png`, type: "image/png", sizes: "192x192" },
+    ],
+    shortcut: [{ url: `${BASE}/favicon-32.png`, type: "image/png" }],
+    apple: [{ url: `${BASE}/apple-touch-icon.png`, type: "image/png", sizes: "180x180" }],
   },
 };
 
@@ -73,8 +73,12 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const fontVars = [notoSansSC, plexSans, plexMono400, plexMono500]
+    .map((f) => f.variable)
+    .join(" ");
+
   return (
-    <html lang="zh-CN" suppressHydrationWarning>
+    <html lang="zh-CN" suppressHydrationWarning className={fontVars}>
       <body>
         <BootScript />
 
