@@ -30,9 +30,11 @@ export const SITE = {
  * next.config 的 basePath 只作用于路由与 _next/ 资源，
  * public/ 下的文件（favicon、图片、预取数据）要自己带上这段前缀。
  * 根路径部署（Vercel / Cloudflare）时为空串。
+ *
+ * 值由 next.config 的 env 注入（NEXT_PUBLIC_BASE_PATH），服务端与
+ * 客户端拿到的是同一个前缀，不依赖客户端读不到的 DEPLOY_TARGET。
  */
-export const BASE =
-  process.env.DEPLOY_TARGET === "pages" ? "/KurohaneKaoruko" : "";
+export const BASE = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 export type NavItem = {
   href: string;
