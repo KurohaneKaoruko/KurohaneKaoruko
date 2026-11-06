@@ -24,7 +24,7 @@ export type ThemeMeta = {
  * 首页按需加载器。
  *
  * 默认主题由 app/page.tsx 直接服务端渲染，其余主题只有在第一次
- * 被选中时才拉取自己的组件树 —— 13 套首页不应该都进首屏包。
+ * 被选中时才拉取自己的组件树 —— 各套首页不应该都进首屏包。
  */
 export type ThemeHomeLoader = () => Promise<{ default: ComponentType }>;
 

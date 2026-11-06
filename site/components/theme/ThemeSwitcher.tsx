@@ -264,7 +264,7 @@ export function ThemeSwitcher({
           className="absolute right-0 top-[calc(100%+8px)] z-[80] max-h-[min(70vh,30rem)] w-[min(20rem,calc(100vw-32px))] overflow-y-auto border border-line-strong bg-bg-2 p-1.5 shadow-[0_30px_80px_-30px_#000]"
         >
           <p className="px-2.5 py-2 font-mono text-[9px] uppercase tracking-[0.3em] text-faint">
-            站点主题 / THEME ({themes.length})
+            站点主题 / THEME
           </p>
           {themes.map((t, i) => {
             const isActive = mounted && t.id === theme;
