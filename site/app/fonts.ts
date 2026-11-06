@@ -53,6 +53,9 @@ export const plexMono400 = localFont({
   style: "normal",
   display: "swap",
   preload: true,
+  // 不要生成 Arial 度量替身：404 的字符画按 0.6em 字步进排版，等宽字体
+  // 尚未就位时必须直接落回 ui-monospace，落到比例字体上整幅画会散架。
+  adjustFontFallback: false,
   variable: "--font-plex-mono-400",
 });
 
@@ -63,5 +66,6 @@ export const plexMono500 = localFont({
   style: "normal",
   display: "swap",
   preload: false,
+  adjustFontFallback: false,
   variable: "--font-plex-mono-500",
 });

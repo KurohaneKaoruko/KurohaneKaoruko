@@ -4,6 +4,7 @@ import Link from "next/link";
 import { createPortal } from "react-dom";
 import { useEffect, useRef, useState } from "react";
 import { ASCII_COLS, ASCII_FPS, ASCII_FRAME0, ASCII_ROWS } from "./ascii-frames";
+import { notoSansSC, plexMono400, plexMono500, plexSans } from "./fonts";
 import { BASE } from "@/lib/site";
 import "./not-found.scss";
 
@@ -128,6 +129,12 @@ export default function NotFound() {
   const stageRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
   const [layout, setLayout] = useState<NfLayout | null>(null);
+  // 404 是从根布局之外单独渲染的静态页面，Next 不一定会为它注入字体
+  // preload；把字体变量挂在页面根上，并放一小段离屏文字，让浏览器在解析
+  // HTML 阶段就开始取字体，而不是等水合后字符画出现才想起要它。
+  const fontVars = [notoSansSC, plexSans, plexMono400, plexMono500]
+    .map((f) => f.variable)
+    .join(" ");
 
   useEffect(() => {
     setMounted(true);
@@ -403,11 +410,20 @@ export default function NotFound() {
     // 水合前的黑幕垫底。data-nf-shell 供 not-found.scss 的 body:has() 规则识别：
     // 只要这个壳还在 DOM 里（= 字符画尚未接管），就压住 SSR 外壳的页眉/页脚，
     // 避免「刷新时先看到网站其它内容」；壳卸载后规则自动解除，与 portal 无缝交接。
-    return <div data-nf-shell className="fixed inset-0 z-[80] bg-black" />;
+    return (
+      <div data-nf-shell className={`${fontVars} fixed inset-0 z-[80] overflow-hidden bg-black`}>
+        <span aria-hidden className="sr-only font-mono">
+          404
+        </span>
+        <span aria-hidden className="sr-only font-sans">
+          404 页面
+        </span>
+      </div>
+    );
   }
 
   return createPortal(
-    <div className="nf-root fixed inset-0 z-[200] overflow-hidden bg-black text-white">
+    <div className={`${fontVars} nf-root fixed inset-0 z-[200] overflow-hidden bg-black text-white`}>
       {/* 404 全部样式在 app/not-found.scss */}
 
       
