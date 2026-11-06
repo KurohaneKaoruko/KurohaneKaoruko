@@ -47,7 +47,8 @@ export type NavItem = {
 export const NAV_ITEMS: NavItem[] = [
   { href: "/", cn: "首页", en: "Index", no: "01" },
   { href: "/projects", cn: "项目", en: "Projects", no: "02" },
-  { href: "/about", cn: "关于", en: "About", no: "03" },
+  { href: "/themes", cn: "主题", en: "Themes", no: "03" },
+  { href: "/about", cn: "关于", en: "About", no: "04" },
 ];
 
 /** 作者自述：关于页与首页共用 */

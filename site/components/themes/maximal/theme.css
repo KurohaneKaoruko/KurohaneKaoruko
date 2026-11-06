@@ -1,0 +1,39 @@
+/*
+ * maximal 主题令牌。
+ * 作用域限定在 [data-theme="maximal"]，删掉这个文件不会影响其他主题。
+ */
+
+[data-theme="maximal"] {
+  --background: #faf3e3;
+  --foreground: #1c1410;
+
+  --primary: #d4380d;
+  --primary-foreground: #fff7e8;
+  --secondary: #1d4ed8;
+  --accent: #0f766e;
+  --brand-hover: #d4380d;
+
+  --card-bg: #fffaf0;
+  --border: rgba(28, 20, 16, 0.35);
+  --border-strong: #1c1410;
+  --border-active: #d4380d;
+
+  --text-muted: #5c4f45;
+  --text-dim: #97897c;
+
+  --grid-color: rgba(28, 20, 16, 0.07);
+  --grid-size: 24px;
+  --decor-ring-a: rgba(212, 56, 13, 0.05);
+  --decor-ring-b: rgba(29, 78, 216, 0.04);
+  --decor-dot: rgba(28, 20, 16, 0.14);
+  --body-gradient: linear-gradient(to top, #f1e6cd 0%, #faf3e3 40%, #fdf8ec 100%);
+
+  --nav-h: 64px;
+
+  --hard-shadow: none;
+
+  /* 极繁专属的第四色：芥末黄（荧光笔 / 色块），只有极繁组件会引用 */
+  --max-sun: #f0b429;
+
+  color-scheme: light;
+}

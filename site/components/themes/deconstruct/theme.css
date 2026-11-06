@@ -1,0 +1,40 @@
+/*
+ * deconstruct 主题令牌。
+ * 作用域限定在 [data-theme="deconstruct"]，删掉这个文件不会影响其他主题。
+ */
+
+[data-theme="deconstruct"] {
+  --background: #f2efe8;
+  --foreground: #1a1712;
+
+  --primary: #d33b1f;
+  --primary-foreground: #fbf7ee;
+  --secondary: #2f4a6d;
+  --accent: #d33b1f;
+  --brand-hover: #d33b1f;
+
+  --card-bg: #faf7f0;
+  --border: rgba(26, 23, 18, 0.26);
+  --border-strong: #1a1712;
+  --border-active: #d33b1f;
+
+  --text-muted: #4f4840;
+  --text-dim: #8a8175;
+
+  --grid-color: rgba(26, 23, 18, 0.055);
+  --grid-size: 56px;
+  --decor-ring-a: rgba(211, 59, 31, 0.05);
+  --decor-ring-b: rgba(47, 74, 109, 0.045);
+  --decor-dot: rgba(26, 23, 18, 0.1);
+  --body-gradient: linear-gradient(to top, #e9e4d9 0%, #f2efe8 45%, #f7f4ec 100%);
+
+  --nav-h: 64px;
+
+  --hard-shadow: none;
+
+  /* 解构专属：错版两色的实际值，工具类直接引用 */
+  --dc-red: #d33b1f;
+  --dc-blue: #2f4a6d;
+
+  color-scheme: light;
+}

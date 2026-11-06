@@ -1,0 +1,39 @@
+/*
+ * vaporwave 主题令牌。
+ * 作用域限定在 [data-theme="vaporwave"]，删掉这个文件不会影响其他主题。
+ */
+
+[data-theme="vaporwave"] {
+  --background: #2b0a3d;
+  --foreground: #fdf4ff;
+
+  --primary: #ff71ce;
+  --primary-foreground: #2b0a3d;
+  --secondary: #01cdfe;
+  --accent: #b967ff;
+  --brand-hover: #ff71ce;
+
+  --card-bg: #3a1160;
+  --border: rgba(253, 244, 255, 0.25);
+  --border-strong: rgba(253, 244, 255, 0.5);
+  --border-active: #ff71ce;
+
+  --text-muted: #d9b8ef;
+  --text-dim: #9d7ab8;
+
+  --grid-color: rgba(255, 113, 206, 0.07);
+  --grid-size: 40px;
+  --decor-ring-a: rgba(1, 205, 254, 0.05);
+  --decor-ring-b: rgba(255, 113, 206, 0.05);
+  --decor-dot: rgba(253, 244, 255, 0.1);
+  --body-gradient: linear-gradient(to top, #1a0526 0%, #2b0a3d 45%, #4a1170 100%);
+
+  --nav-h: 64px;
+
+  --hard-shadow: none;
+
+  /* 蒸汽波专属：镭射渐变（chrome 字与装饰共用） */
+  --vw-grad: linear-gradient(90deg, #ff71ce 0%, #b967ff 45%, #01cdfe 100%);
+
+  color-scheme: dark;
+}

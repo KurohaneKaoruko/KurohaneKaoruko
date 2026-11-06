@@ -1,0 +1,36 @@
+/*
+ * minimal 主题令牌。
+ * 作用域限定在 [data-theme="minimal"]，删掉这个文件不会影响其他主题。
+ */
+
+[data-theme="minimal"] {
+  --background: #ffffff;
+  --foreground: #141414;
+
+  --primary: #141414;
+  --primary-foreground: #ffffff;
+  --secondary: #6b7280;
+  --accent: #141414;
+  --brand-hover: #141414;
+
+  --card-bg: #ffffff;
+  --border: rgba(20, 20, 20, 0.1);
+  --border-strong: rgba(20, 20, 20, 0.32);
+  --border-active: #141414;
+
+  --text-muted: #6b7280;
+  --text-dim: #9aa0a6;
+
+  --grid-color: rgba(20, 20, 20, 0.04);
+  --grid-size: 48px;
+  --decor-ring-a: transparent;
+  --decor-ring-b: transparent;
+  --decor-dot: transparent;
+  --body-gradient: linear-gradient(to top, #ffffff 0%, #ffffff 100%);
+
+  --nav-h: 64px;
+
+  --hard-shadow: none;
+
+  color-scheme: light;
+}

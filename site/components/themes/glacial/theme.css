@@ -1,0 +1,36 @@
+/*
+ * glacial 主题令牌。
+ * 作用域限定在 [data-theme="glacial"]，删掉这个文件不会影响其他主题。
+ */
+
+[data-theme="glacial"] {
+  --background: #eef1f4;
+  --foreground: #131920;
+
+  --primary: #0891b2;
+  --primary-foreground: #ffffff;
+  --secondary: #5b7a8c;
+  --accent: #0891b2;
+  --brand-hover: #0891b2;
+
+  --card-bg: #fafcfd;
+  --border: rgba(19, 25, 32, 0.16);
+  --border-strong: rgba(19, 25, 32, 0.4);
+  --border-active: #0891b2;
+
+  --text-muted: #4a5866;
+  --text-dim: #8b98a5;
+
+  --grid-color: rgba(19, 25, 32, 0.045);
+  --grid-size: 48px;
+  --decor-ring-a: rgba(8, 145, 178, 0.05);
+  --decor-ring-b: rgba(19, 25, 32, 0.03);
+  --decor-dot: rgba(19, 25, 32, 0.1);
+  --body-gradient: linear-gradient(to top, #e3e9ee 0%, #eef1f4 40%, #f4f7fa 100%);
+
+  --nav-h: 64px;
+
+  --hard-shadow: none;
+
+  color-scheme: light;
+}

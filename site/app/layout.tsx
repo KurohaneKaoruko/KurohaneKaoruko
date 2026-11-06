@@ -11,6 +11,8 @@ import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import { BootScript } from "@/components/layout/BootScript";
 import { ReposProvider } from "@/components/ReposProvider";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
+import { ThemeScript } from "@/components/theme/ThemeScript";
 import { LoadingProvider } from "@/context/LoadingContext";
 import { BASE, SITE } from "@/lib/site";
 
@@ -78,8 +80,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     .join(" ");
 
   return (
-    <html lang="zh-CN" suppressHydrationWarning className={fontVars}>
+    <html lang="zh-CN" data-theme="archive" suppressHydrationWarning className={fontVars}>
       <body>
+        <ThemeScript />
         <BootScript />
 
         <div id="top" />
@@ -87,19 +90,21 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           跳到主内容
         </a>
 
-        <LoadingProvider>
-          <ReposProvider>
-            <SplashScreen />
-            <Header />
-            <main id="main" className="pt-[var(--nav-h)]">
-              <RouteFX>{children}</RouteFX>
-            </main>
-            <Footer />
-            <LoadingTrigger />
-            <Cursor />
-            <PointerFX />
-          </ReposProvider>
-        </LoadingProvider>
+        <ThemeProvider>
+          <LoadingProvider>
+            <ReposProvider>
+              <SplashScreen />
+              <Header />
+              <main id="main" className="pt-[var(--nav-h)]">
+                <RouteFX>{children}</RouteFX>
+              </main>
+              <Footer />
+              <LoadingTrigger />
+              <Cursor />
+              <PointerFX />
+            </ReposProvider>
+          </LoadingProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

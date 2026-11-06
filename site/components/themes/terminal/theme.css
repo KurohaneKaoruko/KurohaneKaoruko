@@ -1,0 +1,120 @@
+/*
+ * 终端主题令牌。
+ * 作用域限定在 [data-theme="terminal"]，删掉这个文件不会影响其他主题。
+ */
+
+[data-theme="terminal"] {
+  --background: #080808;
+  --foreground: #f2f2f2;
+
+  --primary: #ff3333;
+  --primary-foreground: #ffffff;
+  --secondary: #3b82f6;
+  --accent: #ff3333;
+  --brand-hover: #ff3333;
+
+  --card-bg: #101010;
+  --border: rgba(255, 255, 255, 0.2);
+  --border-strong: rgba(255, 255, 255, 0.4);
+  --border-active: #ff3333;
+
+  --text-muted: #8a8a8a;
+  --text-dim: #4a4a4a;
+
+  --grid-color: rgba(255, 255, 255, 0.035);
+  --grid-size: 40px;
+  --page-glow: rgba(255, 51, 51, 0.06);
+  --page-grid-size: 40px;
+
+  --hard-shadow: none;
+
+  color-scheme: dark;
+}
+
+[data-theme="terminal"] .crt {
+  position: relative;
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(255, 51, 51, 0.07), transparent 60%),
+    var(--background);
+}
+
+[data-theme="terminal"] .crt-scan {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.045) 0,
+    rgba(255, 255, 255, 0.045) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  mix-blend-mode: overlay;
+  opacity: 0.45;
+}
+
+[data-theme="terminal"] .crt-frame {
+  position: relative;
+  border: 1px solid var(--border-strong);
+  background: color-mix(in srgb, var(--background) 88%, #000);
+  box-shadow:
+    0 0 0 1px rgba(255, 51, 51, 0.08),
+    0 0 70px -20px rgba(255, 51, 51, 0.28),
+    inset 0 0 60px rgba(0, 0, 0, 0.55);
+}
+
+[data-theme="terminal"] .crt-frame::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.035);
+  pointer-events: none;
+}
+
+[data-theme="terminal"] .crt-led {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--primary);
+  box-shadow: 0 0 8px var(--primary);
+  animation: crt-pulse 2.4s ease-in-out infinite;
+}
+
+[data-theme="terminal"] .crt-glow {
+  text-shadow:
+    0 0 10px rgba(255, 51, 51, 0.55),
+    0 0 32px rgba(255, 51, 51, 0.25);
+}
+
+[data-theme="terminal"] .crt-btn {
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+}
+
+[data-theme="terminal"] .crt-row {
+  transition: background-color 0.2s ease;
+}
+[data-theme="terminal"] .crt-row:hover {
+  background: rgba(255, 51, 51, 0.05);
+}
+
+[data-theme="terminal"] .crt-caret {
+  color: var(--primary);
+  animation: blink 1.05s steps(1, end) infinite;
+}
+
+@keyframes crt-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="terminal"] .crt-led {
+    animation: none;
+  }
+}

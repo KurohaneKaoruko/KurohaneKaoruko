@@ -1,0 +1,40 @@
+/*
+ * glitch 主题令牌。
+ * 作用域限定在 [data-theme="glitch"]，删掉这个文件不会影响其他主题。
+ */
+
+[data-theme="glitch"] {
+  --background: #060607;
+  --foreground: #e6e6e9;
+
+  --primary: #ff2a2a;
+  --primary-foreground: #ffffff;
+  --secondary: #2f6bff;
+  --accent: #ff2aa8;
+  --brand-hover: #ff2a2a;
+
+  --card-bg: #0d0d10;
+  --border: rgba(230, 230, 233, 0.16);
+  --border-strong: rgba(230, 230, 233, 0.38);
+  --border-active: #ff2a2a;
+
+  --text-muted: #8b8b93;
+  --text-dim: #55555c;
+
+  --grid-color: rgba(230, 230, 233, 0.04);
+  --grid-size: 40px;
+  --decor-ring-a: rgba(255, 42, 42, 0.03);
+  --decor-ring-b: rgba(47, 107, 255, 0.03);
+  --decor-dot: rgba(230, 230, 233, 0.07);
+  --body-gradient: linear-gradient(to top, #0a0a0c 0%, #060607 40%, #060607 100%);
+
+  --nav-h: 64px;
+
+  --hard-shadow: none;
+
+  /* 故障专属：色差双色的实际值，工具类直接引用 */
+  --g-red: #ff2a2a;
+  --g-blue: #2f6bff;
+
+  color-scheme: dark;
+}

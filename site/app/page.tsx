@@ -1,53 +1,12 @@
-import Link from "next/link";
-import { Collection } from "@/components/collection/Collection";
-import { Featured } from "@/components/home/Featured";
-import { FieldData } from "@/components/home/FieldData";
-import { Hero } from "@/components/home/Hero";
-import { SectionRail } from "@/components/home/SectionRail";
-import { Reveal } from "@/components/ui/Reveal";
-import { SectionHead } from "@/components/ui/SectionHead";
-import { Ticker } from "@/components/ui/Ticker";
-import { projects } from "@/lib/data";
+import { ThemedHome } from "@/components/themes/ThemedHome";
+import ArchiveHome from "@/components/themes/archive/Home";
 
-/** 跑马灯的词条：全部项目名 */
-const TICKER = projects.map((p) => p.name);
-
+/**
+ * 首页。
+ *
+ * 默认主题「档案」仍由服务端直接渲染，首屏 HTML 完整、LCP 路径不变；
+ * 其他主题在客户端选中后按需加载各自的首页组件树。
+ */
 export default function Home() {
-  return (
-    <>
-      <Hero />
-
-      <SectionRail />
-
-      <Ticker items={TICKER} />
-
-      <Featured />
-
-      <section id="collection" className="section border-t border-line">
-        <div className="shell">
-          <Reveal>
-            <SectionHead
-              index="02"
-              en="Project index"
-              cn="全部项目"
-              action={
-                <Link
-                  href="/projects/"
-                  className="link font-mono text-[10px] uppercase tracking-[0.18em] text-fg"
-                >
-                  VIEW ALL →
-                </Link>
-              }
-            />
-          </Reveal>
-
-          <Reveal className="mt-8" delay={50}>
-            <Collection mode="home" limit={8} />
-          </Reveal>
-        </div>
-      </section>
-
-      <FieldData />
-    </>
-  );
+  return <ThemedHome fallback={<ArchiveHome />} />;
 }

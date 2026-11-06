@@ -1,0 +1,39 @@
+/*
+ * y2k 主题令牌。
+ * 作用域限定在 [data-theme="y2k"]，删掉这个文件不会影响其他主题。
+ */
+
+[data-theme="y2k"] {
+  --background: #dfe9f8;
+  --foreground: #1a2440;
+
+  --primary: #2f6df6;
+  --primary-foreground: #ffffff;
+  --secondary: #ff7ac8;
+  --accent: #8f5cff;
+  --brand-hover: #2f6df6;
+
+  --card-bg: #f6f9ff;
+  --border: rgba(26, 36, 64, 0.25);
+  --border-strong: #1a2440;
+  --border-active: #2f6df6;
+
+  --text-muted: #5a6a8c;
+  --text-dim: #90a0c0;
+
+  --grid-color: rgba(26, 36, 64, 0.06);
+  --grid-size: 36px;
+  --decor-ring-a: rgba(47, 109, 246, 0.05);
+  --decor-ring-b: rgba(255, 122, 200, 0.05);
+  --decor-dot: rgba(26, 36, 64, 0.12);
+  --body-gradient: linear-gradient(to top, #c3d4ee 0%, #dfe9f8 40%, #eef4fd 100%);
+
+  --nav-h: 64px;
+
+  --hard-shadow: none;
+
+  /* Y2K 专属：金属渐变（面板边与 chrome 字共用） */
+  --k2-metal: linear-gradient(135deg, #f8fbff 0%, #c5d4ec 40%, #edf3ff 55%, #aebfe0 100%);
+
+  color-scheme: light;
+}

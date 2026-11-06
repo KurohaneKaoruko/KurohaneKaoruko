@@ -1,0 +1,41 @@
+/*
+ * cyberpunk 主题令牌。
+ * 作用域限定在 [data-theme="cyberpunk"]，删掉这个文件不会影响其他主题。
+ */
+
+[data-theme="cyberpunk"] {
+  --background: #0b0b16;
+  --foreground: #e8e8f4;
+
+  --primary: #00f0ff;
+  --primary-foreground: #061018;
+  --secondary: #ff2ec4;
+  --accent: #ffe14d;
+  --brand-hover: #00f0ff;
+
+  --card-bg: #131327;
+  --border: rgba(232, 232, 244, 0.18);
+  --border-strong: rgba(232, 232, 244, 0.42);
+  --border-active: #00f0ff;
+
+  --text-muted: #8f8fb0;
+  --text-dim: #55557a;
+
+  --grid-color: rgba(0, 240, 255, 0.04);
+  --grid-size: 44px;
+  --decor-ring-a: rgba(255, 46, 196, 0.04);
+  --decor-ring-b: rgba(0, 240, 255, 0.04);
+  --decor-dot: rgba(232, 232, 244, 0.07);
+  --body-gradient: linear-gradient(to top, #120f2e 0%, #0b0b16 45%, #1c0f33 100%);
+
+  --nav-h: 64px;
+
+  --hard-shadow: none;
+
+  /* 赛博专属：霓虹的三原值，霓虹工具类直接引用 */
+  --cp-cyan: #00f0ff;
+  --cp-magenta: #ff2ec4;
+  --cp-yellow: #ffe14d;
+
+  color-scheme: dark;
+}

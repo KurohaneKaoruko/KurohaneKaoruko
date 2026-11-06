@@ -1,8 +1,10 @@
 @import "tailwindcss";
+@import "../components/themes/base.css";
 
 /* ==========================================================================
    KUROHANE // SOFTWARE ARCHIVE
-   黑底、白字、单色信号（酸绿）。一套令牌，没有第二套主题。
+   一套基础令牌 + 十三套主题。主题只覆盖令牌与首页组件树，
+   顶栏、页脚等共享结构由这些令牌统一驱动。
    ========================================================================== */
 
 :root {
@@ -13,14 +15,14 @@
   --fg-2: #b9c3be;
   --muted: #79837f;
   --faint: #5d6763;
-  --line: rgba(238, 242, 239, 0.1);
-  --line-soft: rgba(238, 242, 239, 0.055);
-  --line-strong: rgba(238, 242, 239, 0.24);
+  --line: color-mix(in srgb, var(--fg) 10%, transparent);
+  --line-soft: color-mix(in srgb, var(--fg) 5.5%, transparent);
+  --line-strong: color-mix(in srgb, var(--fg) 24%, transparent);
   --signal: #ff453a;
-  --signal-soft: rgba(255, 69, 58, 0.14);
-  --signal-line: rgba(255, 69, 58, 0.4);
+  --signal-soft: color-mix(in srgb, var(--signal) 14%, transparent);
+  --signal-line: color-mix(in srgb, var(--signal) 40%, transparent);
   --danger: #ff6b5a;
-  --grid: rgba(238, 242, 239, 0.026);
+  --grid: color-mix(in srgb, var(--fg) 2.6%, transparent);
   --shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.9);
 
   color-scheme: dark;
@@ -39,6 +41,22 @@
   --color-line-strong: var(--line-strong);
   --color-signal: var(--signal);
   --color-danger: var(--danger);
+
+  /* 主题兼容别名：v1 组件使用 background / foreground / primary 等命名。
+     值仍然来自同一套主题令牌，不存在第二份颜色定义。 */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-card-bg: var(--card-bg);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-active: var(--border-active);
+  --color-text-muted: var(--text-muted);
+  --color-text-dim: var(--text-dim);
+  --color-brand-hover: var(--brand-hover, var(--primary));
 
   --font-sans: var(--stack-sans);
   --font-serif: var(--stack-sans);
@@ -78,10 +96,11 @@ body {
   min-height: 100vh;
   background-color: var(--bg);
   background-image:
-    radial-gradient(1100px 520px at 74% -8%, rgba(255, 69, 58, 0.045), transparent 62%),
+    radial-gradient(1100px 520px at 74% -8%, var(--page-glow), transparent 62%),
     linear-gradient(to right, var(--grid) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
-  background-size: auto, 80px 80px, 80px 80px;
+  background-size: auto, var(--page-grid-size, 80px) var(--page-grid-size, 80px),
+    var(--page-grid-size, 80px) var(--page-grid-size, 80px);
   color: var(--fg);
   font-family: var(--stack-sans);
   font-size: 15.5px;
@@ -95,7 +114,7 @@ body {
 
 ::selection {
   background: var(--signal);
-  color: #0a0d05;
+  color: var(--primary-foreground);
 }
 
 :focus-visible {
@@ -103,16 +122,28 @@ body {
   outline-offset: 3px;
 }
 
+/* 主题切换瞬间的全局过渡：由 ThemeProvider 临时挂载，420ms 后摘掉 */
+.theme-anim,
+.theme-anim *,
+.theme-anim *::before,
+.theme-anim *::after {
+  transition:
+    background-color 0.35s ease,
+    border-color 0.35s ease,
+    color 0.35s ease,
+    box-shadow 0.35s ease !important;
+}
+
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(238, 242, 239, 0.2) transparent;
+  scrollbar-color: color-mix(in srgb, var(--fg) 20%, transparent) transparent;
 }
 *::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 *::-webkit-scrollbar-thumb {
-  background: rgba(238, 242, 239, 0.18);
+  background: color-mix(in srgb, var(--fg) 18%, transparent);
   border: 3px solid var(--bg);
   border-radius: 8px;
 }
@@ -351,7 +382,7 @@ textarea::placeholder {
 .btn-primary:hover {
   background: var(--signal);
   border-color: var(--signal);
-  color: #0a0d05;
+  color: var(--primary-foreground);
 }
 
 .btn-ghost {
@@ -386,7 +417,7 @@ textarea::placeholder {
 }
 
 .plate-art {
-  color: rgba(238, 242, 239, 0.62);
+  color: color-mix(in srgb, var(--fg) 62%, transparent);
 }
 
 .plate-caption {
@@ -405,8 +436,8 @@ textarea::placeholder {
 
 .schematic-grid {
   background-image:
-    linear-gradient(to right, rgba(238, 242, 239, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(238, 242, 239, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, color-mix(in srgb, var(--fg) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--fg) 5%, transparent) 1px, transparent 1px);
   background-size: 18px 18px;
   background-position: center;
 }
@@ -470,7 +501,7 @@ textarea::placeholder {
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .index-row:hover {
-  background: rgba(238, 242, 239, 0.022);
+  background: color-mix(in srgb, var(--fg) 2.2%, transparent);
 }
 .index-row:hover::before {
   transform: scaleY(1);
@@ -526,7 +557,7 @@ textarea::placeholder {
   position: relative;
   overflow: hidden;
   border-block: 1px solid var(--line);
-  background: rgba(238, 242, 239, 0.015);
+  background: color-mix(in srgb, var(--fg) 1.5%, transparent);
   user-select: none; /* 跑马灯：纯装饰，移动的行不应被「选中」 */
 }
 .ticker-track {
@@ -581,7 +612,7 @@ textarea::placeholder {
     border-color 0.35s ease;
 }
 .site-header[data-scrolled="true"] {
-  background: rgba(7, 8, 9, 0.94);
+  background: color-mix(in srgb, var(--bg) 94%, transparent);
   border-bottom-color: var(--line);
 }
 
@@ -626,7 +657,7 @@ textarea::placeholder {
   position: fixed;
   inset: 0;
   z-index: 100;
-  background: rgba(4, 5, 5, 0.82);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
   backdrop-filter: blur(3px);
   opacity: 0;
   animation: scrim-in 0.25s ease forwards;
@@ -700,7 +731,7 @@ textarea::placeholder {
   border-left: 2px solid transparent;
 }
 .palette-item[data-active="true"] {
-  background: rgba(238, 242, 239, 0.035);
+  background: color-mix(in srgb, var(--fg) 3.5%, transparent);
   border-left-color: var(--signal);
   color: var(--fg);
 }
@@ -716,7 +747,7 @@ textarea::placeholder {
   z-index: 200;
   padding: 10px 16px;
   background: var(--signal);
-  color: #0a0d05;
+  color: var(--primary-foreground);
   font-family: var(--stack-mono);
   font-size: 11px;
   letter-spacing: 0.12em;
@@ -884,11 +915,11 @@ textarea::placeholder {
   0%,
   100% {
     opacity: 1;
-    box-shadow: 0 0 0 0 rgba(255, 69, 58, 0.45);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--signal) 45%, transparent);
   }
   50% {
     opacity: 0.55;
-    box-shadow: 0 0 0 4px rgba(255, 69, 58, 0);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--signal) 0%, transparent);
   }
 }
 .status-dot {
@@ -997,7 +1028,7 @@ html.has-cx * {
   width: 26px;
   height: 26px;
   margin: -13px 0 0 -13px;
-  border: 1px solid rgba(238, 242, 239, 0.28);
+  border: 1px solid color-mix(in srgb, var(--fg) 28%, transparent);
   border-radius: 50%;
   transition:
     width 0.22s ease,
@@ -1047,7 +1078,7 @@ html.has-cx * {
   width: 44px;
   height: 44px;
   margin: -22px 0 0 -22px;
-  border-color: rgba(238, 242, 239, 0.55);
+  border-color: color-mix(in srgb, var(--fg) 55%, transparent);
 }
 .cx[data-state="link"] .cx-dot {
   transform: scale(1.3);
@@ -1097,7 +1128,7 @@ html.has-cx * {
   transition: opacity 0.4s ease;
   background: radial-gradient(
     280px circle at var(--gx, 50%) var(--gy, 50%),
-    rgba(255, 69, 58, 0.08),
+    color-mix(in srgb, var(--signal) 8%, transparent),
     transparent 60%
   );
 }
@@ -1110,7 +1141,7 @@ html.has-cx * {
   inset: -12% 0;
   z-index: -1;
   pointer-events: none;
-  background: radial-gradient(closest-side, rgba(255, 69, 58, 0.14), rgba(255, 69, 58, 0.04) 55%, transparent 78%);
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--signal) 14%, transparent), color-mix(in srgb, var(--signal) 4%, transparent) 55%, transparent 78%);
 }
 
 /* ---- 路由扫描 ---- */
@@ -1129,7 +1160,7 @@ html.has-cx * {
     var(--signal) 82%,
     transparent
   );
-  box-shadow: 0 0 14px rgba(255, 69, 58, 0.55);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--signal) 55%, transparent);
   animation: route-scan 0.78s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 @keyframes route-scan {
@@ -1259,7 +1290,7 @@ html.has-cx * {
 }
 .rail-item[data-active="true"] .rail-dot {
   background: var(--signal);
-  box-shadow: 0 0 10px rgba(255, 69, 58, 0.7);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--signal) 70%, transparent);
   transform: scale(1.25);
 }
 .rail-no {
@@ -1382,8 +1413,8 @@ html.has-cx * {
   display: block;
   width: 100%;
   height: 1px;
-  background: linear-gradient(90deg, rgba(255, 69, 58, 0.25), var(--signal));
-  box-shadow: 0 0 10px rgba(255, 69, 58, 0.5);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--signal) 25%, transparent), var(--signal));
+  box-shadow: 0 0 10px color-mix(in srgb, var(--signal) 50%, transparent);
   transform: scaleX(0);
   transform-origin: left;
   will-change: transform;
@@ -1398,7 +1429,7 @@ html.has-cx * {
   width: 0;
   opacity: 0;
   background: var(--signal);
-  box-shadow: 0 0 9px rgba(255, 69, 58, 0.55);
+  box-shadow: 0 0 9px color-mix(in srgb, var(--signal) 55%, transparent);
   transition:
     transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
     width 0.42s cubic-bezier(0.22, 1, 0.36, 1),
@@ -1469,7 +1500,7 @@ html.has-cx * {
   bottom: 0;
   left: var(--cx, 50%);
   width: 1px;
-  background: rgba(238, 242, 239, 0.17);
+  background: color-mix(in srgb, var(--fg) 17%, transparent);
 }
 .plate-xhair-h {
   position: absolute;
@@ -1477,7 +1508,7 @@ html.has-cx * {
   right: 0;
   top: var(--cy, 50%);
   height: 1px;
-  background: rgba(238, 242, 239, 0.17);
+  background: color-mix(in srgb, var(--fg) 17%, transparent);
 }
 .plate-xhair-dot {
   position: absolute;
@@ -1487,7 +1518,7 @@ html.has-cx * {
   height: 5px;
   margin: -2.5px 0 0 -2.5px;
   background: var(--signal);
-  box-shadow: 0 0 12px rgba(255, 69, 58, 0.85);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--signal) 85%, transparent);
 }
 .plate-xhair-read {
   position: absolute;
@@ -1526,7 +1557,7 @@ html.over-card .cx .cx-coord {
   top: 0;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--signal) 18%, var(--signal) 82%, transparent);
-  box-shadow: 0 0 14px rgba(255, 69, 58, 0.6);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--signal) 60%, transparent);
 }
 .portrait-frame:hover .portrait-scan {
   animation: portrait-scan 1.15s cubic-bezier(0.4, 0, 0.2, 1) both;
@@ -1576,7 +1607,7 @@ html.over-card .cx .cx-coord {
   top: 0;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--signal), transparent);
-  box-shadow: 0 0 18px rgba(255, 69, 58, 0.65);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--signal) 65%, transparent);
 }
 @keyframes sheet-scan {
   0% {

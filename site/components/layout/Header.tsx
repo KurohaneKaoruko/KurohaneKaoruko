@@ -5,6 +5,7 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { ScrollProgress } from "@/components/fx/ScrollProgress";
+import { ThemeSwitcher } from "@/components/theme/ThemeSwitcher";
 import { NAV_ITEMS, SITE } from "@/lib/site";
 
 /**
@@ -27,8 +28,8 @@ function GithubMark({ className }: { className?: string }) {
 /**
  * 顶栏。
  *
- * 64px 高的一条系统栏：方标 + 站名，中间三个编号过的分区，
- * 右侧是搜索与 GitHub。滚动之后才出现底色与底线。
+ * 64px 高的一条系统栏：方标 + 站名，中间四个编号过的分区，
+ * 右侧是主题、搜索与 GitHub。滚动之后才出现底色与底线。
  */
 export default function Header() {
   const pathname = usePathname();
@@ -115,7 +116,7 @@ export default function Header() {
     <>
       <header className="site-header" data-scrolled={scrolled || menuOpen}>
         <div className="shell flex h-[var(--nav-h)] items-center justify-between gap-4">
-          <Link href="/" className="group flex items-center gap-3" aria-label={SITE.name}>
+          <Link href="/" className="group flex items-center gap-3">
             <span className="relative flex h-7 w-7 items-center justify-center border border-line-strong">
               <span className="font-mono text-[9px] font-medium tracking-[0.08em] text-fg">
                 {SITE.mark}
@@ -157,11 +158,13 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center gap-2 sm:gap-3">
+            <ThemeSwitcher className="hidden md:block" />
+
             <button
               type="button"
               onClick={() => setPaletteOpen(true)}
               className="hidden items-center gap-2 border border-line px-2.5 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.14em] text-muted transition-colors hover:border-line-strong hover:text-fg sm:flex"
-              aria-label="打开全站搜索"
+              aria-label="打开全站搜索（⌘K）"
             >
               <svg viewBox="0 0 16 16" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="1.2">
                 <circle cx="7" cy="7" r="4.6" />
@@ -218,6 +221,10 @@ export default function Header() {
         aria-hidden={!menuOpen}
       >
         <nav className="shell flex flex-1 flex-col justify-center pb-20">
+          <div className="mb-5 flex items-center justify-between border-b border-line pb-4">
+            <span className="label-sm">站点主题 / THEME</span>
+            <ThemeSwitcher />
+          </div>
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.href}

@@ -1,0 +1,40 @@
+/*
+ * cassette 主题令牌。
+ * 作用域限定在 [data-theme="cassette"]，删掉这个文件不会影响其他主题。
+ */
+
+[data-theme="cassette"] {
+  --background: #e6e0d0;
+  --foreground: #2b2620;
+
+  --primary: #c2571a;
+  --primary-foreground: #f5efe0;
+  --secondary: #5f6f4f;
+  --accent: #4f6f8f;
+  --brand-hover: #c2571a;
+
+  --card-bg: #efe9d8;
+  --border: rgba(43, 38, 32, 0.3);
+  --border-strong: #2b2620;
+  --border-active: #c2571a;
+
+  --text-muted: #6b6353;
+  --text-dim: #9a917e;
+
+  --grid-color: rgba(43, 38, 32, 0.06);
+  --grid-size: 32px;
+  --decor-ring-a: rgba(194, 87, 26, 0.04);
+  --decor-ring-b: rgba(95, 111, 79, 0.04);
+  --decor-dot: rgba(43, 38, 32, 0.1);
+  --body-gradient: linear-gradient(to top, #d8d1bd 0%, #e6e0d0 40%, #eee8d8 100%);
+
+  --nav-h: 64px;
+
+  --hard-shadow: none;
+
+  /* 卡带专属：琥珀屏（暗底琥珀字的内嵌小屏） */
+  --cs-amber: #ffb340;
+  --cs-screen: #241c10;
+
+  color-scheme: light;
+}

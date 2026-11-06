@@ -1,0 +1,36 @@
+/*
+ * brutalist 主题令牌。
+ * 作用域限定在 [data-theme="brutalist"]，删掉这个文件不会影响其他主题。
+ */
+
+[data-theme="brutalist"] {
+  --background: #f2efe9;
+  --foreground: #111111;
+
+  --primary: #ff2d2d;
+  --primary-foreground: #ffffff;
+  --secondary: #1d4ed8;
+  --accent: #ff2d2d;
+  --brand-hover: #ff2d2d;
+
+  --card-bg: #fffdf8;
+  --border: #111111;
+  --border-strong: #111111;
+  --border-active: #ff2d2d;
+
+  --text-muted: #45413b;
+  --text-dim: #857f76;
+
+  --grid-color: rgba(17, 17, 17, 0.06);
+  --grid-size: 32px;
+  --decor-ring-a: rgba(0, 0, 0, 0.03);
+  --decor-ring-b: rgba(0, 0, 0, 0.022);
+  --decor-dot: rgba(0, 0, 0, 0.09);
+  --body-gradient: linear-gradient(to top, #e6e2da 0%, #f2efe9 40%, #f2efe9 100%);
+
+  --nav-h: 76px;
+
+  --hard-shadow: 5px 5px 0 var(--foreground);
+
+  color-scheme: light;
+}
