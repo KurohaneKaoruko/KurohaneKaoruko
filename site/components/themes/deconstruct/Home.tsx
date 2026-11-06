@@ -11,8 +11,8 @@ import { SITE } from "@/lib/site";
  * 解构主题首页。
  *
  * 信息架构：「被拆开又叠回去的海报」—— 页面没有一条贯穿的轴。大标题被
- * 切成两段错位叠放，说明文字压在一块倾斜的碎片上，项目是六张各自歪着
- * 摆的纸片。阅读路径不是自上而下的扫描，而是被斜线牵引着沿对角线坠落。
+ * 切成两段错位叠放，项目是六张各自歪着摆的纸片。阅读路径不是自上而下的
+ * 扫描，而是被斜线牵引着沿对角线坠落。
  *
  * 与粗野的区别：粗野是**对齐**的强硬（粗黑框、偏移阴影、严格栏宽）；
  * 这里是**错位**的强硬 —— 框被切开、第二印偏出去、留白被挪走。
@@ -51,39 +51,20 @@ export default function DeconstructHome() {
           {/* 顶部错版信息条 */}
           <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 font-mono text-[10px] uppercase tracking-[0.3em] text-text-dim">
             <span className="font-bold text-foreground">{SITE.short}</span>
-            <span className="hidden sm:inline">Portfolio — 2026</span>
             <span>github.com/{SITE.handle}</span>
           </div>
           <div className="dc-rule mt-3" />
 
-          <div className="relative mt-10 grid gap-y-10 lg:grid-cols-12 lg:gap-x-8">
+          <div className="relative mt-10">
             {/* 主标题：被切成两段，下半段向右挪开 */}
-            <div className="lg:col-span-8">
-              <h1 className="display-title text-[clamp(3.2rem,11.5vw,9.5rem)] leading-[0.8] text-foreground">
-                <span className="dc-misprint block">DECON</span>
-                <span className="block translate-x-[8%] text-primary">STRUCT</span>
-              </h1>
+            <h1 className="display-title text-[clamp(3.2rem,11.5vw,9.5rem)] leading-[0.8] text-foreground">
+              <span className="dc-misprint block">DECON</span>
+              <span className="block translate-x-[8%] text-primary">STRUCT</span>
+            </h1>
 
-              <p className="mt-7 max-w-md border-l-2 border-primary pl-4 text-lg leading-relaxed text-text-muted">
-                开源工具与 AI 智能体。
-              </p>
-            </div>
-
-            {/* 副栏：倾斜的碎片便签 */}
-            <div className="lg:col-span-4 lg:pt-4">
-              <div className="dc-ghost relative rotate-[1.4deg] border border-foreground bg-card-bg p-5">
-                <p className="font-mono text-[9px] uppercase tracking-[0.32em] text-primary">
-                  Now
-                </p>
-                <p className="mt-3 text-sm leading-relaxed text-text-muted">
-                  最近在写 ExMachina —— 一个事件驱动的多智能体框架。剩下的时间给了小说编辑器和
-                  Screeps 的工具。
-                </p>
-                <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.25em] text-text-dim">
-                  Kurohane Kaoruko
-                </p>
-              </div>
-            </div>
+            <p className="mt-7 max-w-md border-l-2 border-primary pl-4 text-lg leading-relaxed text-text-muted">
+              开源工具与 AI 智能体。
+            </p>
           </div>
 
           <div className="mt-12 flex flex-wrap items-center gap-4">

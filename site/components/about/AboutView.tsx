@@ -7,8 +7,8 @@ import { projects } from "@/lib/data";
 /**
  * 关于。
  *
- * 一页纸的档案：左边一张灰度像，右边三段自述；再往下是工作方式、
- * 工具清单和通信地址。没有时间线 —— 项目本身的提交记录比编年史诚实。
+ * 一页纸的档案：左边一张灰度像，右边是角色、位置与联系方式；再往下是
+ * 工作方式、工具清单和通信地址。没有时间线 —— 项目本身的提交记录比编年史诚实。
  */
 const METHOD = [
   {
@@ -88,7 +88,7 @@ export function AboutView() {
                   <span className="absolute left-2 top-2 h-1.5 w-1.5 bg-signal" aria-hidden="true" />
                 </div>
                 <figcaption className="mt-2 flex items-center justify-between border-t border-line px-1 pt-2">
-                  <span className="label-sm">PORTRAIT // 2026</span>
+                  <span className="label-sm">PORTRAIT</span>
                   <span className="label-sm">IMG_0001</span>
                 </figcaption>
               </figure>
@@ -113,28 +113,7 @@ export function AboutView() {
           </Reveal>
 
           <Reveal className="lg:col-span-8" delay={90} eager>
-            <div className="border-t border-line pt-5">
-              <div className="flex items-center justify-between">
-                <p className="label">NOW</p>
-                <span className="label-sm">2026</span>
-              </div>
-              <ul className="mt-3">
-                {CURATOR.now.map((item, i) => (
-                  <li
-                    key={item.name}
-                    className="grid gap-1 border-b border-line-soft py-4 sm:grid-cols-[26px_190px_minmax(0,1fr)] sm:gap-5"
-                  >
-                    <span className="num text-[9px] text-signal">{String(i + 1).padStart(2, "0")}</span>
-                    <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-fg">
-                      {item.name}
-                    </span>
-                    <span className="text-[13px] leading-relaxed text-muted">{item.note}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <dl className="mt-8 border-t border-line">
+            <dl className="border-t border-line">
               {[
                 ["ROLE", "Independent dev."],
                 ["BASE", "China / UTC+8"],
