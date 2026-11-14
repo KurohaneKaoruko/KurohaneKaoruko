@@ -10,8 +10,6 @@ export const SITE = {
   handle: "KurohaneKaoruko",
   /** 启动屏主标题用的紧凑写法（SplashScreen） */
   short: "K.H.KAORUKO",
-  /** 顶栏的方标 */
-  mark: "◇",
   /** 站点副标 */
   archive: "Software Archive",
   tagline: "AI engineer & toolmaker.",

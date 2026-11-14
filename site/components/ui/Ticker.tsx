@@ -60,7 +60,7 @@ export function Ticker({ items }: { items: string[] }) {
               <span className="px-5 font-mono text-[10px] uppercase tracking-[0.22em] text-fg-2">
                 {item}
               </span>
-              <span className="text-[7px] text-signal opacity-70">◆</span>
+              <span className="h-[3px] w-[3px] bg-signal opacity-80" aria-hidden="true" />
             </span>
           ))}
         </div>

@@ -12,9 +12,9 @@ import { pickFeatured } from "@/lib/repos";
 /**
  * 精选项目。
  *
- * 取星标最高的三个，不是按某个固定名单挑的 —— 排序即理由。
- * 三个项目一左一右铺开：文字在一边，系统图在另一边。这一节决定整站的
- * 尺度感，所以标题、留白和分隔线都按技术手册的排法来。
+ * 取星标最高的三个，不是按固定名单挑的 —— 排序即理由。
+ * 条目按左右交错排：文字在一侧，系统图在另一侧。每一条只用一条发丝线
+ * 和下一件作品分开，版面靠字号和留白建立层级，不再叠加卡片。
  */
 export function Featured() {
   const { repos } = useRepos();
@@ -29,81 +29,82 @@ export function Featured() {
             index="01"
             en="Selected works"
             cn="精选项目"
-            note={`★ RANKED · TOP ${String(featured.length).padStart(2, "0")}`}
+            action={
+              <span className="label">
+                {String(featured.length).padStart(2, "0")} / {String(repos.length).padStart(2, "0")}
+              </span>
+            }
           />
         </Reveal>
 
-        <div className="mt-12 space-y-16 lg:space-y-24">
+        <div>
           {featured.map((repo, index) => {
             const family = familyOf(repo.family);
             const flip = index % 2 === 1;
             return (
-              <Reveal key={repo.name} delay={50}>
-                <article className="grid items-center gap-8 lg:grid-cols-12 lg:gap-10">
+              <Reveal key={repo.name} delay={40}>
+                <article className="featured-item grid gap-8 border-b border-line py-10 lg:grid-cols-12 lg:gap-10 lg:py-16">
                   <div
                     className={
-                      "lg:col-span-6 " +
-                      (flip ? "lg:order-2 lg:col-start-7" : "lg:order-1 lg:col-start-1")
+                      "lg:col-span-7 " +
+                      (flip ? "lg:order-2 lg:col-start-6" : "lg:order-1 lg:col-start-1")
                     }
                   >
-                    <div className="flex flex-wrap items-center gap-3">
-                      <span className="num text-[10px] text-signal">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      <span className="h-px w-6 bg-line-strong" aria-hidden="true" />
-                      <span className="label-sm">{family.code}</span>
-                      <span className="label-sm">★ {repo.stars}</span>
+                    <div className="flex items-baseline gap-4">
+                      <span className="featured-index">{String(index + 1).padStart(2, "0")}</span>
+                      <span className="label text-fg">{family.code}</span>
+                      <span className="label ml-auto">★ {repo.stars}</span>
                     </div>
 
-                    <h3 className="display mt-4 text-[clamp(2rem,4.2vw,3.3rem)] uppercase text-fg">
+                    <h3 className="featured-title">
                       <span className="decode" data-text={repo.name}>
                         {repo.name}
                       </span>
                     </h3>
-                    <p className="mt-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-faint">
-                      {repo.taxon}
-                    </p>
+                    <p className="featured-taxon">{repo.taxon}</p>
 
-                    <p className="mt-5 max-w-[46ch] text-[14px] leading-[1.9] text-fg-2">
-                      {repo.desc}
-                    </p>
+                    <p className="featured-desc">{repo.desc}</p>
 
-                    <dl className="mt-7 grid max-w-[420px] grid-cols-3 border-y border-line py-3">
-                      {[
-                        ["STACK", repo.lang || "—"],
-                        ["STARS", repo.stars > 0 ? "★ " + repo.stars : "—"],
-                        ["UPDATED", repo.pushedAt ? repo.pushedAt.slice(0, 7).replace("-", ".") : "—"],
-                      ].map(([k, v]) => (
-                        <div key={k}>
-                          <dt className="label-sm">{k}</dt>
-                          <dd className="mt-1 font-mono text-[11px] text-fg">{v}</dd>
-                        </div>
-                      ))}
-                    </dl>
+                    <div className="featured-bottom">
+                      <dl className="featured-meta">
+                        {[
+                          ["Stack", repo.lang || "—"],
+                          ["Updated", repo.pushedAt ? repo.pushedAt.slice(0, 7).replace("-", ".") : "—"],
+                        ].map(([key, value]) => (
+                          <div key={key}>
+                            <dt className="label">{key}</dt>
+                            <dd>{value}</dd>
+                          </div>
+                        ))}
+                      </dl>
 
-                    <div className="mt-6 flex flex-wrap items-center gap-3">
-                      <a className="btn btn-ghost" href={repo.url} target="_blank" rel="noreferrer">
-                        GitHub
-                        <span className="btn-arrow" aria-hidden="true">
-                          ↗
-                        </span>
-                      </a>
-                      <SpecimenTrigger
-                        repo={repo}
-                        plateNo={String(index + 1).padStart(2, "0")}
-                        className="link font-mono text-[10px] uppercase tracking-[0.18em] text-fg-2 hover:text-fg"
-                      >
-                        DETAILS ↗
-                      </SpecimenTrigger>
+                      <div className="featured-links">
+                        <SpecimenTrigger
+                          repo={repo}
+                          plateNo={String(index + 1).padStart(2, "0")}
+                          className="featured-link"
+                        >
+                          Details ↗
+                        </SpecimenTrigger>
+                        <a
+                          href={repo.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="featured-link"
+                        >
+                          GitHub ↗
+                        </a>
+                      </div>
                     </div>
                   </div>
 
                   <div
                     className={
-                      "lg:col-span-5 " + (flip ? "lg:order-1 lg:col-start-1" : "lg:order-2 lg:col-start-8")
+                      "lg:col-span-4 " +
+                      (flip ? "lg:order-1 lg:col-start-1" : "lg:order-2 lg:col-start-9")
                     }
                   >
-                    <Tilt max={4} className="featured-plate">
+                    <Tilt max={3}>
                       <SchematicPlate
                         repo={repo}
                         plateNo={String(index + 1).padStart(2, "0")}

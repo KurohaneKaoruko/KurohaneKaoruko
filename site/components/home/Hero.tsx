@@ -1,278 +1,113 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
 import { useCollectionStats, useRepos } from "@/components/ReposProvider";
-import { Tilt } from "@/components/fx/Tilt";
 import { BaseTime } from "@/components/layout/Clock";
-import { ArchivePanel } from "@/components/home/ArchivePanel";
 import { Counter } from "@/components/ui/Counter";
 import { FAMILIES } from "@/lib/data";
-import { CURATOR, SITE } from "@/lib/site";
-
-/** 焦点词条：与 CURATOR.toolchain 的智能体条目同源。
- *  首屏渲染 words[0]，之后每 3.4s 轮换。词越长墨迹越大 —— 首词若比后续词短，
- *  换词瞬间会产生一个更大的 LCP 候选把 LCP 顶到换词时刻（实测桌面 4.1s）。
- *  因此按长度降序：首词最长，之后只可能换成更小的词，LCP 不会回退。 */
-const FOCUS_ITEMS = (CURATOR.toolchain.find((t) => t.en === "Agents")?.items ?? [])
-  .map((w) => w.toUpperCase())
-  .sort((a, b) => b.length - a.length);
-
-/** 语言行：取工具链里的前四种 */
-const LANG_ITEMS = (CURATOR.toolchain.find((t) => t.en === "Languages")?.items ?? []).slice(0, 4);
-
-/** 解码时随机翻出的字符 */
-const GLYPHS = "ABCDEFGHKMNPRSTUVXYZ023456789";
-
-/**
- * 首词 LCP 注册。
- *
- * SSR 首词（最长的 SWARM INTELLIGENCE）的初始文本节点因未知原因始终
- * 不进 Chrome 的 LCP 候选；而 3.4s 后的换词（新文本 → 新绘制）会注册
- * 一个新候选，把 LCP 顶到换词时刻（桌面 ~4.1s；Lantern 移动端模拟
- * ~8.4s）。实验（nodeq.js）证明：任何「内容变化后的绘制」都会立刻注册
- * 候选。因此这段内联脚本在 650ms 时把首词原位翻转一个字符，等确认
- * 翻转帧已经被绘制（双层 rAF：第一帧绘制翻转态，第二帧时它必然上了
- * 屏）再还原：等宽字体宽度不变、不依赖 React 水合。rAF 版会输给主线程
- * 拥塞（两次写入合并进同一帧，等于没翻），setTimeout+双 rAF 保证翻转态
- * 至少上屏一次 —— Lighthouse 的移动端模拟（4x CPU）也适用。首词全宽
- * 自此注册为 LCP 候选，之后换词的候选墨迹只会更小（FOCUS_ITEMS 按长度
- * 降序），LCP 不会回退。
- *
- * 仅桌面视口启用：Lantern 的移动端模型会把任何 JS 触发的早期大文本候选
- * 重罚到 ~8.4s（实测 perf 96 → 58），而移动端本来就没有这个问题
- * （小字号下换词候选赢不过 header logo）。桌面无翻转时换词把 LCP 顶到
- * 4.1s，需要这个修复。
- */
-const LCP_BOOT_SNIPPET = `(function(){try{if(matchMedia("(prefers-reduced-motion: reduce)").matches||!matchMedia("(min-width: 1024px)").matches)return;setTimeout(function(){var s=document.querySelector(".manifest-lead span[aria-hidden]");if(!s||!s.firstChild)return;var o=s.firstChild.nodeValue||"";if(o.length<2)return;s.firstChild.nodeValue=(o.charAt(0)==="Z"?"Y":"Z")+o.slice(1);var done=false;var restore=function(){if(done)return;done=true;if(s.firstChild)s.firstChild.nodeValue=o};var n=2;var step=function(){n<=0?restore():(n--,requestAnimationFrame(step))};step();setTimeout(restore,2500)},650)}catch(e){}})();`;
-
-/**
- * 焦点轮播。
- *
- * 每 3.4s 换一个词条：换词时字符从左到右逐个落定，未落定的位置翻乱码。
- * 首帧渲染完整词，不闪乱码；减动效偏好下直接整词替换。
- */
-
-/**
- * 焦点轮播。
- *
- * 每 3.4s 换一个词条：换词时字符从左到右逐个落定，未落定的位置翻乱码。
- * 首帧渲染完整词，不闪乱码；减动效偏好下直接整词替换。
- */
-function useScramble(words: string[], hold = 3400) {
-  const [state, setState] = useState({ text: words[0] ?? "", index: 0 });
-  const booted = useRef(false);
-
-  /* 到点换词 */
-  useEffect(() => {
-    if (words.length < 2) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const timer = window.setInterval(() => {
-      setState((v) => ({ ...v, index: (v.index + 1) % words.length }));
-    }, hold);
-    return () => window.clearInterval(timer);
-  }, [hold, words]);
-
-  /* 换词时解码 */
-  useEffect(() => {
-    if (words.length < 2) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setState({ text: words[state.index], index: state.index });
-      return;
-    }
-    if (!booted.current) {
-      booted.current = true;
-      return;
-    }
-    const target = words[state.index];
-    let frame = 0;
-    const total = Math.max(10, Math.round(target.length * 0.85));
-    let raf = 0;
-    const tick = () => {
-      frame += 1;
-      const reveal = Math.floor((frame / total) * target.length);
-      let next = "";
-      for (let c = 0; c < target.length; c += 1) {
-        const ch = target[c];
-        next += ch === " " || c < reveal ? ch : GLYPHS[(Math.random() * GLYPHS.length) | 0];
-      }
-      setState({ text: next, index: state.index });
-      if (frame < total) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [state.index, words]);
-
-  return state;
-}
+import { SITE } from "@/lib/site";
 
 /**
  * 首屏。
  *
- * 一条状态栏，一份操作员档案，右边一块系统图。档案卡取代了原先的
- * 大字标语：一句主张、四行规格（焦点 / 语言 / 坐标 / 产出），焦点一行
- * 会自己换词。数字来自仓库数据：服务端渲染 CI 每日刷新的真实快照，
- * 挂载后再与 GitHub 实时值合并。
+ * 版面只有三件事：一行状态、一个足够大的标题、一份可数的目录。
+ * 分类用方块阵列标出体量 —— 每一格是一个项目，第一组用信号红。
+ * 四组数字压在页脚线上，和后面的项目索引共用同一套字距与分栏。
  */
 export function Hero() {
   const { repos } = useRepos();
   const stats = useCollectionStats();
-  const focus = useScramble(FOCUS_ITEMS);
-  const groups = FAMILIES.map((f) => ({
-    code: f.code,
-    count: repos.filter((r) => r.family === f.id).length,
-  }))
-    .filter((g) => g.count > 0)
-    .slice(0, 5);
+
+  const groups = FAMILIES.map((family) => ({
+    code: family.code,
+    count: repos.filter((repo) => repo.family === family.id).length,
+  })).filter((group) => group.count > 0);
+
+  const facts = [
+    { label: "Works / 项目", value: stats.total, pad: 2 },
+    { label: "Stars / 星标", value: stats.stars, pad: 0 },
+    { label: "Languages / 语言", value: stats.langs, pad: 2 },
+    { label: "Series / 分类", value: stats.families, pad: 2 },
+  ];
 
   return (
-    <section id="hero" className="relative overflow-hidden border-b border-line">
+    <section id="hero" className="border-b border-line">
       <div className="shell">
-        {/* 状态栏 */}
         <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b border-line py-3">
-          <span className="label flex items-center gap-2.5">
-            <span className="status-dot" aria-hidden="true" />
-            SYSTEM ONLINE
+          <span className="label text-fg">{SITE.name}</span>
+          <span className="label flex items-center gap-2">
+            China · UTC+8 · <BaseTime />
           </span>
-          <div className="label-sm flex items-center gap-5">
-            <span>
-              NODES{" "}
-              <span className="text-fg">
-                <Counter value={stats.total} pad={3} />
-              </span>
-            </span>
-            <span className="hidden sm:inline">
-              STARS{" "}
-              <span className="text-fg">
-                <Counter value={stats.stars} />
-              </span>
-            </span>
-            <span>BUILD {SITE.build}</span>
-          </div>
         </div>
 
-        <div className="grid items-center gap-12 pb-12 pt-12 lg:grid-cols-12 lg:gap-0 lg:pb-16 lg:pt-16">
-          {/* 操作员档案 */}
-          <div className="lg:col-span-7 lg:pr-10">
-            <p className="label hero-rise" style={{ "--d": "40ms" } as React.CSSProperties}>
-              <span className="mr-2 text-signal">//</span>
-              Operator file · K.H.K.
-              <span className="ml-3 hidden text-faint md:inline">EST. {SITE.build}</span>
-            </p>
+        <div className="grid gap-12 pb-12 pt-10 lg:grid-cols-12 lg:gap-0 lg:pb-16 lg:pt-14">
+          <div className="lg:col-span-8 lg:pr-12">
+            <p className="eyebrow hero-rise">Independent developer / AI engineer</p>
 
-            <h1 className="sr-only">
-              {SITE.name} — {SITE.archive}
+            <h1 className="hero-title hero-rise" style={{ "--d": "60ms" } as React.CSSProperties}>
+              <span>Software</span>
+              <span>
+                Archive<span className="hero-title-dot">.</span>
+              </span>
             </h1>
 
-            <dl className="manifest mt-8">
-              <span className="hero-scan" aria-hidden="true" />
-              <div className="manifest-row hero-rise" style={{ "--d": "140ms" } as React.CSSProperties}>
-                <dt className="manifest-key">
-                  <span className="manifest-idx">01</span> Focus
-                </dt>
-                <dd className="manifest-val manifest-lead">
-                  <span aria-hidden="true">{focus.text}</span>
-                  <span className="sr-only">{FOCUS_ITEMS[focus.index]}</span>
-                  <span className="cursor-blink ml-2 align-baseline" aria-hidden="true" />
-                </dd>
-              </div>
-              <div className="manifest-row hero-rise" style={{ "--d": "190ms" } as React.CSSProperties}>
-                <dt className="manifest-key">
-                  <span className="manifest-idx">02</span> Stack
-                </dt>
-                <dd className="manifest-val">{LANG_ITEMS.join(" · ").toUpperCase()}</dd>
-              </div>
-              <div className="manifest-row hero-rise" style={{ "--d": "240ms" } as React.CSSProperties}>
-                <dt className="manifest-key">
-                  <span className="manifest-idx">03</span> Base
-                </dt>
-                <dd className="manifest-val">
-                  CHINA · UTC+8 · <BaseTime />
-                </dd>
-              </div>
-              <div className="manifest-row hero-rise" style={{ "--d": "290ms" } as React.CSSProperties}>
-                <dt className="manifest-key">
-                  <span className="manifest-idx">04</span> Output
-                </dt>
-                <dd className="manifest-val">
-                  <Counter value={stats.total} pad={3} /> SPECIMENS ·{" "}
-                  <Counter value={stats.families} pad={2} /> FAMILIES · ★{" "}
-                  <Counter value={stats.stars} />
-                </dd>
-              </div>
-            </dl>
-
-            <div
-              className="hero-rise mt-9 flex flex-wrap items-center gap-3"
-              style={{ "--d": "400ms" } as React.CSSProperties}
-            >
-              <Link href="/projects/" className="btn btn-primary">
-                浏览项目
+            <div className="mt-9 flex flex-col items-start gap-7 sm:flex-row sm:items-end sm:justify-between">
+              <p className="hero-lede">Agents, instruments, and small games.</p>
+              <Link href="/projects/" className="btn btn-primary shrink-0">
+                Browse projects
                 <span className="btn-arrow" aria-hidden="true">
                   →
                 </span>
               </Link>
-              <a
-                href="#selected"
-                className="label-sm ml-auto hidden items-center gap-2 transition-colors hover:text-fg lg:inline-flex"
-              >
-                <span className="text-signal" aria-hidden="true">
-                  ↓
-                </span>
-                01 Selected
-              </a>
             </div>
           </div>
 
-          <div className="lg:col-span-5 lg:border-l lg:border-line lg:pl-10">
-            <div className="hero-rise" style={{ "--d": "260ms" } as React.CSSProperties}>
-              <Tilt max={6}>
-                <span className="hero-glow" aria-hidden="true" />
-                <ArchivePanel
-                  groups={groups}
-                  total={stats.total}
-                  stacks={stats.langs}
-                  stars={stats.stars}
-                />
-              </Tilt>
-              <div className="mt-3 flex items-center justify-between">
-                <span className="label-sm">FIG. 00 — ARCHIVE MAP</span>
-                <span className="label-sm">{stats.total} NODES</span>
+          <aside className="lg:col-span-4 lg:border-l lg:border-line lg:pl-10">
+            <div className="hero-index">
+              <div className="flex items-baseline justify-between border-b border-line-strong pb-2">
+                <span className="label text-fg">Index / 分类</span>
+                <span className="label">
+                  <Counter value={stats.total} pad={2} /> works
+                </span>
+              </div>
+
+              <ul>
+                {groups.map((group, index) => (
+                  <li key={group.code} className="hero-family">
+                    <span className="hero-family-code">{group.code}</span>
+                    <span className="hero-squares" aria-hidden="true">
+                      {Array.from({ length: group.count }).map((_, cell) => (
+                        <span
+                          key={cell}
+                          className={"hero-square" + (index === 0 ? " is-hot" : "")}
+                        />
+                      ))}
+                    </span>
+                    <span className="hero-family-count">
+                      {String(group.count).padStart(2, "0")}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="flex items-baseline justify-between border-t border-line pt-3">
+                <span className="label">★ {stats.stars}</span>
+                <span className="label">{String(stats.langs).padStart(2, "0")} stacks</span>
               </div>
             </div>
-          </div>
+          </aside>
         </div>
 
-        {/* 数字条 */}
-        <dl className="grid grid-cols-2 border-t border-line sm:grid-cols-4">
-          {[
-            { label: "NODES / 项目", value: stats.total, pad: 2 },
-            { label: "STARS / 星标", value: stats.stars, pad: 0 },
-            { label: "STACKS / 语言", value: stats.langs, pad: 0 },
-            { label: "GROUPS / 分类", value: stats.families, pad: 0 },
-          ].map((stat, i) => (
-            <div
-              key={stat.label}
-              className={[
-                "border-line py-5",
-                i < 2 ? "border-b" : "",
-                i % 2 === 0 ? "border-r" : "",
-                i % 2 === 1 ? "pl-5" : "",
-                i > 0 ? "sm:pl-5" : "",
-                "sm:border-b-0",
-                i < 3 ? "sm:border-r" : "sm:border-r-0",
-              ].join(" ")}
-            >
-              <dt className="label-sm">{stat.label}</dt>
-              <dd className="mono-display mt-2 text-[clamp(1.6rem,2.6vw,2.1rem)] text-fg">
-                <Counter value={stat.value} pad={stat.pad} />
+        <dl className="hero-facts">
+          {facts.map((fact) => (
+            <div key={fact.label} className="hero-fact">
+              <dt className="label">{fact.label}</dt>
+              <dd className="hero-fact-value">
+                <Counter value={fact.value} pad={fact.pad} />
               </dd>
             </div>
           ))}
         </dl>
-
-        {/* 首词 LCP 注册脚本：见 LCP_BOOT_SNIPPET 注释。 */}
-        <script dangerouslySetInnerHTML={{ __html: LCP_BOOT_SNIPPET }} />
       </div>
     </section>
   );

@@ -45,9 +45,7 @@ export function ArchiveView() {
               className="hero-rise mt-5 max-w-[52ch] text-[14px] leading-[1.9] text-fg-2"
               style={{ "--d": "80ms" } as React.CSSProperties}
             >
-              全部公开仓库，按星标排序、按分类归档。数据每天由 CI 从 GitHub 刷新一次，
-              页面打开时再同步实时星标。
-              点开任意一行看详情，也可以切到图版视图逐张翻看。
+              全部公开仓库，按星标排序、按分类归档；点开任意一行看详情，也可以切到图版视图逐张翻看。
             </p>
           </div>
 

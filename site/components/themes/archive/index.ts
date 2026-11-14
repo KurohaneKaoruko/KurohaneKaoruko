@@ -1,11 +1,12 @@
 import { defineTheme } from "@/components/theme/types";
+import "./theme.css";
 
 export const archive = defineTheme({
   meta: {
     id: "archive",
     name: "Archive",
     label: "档案",
-    desc: "黑底、单色信号与图表式索引：当前站点的原始设计，也是默认主题。",
+    desc: "黑底、信号红与大字号：直角、发丝线和图表式索引，把项目当作档案陈列。",
     swatch: ["#070809", "#ff453a"],
     status: "ARCHIVE ONLINE",
   },

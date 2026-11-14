@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { ScrollProgress } from "@/components/fx/ScrollProgress";
 import { ThemeSwitcher } from "@/components/theme/ThemeSwitcher";
-import { NAV_ITEMS, SITE } from "@/lib/site";
+import { CURATOR, NAV_ITEMS, SITE } from "@/lib/site";
 
 /**
  * ⌘K 面板按需加载：它连带整个项目列表与 Portal，只有真按下快捷键或点
@@ -28,7 +28,7 @@ function GithubMark({ className }: { className?: string }) {
 /**
  * 顶栏。
  *
- * 64px 高的一条系统栏：方标 + 站名，中间四个编号过的分区，
+ * 64px 高的一条系统栏：左侧是竖线 + 大写字标与副标，中间四个编号过的分区，
  * 右侧是主题、搜索与 GitHub。滚动之后才出现底色与底线。
  */
 export default function Header() {
@@ -116,19 +116,21 @@ export default function Header() {
     <>
       <header className="site-header" data-scrolled={scrolled || menuOpen}>
         <div className="shell flex h-[var(--nav-h)] items-center justify-between gap-4">
-          <Link href="/" className="group flex items-center gap-3">
-            <span className="relative flex h-7 w-7 items-center justify-center border border-line-strong">
-              <span className="font-mono text-[9px] font-medium tracking-[0.08em] text-fg">
-                {SITE.mark}
+          <Link href="/" className="group flex items-center gap-3.5" aria-label={`${SITE.name} — ${SITE.archive}`}>
+            <span className="h-[22px] w-[2px] shrink-0 bg-signal lg:h-9" aria-hidden="true" />
+            <span className="flex min-w-0 flex-col leading-none">
+              <span className="font-sans text-[16px] font-bold uppercase leading-none tracking-[-0.015em] text-fg transition-colors group-hover:text-signal">
+                {SITE.name.split(" ").map((part, index) => (
+                  <span key={part}>
+                    {index > 0 && <span className="text-signal">/</span>}
+                    {part}
+                  </span>
+                ))}
               </span>
-              <span className="absolute -right-[3px] -top-[3px] h-1.5 w-1.5 bg-signal" aria-hidden="true" />
-            </span>
-            <span className="flex flex-col leading-none">
-              <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-fg">
-                {SITE.name}
-              </span>
-              <span className="label-sm mt-1.5 hidden tracking-[0.26em] sm:block">
-                {SITE.archive}
+              <span className="mt-[7px] hidden font-mono text-[8.5px] uppercase leading-none tracking-[0.16em] text-muted lg:flex lg:items-center lg:gap-2">
+                <span>{CURATOR.role.replace(" / ", " · ")}</span>
+                <span className="text-faint">/</span>
+                <span>{SITE.archive}</span>
               </span>
             </span>
           </Link>
