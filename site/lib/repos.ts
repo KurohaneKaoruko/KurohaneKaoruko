@@ -71,14 +71,31 @@ function byStars(a: Repo, b: Repo) {
   return b.stars - a.stars || a.order - b.order || a.name.localeCompare(b.name);
 }
 
-/** 精选：星标最高的几个，同分按策展顺序 */
+/**
+ * 精选：星标最高的几个，同分按策展顺序。
+ *
+ * 只挑前 k 条，用有界选择（O(n·k)，k≤3）代替整表排序（O(n log n)）；
+ * 结果按星标降序返回，与原来的排序口径一致。
+ */
 export function pickFeatured<T extends { stars: number; order: number }>(
   repos: T[],
   count = 3,
 ): T[] {
-  return [...repos]
-    .sort((a, b) => b.stars - a.stars || a.order - b.order)
-    .slice(0, count);
+  const top: T[] = [];
+  for (const repo of repos) {
+    let slot = top.length;
+    while (slot > 0 && compareFeatured(repo, top[slot - 1]) < 0) slot -= 1;
+    if (slot < count) {
+      if (top.length === count) top.pop();
+      top.splice(slot, 0, repo);
+    }
+  }
+  return top;
+}
+
+/** 星标降序，同分按策展顺序 —— 与 byStars 的口径一致 */
+function compareFeatured(a: { stars: number; order: number }, b: { stars: number; order: number }) {
+  return b.stars - a.stars || a.order - b.order;
 }
 
 /** 把 API 形状的仓库整理成站点用的 Repo */

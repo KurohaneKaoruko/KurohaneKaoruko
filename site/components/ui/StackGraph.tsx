@@ -3,7 +3,11 @@
  *
  * 每个项目按自己的 topics + 语言画一张节点图：中间是核心，四周是这项技术
  * 实际用到的东西。同一份数据永远得到同一张图 —— 图不是装饰，是项目的一部分。
+ *
+ * SVG 节点数组按 props 记忆化：图版视图一次挂几十块，筛选/排序引起的
+ * 祖先重渲染不再逐块重算随机走线。整个组件包了 memo，props 不变直接跳过。
  */
+import { memo, useMemo } from "react";
 
 type Pt = { x: number; y: number };
 
@@ -57,7 +61,7 @@ function trace(a: Pt, b: Pt): string {
   ].join(" ");
 }
 
-export function StackGraph({
+function StackGraphImpl({
   name,
   topics,
   lang,
@@ -76,37 +80,42 @@ export function StackGraph({
   /** 是否把语言也画成一个节点 */
   includeLang?: boolean;
 }) {
-  const rng = mulberry32(hashSeed(name));
+  /* 随机走线的坐标全部由 seed 推导；按 props 记忆化，父组件重渲染不再重算 */
+  const items = useMemo(() => {
+    const rng = mulberry32(hashSeed(name));
 
-  const labels = [...new Set(topics.filter(Boolean))].slice(0, includeLang ? 4 : 5);
-  if (includeLang && lang && !labels.some((t) => t.toLowerCase() === lang.toLowerCase())) {
-    labels.push(lang);
-  }
-  const nodes = labels.slice(0, 5);
+    const labels = [...new Set(topics.filter(Boolean))].slice(0, includeLang ? 4 : 5);
+    if (includeLang && lang && !labels.some((t) => t.toLowerCase() === lang.toLowerCase())) {
+      labels.push(lang);
+    }
+    const nodes = labels.slice(0, 5);
 
-  const slots =
-    nodes.length <= 1
-      ? [SLOTS[3]]
-      : nodes.length === 2
-        ? [SLOTS[2], SLOTS[3]]
-        : nodes.length === 3
-          ? [SLOTS[0], SLOTS[1], SLOTS[4]]
-          : nodes.length === 4
-            ? [SLOTS[0], SLOTS[1], SLOTS[2], SLOTS[4]]
-            : SLOTS;
+    const slots =
+      nodes.length <= 1
+        ? [SLOTS[3]]
+        : nodes.length === 2
+          ? [SLOTS[2], SLOTS[3]]
+          : nodes.length === 3
+            ? [SLOTS[0], SLOTS[1], SLOTS[4]]
+            : nodes.length === 4
+              ? [SLOTS[0], SLOTS[1], SLOTS[2], SLOTS[4]]
+              : SLOTS;
+
+    const center: Pt = { x: 120, y: 102 };
+
+    return nodes.map((label, i) => {
+      const slot = slots[i];
+      const text = label.length > 15 ? label.slice(0, 14) + "…" : label;
+      const width = Math.min(96, Math.max(32, text.length * 5.1 + 12));
+      const jitterX = (rng() - 0.5) * 4;
+      const jitterY = (rng() - 0.5) * 4;
+      const p = { x: slot.x + jitterX, y: slot.y + jitterY };
+      const left = Math.max(16, Math.min(224 - width, p.x - width / 2));
+      return { label: text, p, width, left, top: p.y - 8.5, trace: trace(center, p) };
+    });
+  }, [name, topics, lang, includeLang]);
 
   const center: Pt = { x: 120, y: 102 };
-
-  const items = nodes.map((label, i) => {
-    const slot = slots[i];
-    const text = label.length > 15 ? label.slice(0, 14) + "…" : label;
-    const width = Math.min(96, Math.max(32, text.length * 5.1 + 12));
-    const jitterX = (rng() - 0.5) * 4;
-    const jitterY = (rng() - 0.5) * 4;
-    const p = { x: slot.x + jitterX, y: slot.y + jitterY };
-    const left = Math.max(16, Math.min(224 - width, p.x - width / 2));
-    return { label: text, p, width, left, top: p.y - 8.5, trace: trace(center, p) };
-  });
 
   return (
     <svg
@@ -218,3 +227,6 @@ export function StackGraph({
     </svg>
   );
 }
+
+/** 图版视图一次挂几十块，memo 让 props 不变的块在祖先重渲染时直接跳过 */
+export const StackGraph = memo(StackGraphImpl);

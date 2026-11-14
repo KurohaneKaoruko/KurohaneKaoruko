@@ -142,6 +142,15 @@ export function Collection({
     };
   }, [hovered, repos]);
 
+  /* 检索索引：按 repos 预拼好每条的小写检索串，键入时不再逐仓重拼 */
+  const searchIndex = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const r of repos) {
+      map.set(r.name, [r.name, r.taxon, r.desc, r.lang, ...r.topics].join(" ").toLowerCase());
+    }
+    return map;
+  }, [repos]);
+
   const items = useMemo(() => {
     let list = repos.slice();
     if (mode === "home") {
@@ -153,9 +162,7 @@ export function Collection({
       if (family !== "all") list = list.filter((r) => r.family === family);
       const q = query.trim().toLowerCase();
       if (q) {
-        list = list.filter((r) =>
-          [r.name, r.taxon, r.desc, r.lang, ...r.topics].join(" ").toLowerCase().includes(q),
-        );
+        list = list.filter((r) => (searchIndex.get(r.name) ?? "").includes(q));
       }
       if (sort === "curated")
         list.sort((a, b) => a.order - b.order || a.name.localeCompare(b.name));
@@ -165,7 +172,7 @@ export function Collection({
         list.sort((a, b) => (b.pushedAt ?? "").localeCompare(a.pushedAt ?? "") || a.order - b.order);
     }
     return limit ? list.slice(0, limit) : list;
-  }, [repos, mode, family, query, sort, limit]);
+  }, [repos, mode, family, query, sort, limit, searchIndex]);
 
   const counts = useMemo(() => {
     const map = new Map<string, number>();

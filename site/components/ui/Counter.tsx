@@ -20,6 +20,10 @@ export function Counter({
   const ref = useRef<HTMLSpanElement>(null);
   const last = useRef(0);
   const armed = useRef(false);
+  /* IO 回调读 ref 而不是闭包：元素进入视口可能晚于实时数据到达，
+     闭包里捕获的 value 是挂载时的快照值，会把数字钉在旧数据上 */
+  const valueRef = useRef(value);
+  valueRef.current = value;
 
   useEffect(() => {
     const el = ref.current;
@@ -28,8 +32,8 @@ export function Counter({
     const fmt = (n: number) => String(Math.round(n)).padStart(pad, "0");
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      el.textContent = fmt(value);
-      last.current = value;
+      el.textContent = fmt(valueRef.current);
+      last.current = valueRef.current;
       return;
     }
 
@@ -56,7 +60,7 @@ export function Counter({
         if (!entries.some((e) => e.isIntersecting)) return;
         io.disconnect();
         armed.current = true;
-        run(value);
+        run(valueRef.current);
       },
       { threshold: 0.4 },
     );

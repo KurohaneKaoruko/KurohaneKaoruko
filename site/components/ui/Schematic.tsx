@@ -6,7 +6,11 @@
  *
  * 画法是工程制图：0.75px 细线、45° 折角、刻度、十字准星、极小的标注。
  * 全部由 SVG 生成，不依赖任何图片。
+ *
+ * SVG 节点数组按 props 记忆化，组件整体包 memo：祖先重渲染（数据同步、
+ * 筛选切换）不再逐张重算随机走线。
  */
+import { memo, useMemo } from "react";
 
 type Pt = { x: number; y: number };
 type Variant = "chip" | "network" | "wave";
@@ -55,21 +59,27 @@ function trace(a: Pt, b: Pt): string {
   ].join(" ");
 }
 
-export function Schematic({
-  seed,
-  variant,
-  className = "",
-  animate = false,
-  detail = "full",
-  accent = true,
-}: {
-  seed: string;
-  variant?: Variant;
-  className?: string;
-  animate?: boolean;
-  detail?: "full" | "mini";
-  accent?: boolean;
-}) {
+type SchematicArt = {
+  mini: boolean;
+  paths: React.ReactNode[];
+  nodes: React.ReactNode[];
+  marks: React.ReactNode[];
+  ticks: React.ReactNode[];
+  crossX: number;
+  crossY: number;
+  frameStyle: React.CSSProperties;
+};
+
+/**
+ * 纯函数生成整张图版：同样的参数永远得到同样的节点数组。
+ * 组件侧按 props 记忆化调用结果，祖先重渲染不再逐张重算随机走线。
+ */
+function buildSchematic(
+  seed: string,
+  variant: Variant | undefined,
+  detail: "full" | "mini",
+  accent: boolean,
+): SchematicArt {
   const rng = mulberry32(hashSeed(seed));
   const kind: Variant =
     variant ?? (["chip", "network", "wave"] as Variant[])[Math.floor(rng() * 3) % 3];
@@ -511,6 +521,32 @@ export function Schematic({
   const crossX = range(rng, 40, 200);
   const crossY = range(rng, 40, 160);
 
+  const frameStyle = next();
+
+  return { mini, paths, nodes, marks, ticks, crossX, crossY, frameStyle };
+}
+
+/** 图版渲染：纯展示，数据来自 buildSchematic（按 props 记忆化） */
+export const Schematic = memo(function Schematic({
+  seed,
+  variant,
+  className = "",
+  animate = false,
+  detail = "full",
+  accent = true,
+}: {
+  seed: string;
+  variant?: Variant;
+  className?: string;
+  animate?: boolean;
+  detail?: "full" | "mini";
+  accent?: boolean;
+}) {
+  const art = useMemo(
+    () => buildSchematic(seed, variant, detail, accent),
+    [seed, variant, detail, accent],
+  );
+
   return (
     <svg
       viewBox="0 0 240 200"
@@ -533,26 +569,26 @@ export function Schematic({
         stroke="currentColor"
         strokeWidth="0.5"
         opacity="0.28"
-        style={next()}
+        style={art.frameStyle}
       />
 
-      {paths}
-      {nodes}
+      {art.paths}
+      {art.nodes}
 
       {/* 十字准星 */}
-      {!mini && (
+      {!art.mini && (
         <g opacity="0.4" stroke={accent ? "var(--signal)" : "currentColor"} strokeWidth="0.5">
-          <line x1={crossX - 5} y1={crossY} x2={crossX + 5} y2={crossY} pathLength={1} />
-          <line x1={crossX} y1={crossY - 5} x2={crossX} y2={crossY + 5} pathLength={1} />
-          <circle cx={crossX} cy={crossY} r="7" pathLength={1} />
+          <line x1={art.crossX - 5} y1={art.crossY} x2={art.crossX + 5} y2={art.crossY} pathLength={1} />
+          <line x1={art.crossX} y1={art.crossY - 5} x2={art.crossX} y2={art.crossY + 5} pathLength={1} />
+          <circle cx={art.crossX} cy={art.crossY} r="7" pathLength={1} />
         </g>
       )}
 
-      {marks}
-      {ticks}
+      {art.marks}
+      {art.ticks}
     </svg>
   );
-}
+});
 
 /** 章节之间的分隔符：一条带刻度的短线 */
 export function TickRule({ className = "" }: { className?: string }) {

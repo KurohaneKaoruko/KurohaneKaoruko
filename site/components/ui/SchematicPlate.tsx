@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { StackGraph } from "@/components/ui/StackGraph";
 import { accessionOf, familyOf, type Project } from "@/lib/data";
 
@@ -9,8 +9,11 @@ import { accessionOf, familyOf, type Project } from "@/lib/data";
  *
  * 一块带网格的黑色面板，里面是这个项目对应的系统图：编号、代号、
  * 走线、刻度。同一份数据永远画出同一张图。
+ *
+ * 组件包了 memo：图版视图一次挂几十块，筛选/排序触发的祖先重渲染
+ * 不再逐块重建 SVG。
  */
-export function SchematicPlate({
+export const SchematicPlate = memo(function SchematicPlate({
   repo,
   plateNo,
   className = "",
@@ -99,4 +102,4 @@ export function SchematicPlate({
       </div>
     </figure>
   );
-}
+});

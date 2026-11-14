@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useMemo } from "react";
 import { useCollectionStats, useRepos } from "@/components/ReposProvider";
 import { BaseTime } from "@/components/layout/Clock";
 import { Counter } from "@/components/ui/Counter";
@@ -18,10 +19,14 @@ export function Hero() {
   const { repos } = useRepos();
   const stats = useCollectionStats();
 
-  const groups = FAMILIES.map((family) => ({
-    code: family.code,
-    count: repos.filter((repo) => repo.family === family.id).length,
-  })).filter((group) => group.count > 0);
+  /* 分类计数：一遍数完再按 FAMILIES 的次序取列，避免 n×m 的双重过滤 */
+  const groups = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const repo of repos) counts.set(repo.family, (counts.get(repo.family) ?? 0) + 1);
+    return FAMILIES.map((family) => ({ code: family.code, count: counts.get(family.id) ?? 0 })).filter(
+      (group) => group.count > 0,
+    );
+  }, [repos]);
 
   const facts = [
     { label: "Works / 项目", value: stats.total, pad: 2 },

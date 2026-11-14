@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { SNAPSHOT, fetchRepos, readCache, type Repo } from "@/lib/repos";
 
 type Status = "snapshot" | "syncing" | "live" | "offline";
@@ -59,11 +59,23 @@ export function useRepos() {
   return useContext(ReposContext);
 }
 
-/** 汇总数字：标本数、星标、语言数、科属数 */
+/**
+ * 汇总数字：标本数、星标、语言数、科属数。
+ *
+ * 单遍扫描一次算齐四项（原来每次渲染要做三次全表遍历），再按 repos
+ * 记忆化 —— Hero 与数据区两处消费，任何一处重渲染都不必重新归约。
+ */
 export function useCollectionStats() {
   const { repos } = useRepos();
-  const stars = repos.reduce((sum, r) => sum + r.stars, 0);
-  const langs = new Set(repos.map((r) => r.lang).filter(Boolean));
-  const families = new Set(repos.map((r) => r.family));
-  return { total: repos.length, stars, langs: langs.size, families: families.size };
+  return useMemo(() => {
+    let stars = 0;
+    const langs = new Set<string>();
+    const families = new Set<string>();
+    for (const repo of repos) {
+      stars += repo.stars;
+      if (repo.lang) langs.add(repo.lang);
+      families.add(repo.family);
+    }
+    return { total: repos.length, stars, langs: langs.size, families: families.size };
+  }, [repos]);
 }
