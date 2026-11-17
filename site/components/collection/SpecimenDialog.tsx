@@ -93,21 +93,28 @@ export function SpecimenDialog({
   return (
     <Portal>
       <div className="scrim" onClick={onClose} aria-hidden="true" />
-      <div className="sheet-dialog" role="dialog" aria-modal="true" aria-labelledby="specimen-title">
+      <div
+        className="sheet-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="specimen-title"
+      >
         <div className="sheet-card" ref={cardRef}>
           <span className="sheet-scan" aria-hidden="true" />
           <div className="flex items-center justify-between border-b border-line px-5 py-3">
             <span className="label-sm flex items-center gap-2">
               <span className="status-dot" aria-hidden="true" />
-              NODE {accessionOf(repo.name)} · {plateNo ? `FIG.${plateNo}` : "RECORD"}
+              NODE {accessionOf(repo)} · {plateNo ? `FIG.${plateNo}` : "RECORD"}
             </span>
             <div className="flex items-center gap-2">
-              {position && <span className="label-sm mr-1 tabular-nums">{position}</span>}
+              {position && (
+                <span className="label-sm mr-1 tabular-nums">{position}</span>
+              )}
               {onPrev && (
                 <button
                   type="button"
                   onClick={onPrev}
-                  className="flex h-7 w-7 items-center justify-center border border-line text-muted transition-colors hover:border-line-strong hover:text-fg"
+                  className="flex h-11 w-11 items-center justify-center border border-line text-muted transition-colors hover:border-line-strong hover:text-fg"
                   aria-label="上一个项目"
                 >
                   <span aria-hidden="true">←</span>
@@ -117,7 +124,7 @@ export function SpecimenDialog({
                 <button
                   type="button"
                   onClick={onNext}
-                  className="flex h-7 w-7 items-center justify-center border border-line text-muted transition-colors hover:border-line-strong hover:text-fg"
+                  className="flex h-11 w-11 items-center justify-center border border-line text-muted transition-colors hover:border-line-strong hover:text-fg"
                   aria-label="下一个项目"
                 >
                   <span aria-hidden="true">→</span>
@@ -128,10 +135,16 @@ export function SpecimenDialog({
                 type="button"
                 autoFocus
                 onClick={onClose}
-                className="flex h-7 w-7 items-center justify-center border border-line text-muted transition-colors hover:border-line-strong hover:text-fg"
+                className="flex h-11 w-11 items-center justify-center border border-line text-muted transition-colors hover:border-line-strong hover:text-fg"
                 aria-label="关闭"
               >
-                <svg viewBox="0 0 16 16" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="1.2">
+                <svg
+                  viewBox="0 0 16 16"
+                  className="h-3 w-3"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.2"
+                >
                   <path d="M3 3 L13 13 M13 3 L3 13" />
                 </svg>
               </button>
@@ -207,17 +220,29 @@ export function SpecimenDialog({
               </dl>
 
               <div className="mt-auto flex flex-wrap items-center gap-3 pt-7">
-                <a className="btn btn-primary" href={repo.url} target="_blank" rel="noreferrer">
+                <a
+                  className="btn btn-primary"
+                  href={repo.url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   GitHub
                   <span className="btn-arrow">↗</span>
                 </a>
                 {repo.homepage && (
-                  <a className="btn btn-ghost" href={repo.homepage} target="_blank" rel="noreferrer">
+                  <a
+                    className="btn btn-ghost"
+                    href={repo.homepage}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     项目主页
                     <span className="btn-arrow">↗</span>
                   </a>
                 )}
-                <span className="label-sm ml-auto hidden sm:block">← → 切换 · ESC 关闭</span>
+                <span className="label-sm ml-auto hidden sm:block">
+                  ← → 切换 · ESC 关闭
+                </span>
               </div>
             </div>
           </div>

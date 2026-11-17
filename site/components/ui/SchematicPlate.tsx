@@ -21,7 +21,10 @@ export const SchematicPlate = memo(function SchematicPlate({
   showCaption = true,
   animate = false,
 }: {
-  repo: Pick<Project, "name" | "taxon" | "family" | "lang" | "stars" | "topics">;
+  repo: Pick<
+    Project,
+    "repoId" | "name" | "taxon" | "family" | "lang" | "stars" | "topics"
+  >;
   plateNo?: string;
   className?: string;
   size?: "sm" | "md" | "lg";
@@ -53,7 +56,11 @@ export const SchematicPlate = memo(function SchematicPlate({
   }, []);
   const pad = size === "lg" ? "p-5 sm:p-6" : size === "sm" ? "p-3" : "p-4";
   const artHeight =
-    size === "lg" ? "h-[250px] sm:h-[320px]" : size === "sm" ? "h-[118px]" : "h-[170px]";
+    size === "lg"
+      ? "h-[250px] sm:h-[320px]"
+      : size === "sm"
+        ? "h-[118px]"
+        : "h-[170px]";
 
   return (
     <figure ref={ref} className={"plate corner-ticks " + className}>
@@ -61,7 +68,7 @@ export const SchematicPlate = memo(function SchematicPlate({
       <div className={pad}>
         <div className="flex items-center justify-between gap-3">
           <span className="plate-index">
-            FIG.{plateNo ?? "—"} // {accessionOf(repo.name)}
+            FIG.{plateNo ?? "—"} // {accessionOf(repo)}
           </span>
           <span className="plate-index">{repo.lang || "—"}</span>
         </div>
@@ -79,8 +86,14 @@ export const SchematicPlate = memo(function SchematicPlate({
             className="plate-art h-full w-full"
             animate={animate || (showCaption && inView)}
           />
-          <span className="absolute right-2 top-2 h-1 w-1 bg-signal" aria-hidden="true" />
-          <span className="absolute bottom-2 left-2 h-2 w-2 border-b border-l border-line-strong" aria-hidden="true" />
+          <span
+            className="absolute right-2 top-2 h-1 w-1 bg-signal"
+            aria-hidden="true"
+          />
+          <span
+            className="absolute bottom-2 left-2 h-2 w-2 border-b border-l border-line-strong"
+            aria-hidden="true"
+          />
         </div>
 
         {showCaption && (

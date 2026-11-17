@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHead } from "@/components/ui/SectionHead";
 import { BASE, CURATOR } from "@/lib/site";
+import { ProjectName } from "@/components/ProjectName";
 
 /**
  * 作者。
@@ -38,7 +39,10 @@ export function Curator() {
                   className="aspect-square w-full object-cover"
                 />
                 <span className="portrait-scan" aria-hidden="true" />
-                <span className="absolute left-2 top-2 h-1.5 w-1.5 bg-signal" aria-hidden="true" />
+                <span
+                  className="absolute left-2 top-2 h-1.5 w-1.5 bg-signal"
+                  aria-hidden="true"
+                />
                 <span className="absolute bottom-2 right-2 font-mono text-[8px] uppercase tracking-[0.2em] text-fg/70">
                   IMG_0001
                 </span>
@@ -66,9 +70,11 @@ export function Curator() {
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-fg">
-                      {item.name}
+                      <ProjectName name={item.name} />
                     </span>
-                    <span className="text-[13px] leading-relaxed text-muted">{item.note}</span>
+                    <span className="text-[13px] leading-relaxed text-muted">
+                      {item.note}
+                    </span>
                   </li>
                 ))}
               </ul>

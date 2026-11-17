@@ -8,14 +8,17 @@ import { Portal } from "@/components/ui/Portal";
 import { Schematic } from "@/components/ui/Schematic";
 import { SchematicPlate } from "@/components/ui/SchematicPlate";
 import { accessionOf, FAMILIES, familyOf, type FamilyId } from "@/lib/data";
-import { pickFeatured, type Repo } from "@/lib/repos";
+import { findRepo, pickFeatured, type Repo } from "@/lib/repos";
 
 /**
  * 详情面板按需加载：带着 Schematic 与 Portal，只有点开某个项目才需要。
  * 静态引入会让首屏为一次可能不发生的点击付出解析成本。
  */
 const SpecimenDialog = dynamic(
-  () => import("@/components/collection/SpecimenDialog").then((m) => m.SpecimenDialog),
+  () =>
+    import("@/components/collection/SpecimenDialog").then(
+      (m) => m.SpecimenDialog,
+    ),
   { ssr: false },
 );
 
@@ -29,7 +32,8 @@ const SORTS: { key: SortKey; label: string }[] = [
   { key: "pushed", label: "UPDATED" },
 ];
 
-const monthOf = (iso?: string) => (iso ? iso.slice(0, 7).replace("-", ".") : "—");
+const monthOf = (iso?: string) =>
+  iso ? iso.slice(0, 7).replace("-", ".") : "—";
 
 /**
  * 项目索引。
@@ -43,10 +47,14 @@ const monthOf = (iso?: string) => (iso ? iso.slice(0, 7).replace("-", ".") : "�
 export function Collection({
   mode = "archive",
   limit,
+  subtitle = "description",
+  showFooter = true,
   className = "",
 }: {
   mode?: "home" | "archive";
   limit?: number;
+  subtitle?: "taxon" | "description";
+  showFooter?: boolean;
   className?: string;
 }) {
   const { repos } = useRepos();
@@ -54,8 +62,14 @@ export function Collection({
   const [family, setFamily] = useState<FamilyId | "all">("all");
   const [sort, setSort] = useState<SortKey>("stars");
   const [view, setView] = useState<View>("index");
-  const [open, setOpen] = useState<Repo | null>(null);
-  const [hovered, setHovered] = useState<Repo | null>(null);
+  const [openSelection, setOpen] = useState<Repo | null>(null);
+  const [hoveredSelection, setHovered] = useState<Repo | null>(null);
+  const open = openSelection
+    ? (findRepo(repos, openSelection) ?? openSelection)
+    : null;
+  const hovered = hoveredSelection
+    ? (findRepo(repos, hoveredSelection) ?? hoveredSelection)
+    : null;
 
   const previewRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
@@ -114,7 +128,10 @@ export function Collection({
     let scrollRaf = 0;
     const recheck = () => {
       scrollRaf = 0;
-      const el = document.elementFromPoint(pointer.current.x, pointer.current.y);
+      const el = document.elementFromPoint(
+        pointer.current.x,
+        pointer.current.y,
+      );
       const row = el?.closest<HTMLElement>(".index-row");
       const name = row?.dataset.repo;
       if (!name) {
@@ -146,7 +163,10 @@ export function Collection({
   const searchIndex = useMemo(() => {
     const map = new Map<string, string>();
     for (const r of repos) {
-      map.set(r.name, [r.name, r.taxon, r.desc, r.lang, ...r.topics].join(" ").toLowerCase());
+      map.set(
+        r.name,
+        [r.name, r.taxon, r.desc, r.lang, ...r.topics].join(" ").toLowerCase(),
+      );
     }
     return map;
   }, [repos]);
@@ -166,10 +186,15 @@ export function Collection({
       }
       if (sort === "curated")
         list.sort((a, b) => a.order - b.order || a.name.localeCompare(b.name));
-      if (sort === "stars") list.sort((a, b) => b.stars - a.stars || a.order - b.order);
+      if (sort === "stars")
+        list.sort((a, b) => b.stars - a.stars || a.order - b.order);
       if (sort === "name") list.sort((a, b) => a.name.localeCompare(b.name));
       if (sort === "pushed")
-        list.sort((a, b) => (b.pushedAt ?? "").localeCompare(a.pushedAt ?? "") || a.order - b.order);
+        list.sort(
+          (a, b) =>
+            (b.pushedAt ?? "").localeCompare(a.pushedAt ?? "") ||
+            a.order - b.order,
+        );
     }
     return limit ? list.slice(0, limit) : list;
   }, [repos, mode, family, query, sort, limit, searchIndex]);
@@ -222,6 +247,7 @@ export function Collection({
                     setHovered(null);
                   }}
                   data-active={view === v}
+                  aria-pressed={view === v}
                   className="px-3 py-2 font-mono text-[9.5px] uppercase tracking-[0.14em] text-muted transition-colors data-[active=true]:bg-fg data-[active=true]:text-bg hover:text-fg data-[active=true]:hover:text-bg"
                 >
                   {v === "index" ? "INDEX" : "GRID"}
@@ -236,6 +262,7 @@ export function Collection({
                 type="button"
                 onClick={() => setFamily("all")}
                 data-active={family === "all"}
+                aria-pressed={family === "all"}
                 className="border border-transparent px-2.5 py-1 font-mono text-[9.5px] uppercase tracking-[0.12em] text-muted transition-colors data-[active=true]:border-line-strong data-[active=true]:text-fg hover:text-fg"
               >
                 ALL <span className="text-faint">{repos.length}</span>
@@ -246,16 +273,19 @@ export function Collection({
                   type="button"
                   onClick={() => setFamily(f.id)}
                   data-active={family === f.id}
+                  aria-pressed={family === f.id}
                   className="border border-transparent px-2.5 py-1 font-mono text-[9.5px] uppercase tracking-[0.12em] text-muted transition-colors data-[active=true]:border-line-strong data-[active=true]:text-fg hover:text-fg"
                 >
-                  {f.code} <span className="text-faint">{counts.get(f.id)}</span>
+                  {f.code}{" "}
+                  <span className="text-faint">{counts.get(f.id)}</span>
                 </button>
               ))}
             </div>
 
             <div className="flex items-center gap-4">
               <span className="label-sm">
-                {String(items.length).padStart(2, "0")} / {String(repos.length).padStart(2, "0")}
+                {String(items.length).padStart(2, "0")} /{" "}
+                {String(repos.length).padStart(2, "0")}
               </span>
               <div className="relative">
                 <select
@@ -288,8 +318,15 @@ export function Collection({
 
       {items.length === 0 && (
         <div className="flex flex-col items-center justify-center py-24 text-center">
-          <Schematic seed="no-match" variant="network" detail="mini" className="h-24 w-32 text-faint" />
-          <p className="mt-6 font-mono text-[12px] uppercase tracking-[0.18em] text-fg">NO MATCH</p>
+          <Schematic
+            seed="no-match"
+            variant="network"
+            detail="mini"
+            className="h-24 w-32 text-faint"
+          />
+          <p className="mt-6 font-mono text-[12px] uppercase tracking-[0.18em] text-fg">
+            NO MATCH
+          </p>
           <p className="label mt-2">没有符合条件的项目</p>
           <button type="button" onClick={reset} className="btn btn-ghost mt-6">
             清除筛选
@@ -329,20 +366,24 @@ export function Collection({
                 data-repo={repo.name}
                 className="index-row w-full grid-cols-[34px_minmax(0,1fr)_16px] text-left md:grid-cols-[40px_minmax(0,1fr)_84px_104px_50px_78px_16px]"
               >
-                <span className="num text-[10px] text-faint">{String(i + 1).padStart(3, "0")}</span>
+                <span className="num text-[10px] text-faint">
+                  {String(i + 1).padStart(3, "0")}
+                </span>
 
                 <span className="row-name min-w-0">
                   <span className="flex min-w-0 items-baseline gap-3">
                     <span className="truncate text-[14.5px] font-medium uppercase tracking-[-0.01em] text-fg">
                       {repo.name}
                     </span>
-                    <span className="leader hidden sm:block" aria-hidden="true" />
+                    <span
+                      className="leader hidden sm:block"
+                      aria-hidden="true"
+                    />
                   </span>
-                  <span
-                    className="decode mt-0.5 block truncate font-mono text-[9px] uppercase tracking-[0.12em] text-faint"
-                    data-text={repo.taxon}
-                  >
-                    {repo.taxon}
+                  <span className="mt-0.5 block truncate font-mono text-[9px] tracking-[0.02em] text-faint">
+                    {subtitle === "taxon"
+                      ? repo.taxon
+                      : repo.desc || repo.taxon}
                   </span>
                 </span>
 
@@ -394,10 +435,12 @@ export function Collection({
                 </span>
                 <span className="label-sm shrink-0">{repo.lang || "—"}</span>
               </div>
-              <p className="mt-1.5 line-clamp-2 text-[12px] leading-relaxed text-muted">{repo.desc}</p>
+              <p className="mt-1.5 line-clamp-2 text-[12px] leading-relaxed text-muted">
+                {repo.desc}
+              </p>
               <span className="mt-2 inline-flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.16em] text-faint transition-colors group-hover:text-signal">
-                <span className="decode" data-text={accessionOf(repo.name)}>
-                  {accessionOf(repo.name)}
+                <span className="decode" data-text={accessionOf(repo)}>
+                  {accessionOf(repo)}
                 </span>
                 <span aria-hidden="true">↗</span>
               </span>
@@ -406,10 +449,13 @@ export function Collection({
         </div>
       )}
 
-      {mode === "home" && (
+      {mode === "home" && showFooter && (
         <div className="mt-7 flex flex-wrap items-center justify-between gap-4">
           <p className="label">其余项目 · 完整索引见档案页</p>
-          <Link href="/projects/" className="link font-mono text-[10px] uppercase tracking-[0.18em] text-fg">
+          <Link
+            href="/projects/"
+            className="link font-mono text-[10px] uppercase tracking-[0.18em] text-fg"
+          >
             VIEW ALL {repos.length} →
           </Link>
         </div>
@@ -417,7 +463,11 @@ export function Collection({
 
       {/* 跟随指针的预览 */}
       <Portal>
-        <div ref={previewRef} className="cursor-plate" data-visible={hovered ? "true" : "false"}>
+        <div
+          ref={previewRef}
+          className="cursor-plate"
+          data-visible={hovered ? "true" : "false"}
+        >
           {hovered && (
             <div className="w-[248px] border border-line-strong bg-bg-2 shadow-[0_30px_60px_-20px_#000]">
               <div className="flex items-baseline justify-between gap-2 border-b border-line px-3 py-2">
@@ -437,9 +487,11 @@ export function Collection({
 
               <div className="flex items-baseline justify-between gap-2 border-t border-line px-3 py-1.5">
                 <span className="truncate font-mono text-[8px] uppercase tracking-[0.14em] text-faint">
-                  {accessionOf(hovered.name)}
+                  {accessionOf(hovered)}
                 </span>
-                <span className="shrink-0 font-mono text-[8px] text-fg-2">★ {hovered.stars}</span>
+                <span className="shrink-0 font-mono text-[8px] text-fg-2">
+                  ★ {hovered.stars}
+                </span>
               </div>
 
               <p className="truncate border-t border-line px-3 py-1.5 font-mono text-[8px] uppercase tracking-[0.1em] text-muted">
@@ -453,7 +505,9 @@ export function Collection({
       {open && (
         <SpecimenDialog
           repo={open}
-          plateNo={String(repos.findIndex((r) => r.name === open.name) + 1).padStart(2, "0")}
+          plateNo={String(
+            repos.findIndex((r) => r.name === open.name) + 1,
+          ).padStart(2, "0")}
           position={
             openIndex >= 0
               ? `${String(openIndex + 1).padStart(2, "0")} / ${String(items.length).padStart(2, "0")}`

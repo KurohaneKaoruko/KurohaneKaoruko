@@ -8,26 +8,18 @@ import { Counter } from "@/components/ui/Counter";
 import { FAMILIES } from "@/lib/data";
 import { SITE } from "@/lib/site";
 
-/**
- * 首屏。
- *
- * 版面只有三件事：一行状态、一个足够大的标题、一份可数的目录。
- * 分类用方块阵列标出体量 —— 每一格是一个项目，第一组用信号红。
- * 四组数字压在页脚线上，和后面的项目索引共用同一套字距与分栏。
- */
 export function Hero() {
   const { repos } = useRepos();
   const stats = useCollectionStats();
-
-  /* 分类计数：一遍数完再按 FAMILIES 的次序取列，避免 n×m 的双重过滤 */
   const groups = useMemo(() => {
     const counts = new Map<string, number>();
-    for (const repo of repos) counts.set(repo.family, (counts.get(repo.family) ?? 0) + 1);
-    return FAMILIES.map((family) => ({ code: family.code, count: counts.get(family.id) ?? 0 })).filter(
-      (group) => group.count > 0,
-    );
+    for (const repo of repos)
+      counts.set(repo.family, (counts.get(repo.family) ?? 0) + 1);
+    return FAMILIES.map((family) => ({
+      code: family.code,
+      count: counts.get(family.id) ?? 0,
+    })).filter((group) => group.count > 0);
   }, [repos]);
-
   const facts = [
     { label: "Works / 项目", value: stats.total, pad: 2 },
     { label: "Stars / 星标", value: stats.stars, pad: 0 },
@@ -44,18 +36,20 @@ export function Hero() {
             China · UTC+8 · <BaseTime />
           </span>
         </div>
-
         <div className="grid gap-12 pb-12 pt-10 lg:grid-cols-12 lg:gap-0 lg:pb-16 lg:pt-14">
           <div className="lg:col-span-8 lg:pr-12">
-            <p className="eyebrow hero-rise">Independent developer / AI engineer</p>
-
-            <h1 className="hero-title hero-rise" style={{ "--d": "60ms" } as React.CSSProperties}>
+            <p className="eyebrow hero-rise">
+              Independent developer / AI engineer
+            </p>
+            <h1
+              className="hero-title hero-rise"
+              style={{ "--d": "60ms" } as React.CSSProperties}
+            >
               <span>Software</span>
               <span>
                 Archive<span className="hero-title-dot">.</span>
               </span>
             </h1>
-
             <div className="mt-9 flex flex-col items-start gap-7 sm:flex-row sm:items-end sm:justify-between">
               <p className="hero-lede">Agents, instruments, and small games.</p>
               <Link href="/projects/" className="btn btn-primary shrink-0">
@@ -66,7 +60,6 @@ export function Hero() {
               </Link>
             </div>
           </div>
-
           <aside className="lg:col-span-4 lg:border-l lg:border-line lg:pl-10">
             <div className="hero-index">
               <div className="flex items-baseline justify-between border-b border-line-strong pb-2">
@@ -75,16 +68,15 @@ export function Hero() {
                   <Counter value={stats.total} pad={2} /> works
                 </span>
               </div>
-
               <ul>
                 {groups.map((group, index) => (
                   <li key={group.code} className="hero-family">
                     <span className="hero-family-code">{group.code}</span>
                     <span className="hero-squares" aria-hidden="true">
-                      {Array.from({ length: group.count }).map((_, cell) => (
+                      {Array.from({ length: group.count }, (_, cell) => (
                         <span
                           key={cell}
-                          className={"hero-square" + (index === 0 ? " is-hot" : "")}
+                          className={`hero-square${index === 0 ? " is-hot" : ""}`}
                         />
                       ))}
                     </span>
@@ -94,15 +86,15 @@ export function Hero() {
                   </li>
                 ))}
               </ul>
-
               <div className="flex items-baseline justify-between border-t border-line pt-3">
                 <span className="label">★ {stats.stars}</span>
-                <span className="label">{String(stats.langs).padStart(2, "0")} stacks</span>
+                <span className="label">
+                  {String(stats.langs).padStart(2, "0")} stacks
+                </span>
               </div>
             </div>
           </aside>
         </div>
-
         <dl className="hero-facts">
           {facts.map((fact) => (
             <div key={fact.label} className="hero-fact">

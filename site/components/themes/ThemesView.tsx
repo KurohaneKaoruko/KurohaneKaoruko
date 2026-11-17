@@ -12,7 +12,7 @@ import { Reveal } from "@/components/ui/Reveal";
  * 标题之后直接进入可点击的主题陈列；每张卡片本身就是该主题的色与字。
  */
 export function ThemesView() {
-  const { meta, mounted } = useTheme();
+  const { meta, mounted, themes, theme } = useTheme();
 
   return (
     <div className="pb-[clamp(56px,8vw,110px)] pt-[clamp(40px,6vw,84px)]">
@@ -23,7 +23,18 @@ export function ThemesView() {
               <p className="eyebrow">
                 <span className="text-signal">03</span> / THEMES
               </p>
-              <h1 className="sr-only">主题</h1>
+              <h1
+                className={
+                  theme === "default" ? "theme-gallery-title" : "sr-only"
+                }
+              >
+                Theme library<span className="text-signal">.</span>
+              </h1>
+              {theme === "default" && (
+                <p className="theme-gallery-description">
+                  {themes.length} 个独立主题 · 点击切换
+                </p>
+              )}
             </div>
 
             <p className="label flex items-center gap-3 pb-1 text-fg">
@@ -41,8 +52,12 @@ export function ThemesView() {
           <div className="flex flex-wrap items-center justify-between gap-4 border-t border-line pt-4">
             <p className="label-sm">
               当前 / CURRENT
-              <span className="ml-3 text-signal">{mounted ? meta.label : "档案"}</span>
-              <span className="ml-2 text-faint">{mounted ? meta.name : "ARCHIVE"}</span>
+              <span className="ml-3 text-signal">
+                {mounted ? meta.label : "默认"}
+              </span>
+              <span className="ml-2 text-faint">
+                {mounted ? meta.name : "DEFAULT"}
+              </span>
             </p>
             <Link
               href="/"

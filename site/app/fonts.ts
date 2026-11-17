@@ -1,5 +1,13 @@
 import localFont from "next/font/local";
 
+export const spaceGrotesk = localFont({
+  src: "./fonts/space-grotesk-variable.woff2",
+  weight: "300 700",
+  display: "swap",
+  preload: true,
+  variable: "--font-space-grotesk",
+});
+
 /**
  * 字体。
  *

@@ -1,6 +1,6 @@
-import { projects as CURATED } from "@/lib/data";
+import { curatedProject, projects as CURATED } from "@/lib/data";
 import { SITE } from "@/lib/site";
-import type { FamilyId, Project } from "@/lib/data";
+import type { FamilyId, Project, ProjectIdentity } from "@/lib/data";
 
 /** GitHub API 返回的仓库原文（只声明站点消费的字段） */
 export type ApiRepo = {
@@ -34,8 +34,6 @@ export type ApiRepo = {
  */
 
 export type Repo = Project & {
-  /** GitHub 数字 ID（改名不变的身份主键；旧快照数据可能缺失） */
-  repoId?: number;
   /** 策展顺序：登记过的按清单次序，新仓库排在后面 */
   order: number;
 };
@@ -53,10 +51,24 @@ export const EXCLUDED_REPOS = new Set([
 ]);
 
 /** 未认证的公开接口限额是 60 次/小时/IP，结果要缓存 */
-export const REPOS_CACHE_KEY = "kh-repos-v2";
+export const REPOS_CACHE_KEY = "kh-repos-v5";
 export const REPOS_CACHE_TTL = 30 * 60 * 1000;
 
 const API_URL = `https://api.github.com/users/${SITE.handle}/repos?per_page=100&sort=pushed`;
+
+const REPOSITORY_ENDPOINT_IDS = new Set(
+  CURATED.filter((project) => {
+    try {
+      const owner = new URL(project.url).pathname.split("/")[1];
+      return (
+        project.repoId !== undefined &&
+        owner.toLowerCase() !== SITE.handle.toLowerCase()
+      );
+    } catch {
+      return false;
+    }
+  }).map((project) => project.repoId!),
+);
 
 /** 请求超时：慢网络下别让"同步中"一直挂着 */
 const REQUEST_TIMEOUT = 8000;
@@ -94,7 +106,10 @@ export function pickFeatured<T extends { stars: number; order: number }>(
 }
 
 /** 星标降序，同分按策展顺序 —— 与 byStars 的口径一致 */
-function compareFeatured(a: { stars: number; order: number }, b: { stars: number; order: number }) {
+function compareFeatured(
+  a: { stars: number; order: number },
+  b: { stars: number; order: number },
+) {
   return b.stars - a.stars || a.order - b.order;
 }
 
@@ -103,7 +118,8 @@ function toRepo(r: ApiRepo, order: number, curated?: Project): Repo {
   if (curated) {
     return {
       ...curated,
-      repoId: r.id,
+      repoId: r.id ?? curated.repoId,
+      name: r.name,
       lang: r.language ?? curated.lang,
       stars: r.stargazers_count,
       url: r.html_url,
@@ -137,21 +153,63 @@ function toRepo(r: ApiRepo, order: number, curated?: Project): Repo {
  * 列表里没有的旧条目保留原样 —— 覆盖语义是「补全」而非「替换」——
  * 列表接口漏仓库时（实测 /users/:user/repos 丢过已转移走的项目）不凭空消失。
  */
-function mergeRepos(base: Repo[], incoming: ApiRepo[]): Repo[] {
-  const curatedByName = new Map(CURATED.map((p, i) => [p.name, { project: p, order: i }]));
-  const merged = new Map(base.map((r) => [r.name, r]));
-  const baseById = new Map(base.filter((r) => r.repoId !== undefined).map((r) => [r.repoId, r]));
+function repoKey(reference: ProjectIdentity): string {
+  const id = reference.repoId ?? curatedProject(reference)?.repoId;
+  return id === undefined ? `name:${reference.name.toLowerCase()}` : `id:${id}`;
+}
+
+export function mergeRepos(base: Repo[], incoming: ApiRepo[]): Repo[] {
+  const merged = new Map(base.map((repo) => [repoKey(repo), repo]));
 
   for (const raw of incoming) {
     if (raw.fork || EXCLUDED_REPOS.has(raw.name)) continue;
-    const curated = curatedByName.get(raw.name);
-    const repo = toRepo(raw, curated?.order ?? 1000, curated?.project);
-    const existing = baseById.get(raw.id) ?? merged.get(raw.name);
-    if (existing) merged.delete(existing.name); // 改名场景：移除旧名条目，避免一仓两名
-    merged.set(repo.name, repo);
+    const curated = curatedProject({ name: raw.name, repoId: raw.id });
+    const key = repoKey({ name: raw.name, repoId: raw.id });
+    const legacyKey = `name:${raw.name.toLowerCase()}`;
+    const existing = merged.get(key) ?? merged.get(legacyKey);
+    const order = curated
+      ? CURATED.indexOf(curated)
+      : (existing?.order ?? 1000);
+    const repo = toRepo(raw, order, curated);
+    if (existing) {
+      for (const [existingKey, existingRepo] of merged) {
+        if (
+          existingRepo === existing ||
+          (raw.id !== undefined && existingRepo.repoId === raw.id)
+        ) {
+          merged.delete(existingKey);
+        }
+      }
+    }
+    merged.set(key, repo);
   }
 
   return [...merged.values()].sort(byStars);
+}
+
+/** 组件选择的是项目身份，标题和链接使用同步后的仓库数据。 */
+export function findRepo(
+  repos: readonly Repo[],
+  reference: string | ProjectIdentity,
+): Repo | undefined {
+  const curated = curatedProject(reference);
+  const id =
+    (typeof reference === "string" ? undefined : reference.repoId) ??
+    curated?.repoId;
+  const names = new Set(
+    [
+      typeof reference === "string" ? reference : reference.name,
+      ...(curated ? [curated.name, ...(curated.aliases ?? [])] : []),
+    ].map((name) => name.toLowerCase()),
+  );
+  if (id !== undefined) {
+    const current = repos.find((repo) => repo.repoId === id);
+    if (current) return current;
+    return repos.find(
+      (repo) => repo.repoId === undefined && names.has(repo.name.toLowerCase()),
+    );
+  }
+  return repos.find((repo) => names.has(repo.name.toLowerCase()));
 }
 
 /**
@@ -174,7 +232,8 @@ export function readCache(): SyncResult | null {
     const raw = window.localStorage.getItem(REPOS_CACHE_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw) as SyncResult;
-    if (!Array.isArray(parsed?.repos) || typeof parsed.syncedAt !== "number") return null;
+    if (!Array.isArray(parsed?.repos) || typeof parsed.syncedAt !== "number")
+      return null;
     if (Date.now() - parsed.syncedAt > REPOS_CACHE_TTL) return null;
     return parsed;
   } catch {
@@ -212,7 +271,36 @@ export async function fetchRepos(signal?: AbortSignal): Promise<SyncResult> {
     const api = (await res.json()) as ApiRepo[];
     if (!api.length) throw new Error("GitHub API 返回空列表");
 
-    const repos = mergeRepos(SNAPSHOT, api);
+    // 组织仓库不会出现在个人列表中。只按 ID 补查这些明确的策展条目，
+    // 其他缺失项目保持离线兜底，不为每个仓库额外消耗 API 请求。
+    const seen = new Set(api.map((repo) => repo.id));
+    const missing = CURATED.filter(
+      (project) =>
+        project.repoId !== undefined &&
+        REPOSITORY_ENDPOINT_IDS.has(project.repoId) &&
+        !seen.has(project.repoId),
+    );
+    const additional = await Promise.allSettled(
+      missing.map(async (project) => {
+        const response = await fetch(
+          `https://api.github.com/repositories/${project.repoId}`,
+          {
+            signal: controller.signal,
+            headers: { Accept: "application/vnd.github+json" },
+            cache: "no-store",
+          },
+        );
+        if (!response.ok) throw new Error(`GitHub API ${response.status}`);
+        return (await response.json()) as ApiRepo;
+      }),
+    );
+    signal?.throwIfAborted();
+    const repos = mergeRepos(SNAPSHOT, [
+      ...api,
+      ...additional.flatMap((result) =>
+        result.status === "fulfilled" ? [result.value] : [],
+      ),
+    ]);
     const result: SyncResult = { repos, syncedAt: Date.now() };
     writeCache(result);
     return result;

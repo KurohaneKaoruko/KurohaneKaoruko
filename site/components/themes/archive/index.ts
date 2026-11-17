@@ -10,9 +10,6 @@ export const archive = defineTheme({
     swatch: ["#070809", "#ff453a"],
     status: "ARCHIVE ONLINE",
   },
-  /**
-   * 默认主题的首页由 app/page.tsx 直接服务端渲染（LCP 路径），
-   * 这里的 loader 只用于主题页的按需预览 / 其他入口。
-   */
+  /** 保留原版档案首页，切换时独立加载。 */
   loadHome: () => import("./Home"),
 });

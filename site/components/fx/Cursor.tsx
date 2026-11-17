@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useTheme } from "@/components/theme/ThemeProvider";
 
 /**
  * 自定义指针。
@@ -9,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
  * 指到输入框会收成一道竖线。触屏与减动效偏好下完全不启用。
  */
 export function Cursor() {
+  const { theme } = useTheme();
   const rootRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLSpanElement>(null);
   const coordRef = useRef<HTMLSpanElement>(null);
@@ -16,7 +18,10 @@ export function Cursor() {
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
+    setEnabled(false);
+    if (theme === "default") return;
     if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     setEnabled(true);
     document.documentElement.classList.add("has-cx");
 
@@ -120,7 +125,7 @@ export function Cursor() {
       cancelAnimationFrame(raf);
       document.documentElement.classList.remove("has-cx");
     };
-  }, []);
+  }, [theme]);
 
   if (!enabled) return null;
 

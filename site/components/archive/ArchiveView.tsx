@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { useRepos } from "@/components/ReposProvider";
 import { Collection } from "@/components/collection/Collection";
 import { FAMILIES } from "@/lib/data";
+import { useTheme } from "@/components/theme/ThemeProvider";
 
 /**
  * 项目档案页。
@@ -12,6 +13,8 @@ import { FAMILIES } from "@/lib/data";
  */
 export function ArchiveView() {
   const { repos, status } = useRepos();
+  const { theme } = useTheme();
+  const defaultStyle = theme === "default";
 
   const counts = useMemo(() => {
     const map = new Map<string, number>();
@@ -21,31 +24,49 @@ export function ArchiveView() {
 
   return (
     <>
-      <header className="shell">
+      <header className="shell archive-page-header">
         <div className="flex items-center justify-between border-b border-line py-3">
           <span className="eyebrow">02 — Projects</span>
           <span className="label-sm flex items-center gap-2">
             <span
               className={
                 "inline-block h-1.5 w-1.5 rounded-full " +
-                (status === "live" ? "bg-signal" : status === "syncing" ? "bg-fg-2" : "bg-faint")
+                (status === "live"
+                  ? "bg-signal"
+                  : status === "syncing"
+                    ? "bg-fg-2"
+                    : "bg-faint")
               }
               aria-hidden="true"
             />
-            {status === "live" ? "LIVE · GITHUB" : status === "syncing" ? "SYNCING…" : "SNAPSHOT"}
+            {status === "live"
+              ? "LIVE · GITHUB"
+              : status === "syncing"
+                ? "SYNCING…"
+                : "SNAPSHOT"}
           </span>
         </div>
 
         <div className="grid gap-10 pb-10 pt-10 lg:grid-cols-12 lg:gap-0 lg:pb-14">
           <div className="lg:col-span-8 lg:pr-10">
-            <h1 className="display hero-rise text-[clamp(2.7rem,6.8vw,5.4rem)] uppercase text-fg">
-              Index<span className="text-signal">.</span>
+            <h1 className="archive-page-title display hero-rise text-[clamp(2.7rem,6.8vw,5.4rem)] text-fg">
+              {defaultStyle ? (
+                <>
+                  The collection<span className="text-signal">.</span>
+                </>
+              ) : (
+                <>
+                  Index<span className="text-signal">.</span>
+                </>
+              )}
             </h1>
             <p
               className="hero-rise mt-5 max-w-[52ch] text-[14px] leading-[1.9] text-fg-2"
               style={{ "--d": "80ms" } as React.CSSProperties}
             >
-              全部公开仓库，按星标排序、按分类归档；点开任意一行看详情，也可以切到图版视图逐张翻看。
+              {defaultStyle
+                ? "公开仓库 / 按分类、技术栈或名称检索"
+                : "全部公开仓库，按星标排序、按分类归档；点开任意一行看详情，也可以切到图版视图逐张翻看。"}
             </p>
           </div>
 
@@ -72,7 +93,10 @@ export function ArchiveView() {
       </header>
 
       <div className="shell pb-16">
-        <Collection mode="archive" />
+        <Collection
+          mode="archive"
+          subtitle={defaultStyle ? "description" : "taxon"}
+        />
       </div>
     </>
   );

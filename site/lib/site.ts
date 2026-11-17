@@ -18,7 +18,7 @@ export const SITE = {
   repo: "KurohaneKaoruko",
   url: "https://kurohanekaoruko.github.io/KurohaneKaoruko",
   github: "https://github.com/KurohaneKaoruko",
-  email: "kurohanekaoruko@163.com",
+  email: "kurohanekaoruko@gmail.com",
   /** 版本号，页脚显示 */
   build: "2026.10",
 } as const;
@@ -57,7 +57,7 @@ export const CURATOR = {
   base: "China · UTC+8",
   now: [
     {
-      name: "Iris-I.C.E.",
+      name: "Iris-Creation",
       note: "长篇小说的工作台：Lexical 编辑器、作品资料库与跨章节的长期记忆。",
     },
     {
@@ -70,11 +70,21 @@ export const CURATOR = {
     },
   ],
   toolchain: [
-    { title: "语言", en: "Languages", items: ["TypeScript", "Rust", "Python", "JavaScript", "Dart"] },
+    {
+      title: "语言",
+      en: "Languages",
+      items: ["TypeScript", "Rust", "Python", "JavaScript", "Dart"],
+    },
     {
       title: "智能体",
       en: "Agents",
-      items: ["LLM Agents", "Swarm Intelligence", "RAG", "Multi-Agent RL", "Agent Skills"],
+      items: [
+        "LLM Agents",
+        "Swarm Intelligence",
+        "RAG",
+        "Multi-Agent RL",
+        "Agent Skills",
+      ],
     },
     {
       title: "框架与系统",

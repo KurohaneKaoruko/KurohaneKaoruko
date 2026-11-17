@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { ScrambleText, CHARS_FULL } from "@/components/ui/ScrambleText";
 import { useLoading } from "@/context/LoadingContext";
 import { SITE } from "@/lib/site";
+import { useTheme } from "@/components/theme/ThemeProvider";
 
 /* ==========================================================================
    时序。节奏全部由这几个数决定，改这里就行。
@@ -55,6 +56,7 @@ const statusFor = (value: number) =>
  * 视觉上两者互不影响：启动屏仍然完整覆盖一屏。
  */
 export default function SplashScreen() {
+  const { theme } = useTheme();
   const { isLoaded, setIsLoaded, shouldShowSplash } = useLoading();
   const [isVisible, setIsVisible] = useState(shouldShowSplash);
   /** 退场中：挂 data-exiting，让 CSS 开始放退场动画 */
@@ -169,7 +171,7 @@ export default function SplashScreen() {
     };
   }, [shouldShowSplash, setIsLoaded, finish]);
 
-  if (!isVisible) return null;
+  if (theme === "default" || !isVisible) return null;
 
   return (
     <div

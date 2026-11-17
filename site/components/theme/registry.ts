@@ -1,5 +1,6 @@
 import type { ComponentType } from "react";
 import { archive } from "@/components/themes/archive";
+import { defaultTheme } from "@/components/themes/default";
 import { brutalist } from "@/components/themes/brutalist";
 import { cassette } from "@/components/themes/cassette";
 import { cyberpunk } from "@/components/themes/cyberpunk";
@@ -27,6 +28,7 @@ import type { ThemeDefinition } from "@/components/theme/types";
  * 数组顺序就是选择器里的展示顺序。
  */
 export const THEMES = [
+  defaultTheme,
   archive,
   terminal,
   brutalist,
@@ -44,7 +46,7 @@ export const THEMES = [
 
 export type ThemeId = (typeof THEMES)[number]["meta"]["id"];
 
-export const DEFAULT_THEME: ThemeId = "archive";
+export const DEFAULT_THEME: ThemeId = "default";
 
 export const THEME_STORAGE_KEY = "kk-theme";
 
@@ -55,7 +57,8 @@ export function isThemeId(value: unknown): value is ThemeId {
 }
 
 export function getTheme(id: string): ThemeDefinition {
-  return (THEMES.find((theme) => theme.meta.id === id) ?? archive) as ThemeDefinition;
+  return (THEMES.find((theme) => theme.meta.id === id) ??
+    defaultTheme) as ThemeDefinition;
 }
 
 export function getThemeMeta(id: string) {
@@ -74,7 +77,9 @@ export function nextTheme(id: ThemeId): ThemeId {
  */
 const homeChunks = new Map<string, Promise<{ default: ComponentType }>>();
 
-export function loadThemeHome(id: ThemeId): Promise<{ default: ComponentType }> {
+export function loadThemeHome(
+  id: ThemeId,
+): Promise<{ default: ComponentType }> {
   const cached = homeChunks.get(id);
   if (cached) return cached;
   const promise = getTheme(id).loadHome();

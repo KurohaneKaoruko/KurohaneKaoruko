@@ -1,21 +1,10 @@
-/* ==========================================================================
-   档案主题 / Archive
-   --------------------------------------------------------------------------
-   默认主题的专属排版与表面处理。所有选择器都锁在 [data-theme="archive"]
-   之下，切换到其他主题时这份文件不会再命中任何元素。
-   ========================================================================== */
-
+/* Original Archive. These styles remain independent of the Default theme. */
 html[data-theme="archive"] {
   color-scheme: dark;
 }
-
-/* 深色底上不铺网格：结构由发丝线和留白给出。 */
 html[data-theme="archive"] body {
   background-image: none;
 }
-
-/* ---- 首屏 ---------------------------------------------------------------- */
-
 [data-theme="archive"] .hero-title {
   margin-top: clamp(20px, 3.2vw, 40px);
   font-family: var(--stack-sans);
@@ -25,15 +14,12 @@ html[data-theme="archive"] body {
   letter-spacing: -0.072em;
   color: var(--fg);
 }
-
 [data-theme="archive"] .hero-title > span {
   display: block;
 }
-
 [data-theme="archive"] .hero-title-dot {
   color: var(--signal);
 }
-
 [data-theme="archive"] .hero-lede {
   max-width: 32ch;
   font-size: clamp(1rem, 1.35vw, 1.2rem);
@@ -41,11 +27,9 @@ html[data-theme="archive"] body {
   color: var(--fg-2);
   text-wrap: pretty;
 }
-
 [data-theme="archive"] .hero-index {
   padding-top: 2px;
 }
-
 [data-theme="archive"] .hero-family {
   display: flex;
   align-items: center;
@@ -53,7 +37,6 @@ html[data-theme="archive"] body {
   padding-block: 11px;
   border-bottom: 1px solid var(--line-soft);
 }
-
 [data-theme="archive"] .hero-family-code {
   flex: 0 0 72px;
   font-family: var(--stack-mono);
@@ -63,25 +46,21 @@ html[data-theme="archive"] body {
   color: var(--muted);
   white-space: nowrap;
 }
-
 [data-theme="archive"] .hero-squares {
   display: flex;
   flex-wrap: wrap;
   gap: 3px;
   margin-left: auto;
 }
-
 [data-theme="archive"] .hero-square {
   display: block;
   width: 7px;
   height: 7px;
   background: color-mix(in srgb, var(--fg) 78%, transparent);
 }
-
 [data-theme="archive"] .hero-square.is-hot {
   background: var(--signal);
 }
-
 [data-theme="archive"] .hero-family-count {
   flex: 0 0 2ch;
   font-family: var(--stack-mono);
@@ -89,24 +68,20 @@ html[data-theme="archive"] body {
   text-align: right;
   color: var(--fg);
 }
-
 [data-theme="archive"] .hero-facts {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   border-top: 1px solid var(--line);
 }
-
 [data-theme="archive"] .hero-fact {
   padding: 18px 18px 20px 0;
   border-bottom: 1px solid var(--line);
 }
-
 [data-theme="archive"] .hero-fact:nth-child(even) {
   padding-left: 18px;
   padding-right: 0;
   border-left: 1px solid var(--line);
 }
-
 [data-theme="archive"] .hero-fact-value {
   margin-top: 10px;
   font-family: var(--stack-sans);
@@ -117,41 +92,32 @@ html[data-theme="archive"] body {
   font-variant-numeric: tabular-nums;
   color: var(--fg);
 }
-
 @media (min-width: 640px) {
   [data-theme="archive"] .hero-facts {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
-
   [data-theme="archive"] .hero-fact {
     padding: 22px 24px 24px;
     border-bottom: 0;
     border-left: 1px solid var(--line);
   }
-
   [data-theme="archive"] .hero-fact:first-child {
     padding-left: 0;
     border-left: 0;
   }
-
   [data-theme="archive"] .hero-fact:last-child {
     padding-right: 0;
   }
 }
-
-/* ---- 精选条目 ------------------------------------------------------------ */
-
 [data-theme="archive"] .featured-item:last-child {
   border-bottom: 0;
 }
-
 [data-theme="archive"] .featured-index {
   font-family: var(--stack-mono);
   font-size: 11px;
   letter-spacing: 0.08em;
   color: var(--signal);
 }
-
 [data-theme="archive"] .featured-title {
   margin-top: 16px;
   font-family: var(--stack-sans);
@@ -162,8 +128,8 @@ html[data-theme="archive"] body {
   text-transform: uppercase;
   color: var(--fg);
   text-wrap: balance;
+  overflow-wrap: anywhere;
 }
-
 [data-theme="archive"] .featured-taxon {
   margin-top: 10px;
   font-family: var(--stack-mono);
@@ -172,7 +138,6 @@ html[data-theme="archive"] body {
   text-transform: uppercase;
   color: var(--faint);
 }
-
 [data-theme="archive"] .featured-desc {
   margin-top: 20px;
   max-width: 46ch;
@@ -181,7 +146,6 @@ html[data-theme="archive"] body {
   color: var(--fg-2);
   text-wrap: pretty;
 }
-
 [data-theme="archive"] .featured-bottom {
   display: flex;
   flex-wrap: wrap;
@@ -192,13 +156,11 @@ html[data-theme="archive"] body {
   padding-top: 16px;
   border-top: 1px solid var(--line);
 }
-
 [data-theme="archive"] .featured-meta {
   display: flex;
   flex-wrap: wrap;
   gap: 14px 32px;
 }
-
 [data-theme="archive"] .featured-meta dd {
   margin-top: 4px;
   font-family: var(--stack-mono);
@@ -206,13 +168,11 @@ html[data-theme="archive"] body {
   letter-spacing: 0.04em;
   color: var(--fg);
 }
-
 [data-theme="archive"] .featured-links {
   display: flex;
   align-items: center;
   gap: 22px;
 }
-
 [data-theme="archive"] .featured-link {
   position: relative;
   padding-bottom: 3px;
@@ -226,7 +186,6 @@ html[data-theme="archive"] body {
   cursor: pointer;
   transition: color 0.25s ease;
 }
-
 [data-theme="archive"] .featured-link::after {
   content: "";
   position: absolute;
@@ -239,86 +198,74 @@ html[data-theme="archive"] body {
   transform-origin: left;
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
-
 [data-theme="archive"] .featured-link:hover {
   color: var(--signal);
 }
-
 [data-theme="archive"] .featured-link:hover::after {
   transform: scaleX(1);
 }
-
-/* ---- 图版 ---------------------------------------------------------------- */
-
 [data-theme="archive"] .plate {
   background-color: var(--bg-2);
   background-image: none;
   border: 1px solid var(--line-strong);
   box-shadow: none;
 }
-
 [data-theme="archive"] .plate-inner,
 [data-theme="archive"] .corner-ticks::before,
 [data-theme="archive"] .corner-ticks::after {
   display: none;
 }
-
 [data-theme="archive"] .plate-caption {
   border-top-color: var(--line);
 }
-
 [data-theme="archive"] .plate-art {
   color: color-mix(in srgb, var(--fg) 76%, transparent);
 }
-
 [data-theme="archive"] .schematic-grid {
   background-image:
-    linear-gradient(to right, color-mix(in srgb, var(--fg) 4.5%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in srgb, var(--fg) 4.5%, transparent) 1px, transparent 1px);
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--fg) 4.5%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--fg) 4.5%, transparent) 1px,
+      transparent 1px
+    );
   background-size: 24px 24px;
 }
-
 [data-theme="archive"] .liftable:hover {
   transform: none;
   box-shadow: none;
   border-color: var(--fg);
 }
-
 [data-theme="archive"] .tilt-glare {
   display: none;
 }
-
-/* ---- 数据 ---------------------------------------------------------------- */
-
 [data-theme="archive"] .record-bars {
   display: grid;
   gap: 16px;
 }
-
 [data-theme="archive"] .record-bar {
   display: grid;
   grid-template-columns: minmax(72px, 104px) minmax(0, 1fr) 28px;
   align-items: center;
   gap: 16px;
 }
-
 [data-theme="archive"] .bar-track {
   height: 2px;
   background: var(--line);
 }
-
 [data-theme="archive"] .bar-fill {
   background: var(--fg);
 }
-
 [data-theme="archive"] .bar-fill[data-hot="true"] {
   background: var(--signal);
 }
-
 [data-theme="archive"] .record-recent {
   border-top: 1px solid var(--line);
 }
-
 [data-theme="archive"] .record-recent li {
   display: flex;
   align-items: baseline;
@@ -327,36 +274,26 @@ html[data-theme="archive"] body {
   border-bottom: 1px solid var(--line-soft);
   padding-block: 12px;
 }
-
-/* ---- 共享细节 ------------------------------------------------------------ */
-
 [data-theme="archive"] .btn::before {
   display: none;
 }
-
 [data-theme="archive"] .cursor-plate > div {
   box-shadow: 0 24px 50px -30px rgba(0, 0, 0, 0.9);
 }
-
 [data-theme="archive"] .ticker {
   background: transparent;
 }
-
 [data-theme="archive"] .index-row:hover {
   background: color-mix(in srgb, var(--fg) 3.2%, transparent);
 }
-
 [data-theme="archive"] .sheet-card,
 [data-theme="archive"] .palette {
   background: var(--bg);
   box-shadow: 0 40px 90px -50px rgba(0, 0, 0, 0.95);
 }
-
 [data-theme="archive"] .section-head .section-rule {
   background: var(--line-strong);
 }
-
-/* 首屏标题已经足够大，不需要再播放遮罩入场。 */
 [data-theme="archive"] .hero-title.hero-rise {
   animation-duration: 1.1s;
 }

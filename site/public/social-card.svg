@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <defs>
+    <linearGradient id="fade" x1="570" y1="0" x2="710" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#080808"/><stop offset="1" stop-color="#080808" stop-opacity="0"/></linearGradient>
+    <linearGradient id="bottom" x1="0" y1="535" x2="0" y2="595" gradientUnits="userSpaceOnUse"><stop stop-color="#080808" stop-opacity="0"/><stop offset="1" stop-color="#080808"/></linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#080808"/>
+  <image href="portrait-pixels.webp" x="620" y="58" width="535" height="535"/>
+  <rect x="570" y="58" width="140" height="535" fill="url(#fade)"/>
+  <rect x="620" y="535" width="535" height="60" fill="url(#bottom)"/>
+  <g font-family="'Space Grotesk',sans-serif" fill="#f5f5f5">
+    <text x="53" y="64" font-size="34" font-weight="600" letter-spacing="-3">K<tspan fill="#f04444">.</tspan></text>
+    <text x="107" y="59" font-size="14" font-weight="500">Kurohane Kaoruko</text>
+    <text x="53" y="312" font-size="125" font-weight="500" letter-spacing="-8">Kurohane</text>
+    <text x="95" y="429" font-size="125" font-weight="500" letter-spacing="-8">Kaoruko<tspan fill="#f04444">.</tspan></text>
+  </g>
+  <g font-family="'IBM Plex Mono',monospace" font-size="10" fill="#a4a4a4" letter-spacing="1">
+    <text x="53" y="182">INDEPENDENT DEVELOPER</text>
+    <text x="53" y="478">AI ENGINEER <tspan fill="#f04444">/</tspan> TOOLMAKER</text>
+    <text x="53" y="588">AI AGENTS / DESKTOP TOOLS / EXPERIMENTS</text>
+    <text x="991" y="58">OPEN SOURCE</text>
+  </g>
+  <path d="M53 547H1147" stroke="#ffffff24"/>
+  <circle cx="978" cy="54" r="3" fill="#f04444"/>
+</svg>

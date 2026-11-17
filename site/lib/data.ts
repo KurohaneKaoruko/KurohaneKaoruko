@@ -1,7 +1,12 @@
-export type FamilyId = "principium" | "arsenalia" | "animulae" | "ludi" | "incertae";
+export type FamilyId =
+  "principium" | "arsenalia" | "animulae" | "ludi" | "incertae";
 
 export type Project = {
+  /** GitHub 仓库 ID：改名或转移后保持不变。 */
+  repoId?: number;
   name: string;
+  /** 仅用于识别历史引用，展示名始终使用当前 name。 */
+  aliases?: string[];
   /** 拉丁学名式的标本名，图版与索引上的斜体行 */
   taxon: string;
   /** 中文俗名，两到三个字 */
@@ -91,17 +96,20 @@ export const FAMILIES: Family[] = [
 export const projects: Project[] = [
   // ── 旗舰 ──
   {
-    name: "Iris-I.C.E.",
+    repoId: 1153495189,
+    name: "Iris-Creation",
+    aliases: ["Iris-I.C.E."],
     taxon: "Machina Scriptoria",
     vernacular: "写作台",
     desc: "长篇小说桌面写作工作台：作品资料管理、章节写作与改稿、AI 规划审阅与长期记忆、人物关系与连续性维护，Tauri + React + Lexical 构建",
     lang: "TypeScript",
     stars: 8,
-    url: "https://github.com/KurohaneKaoruko/Iris-I.C.E.",
+    url: "https://github.com/KurohaneKaoruko/Iris-Creation",
     topics: ["Novel", "Tauri", "Lexical"],
     family: "principium",
   },
   {
+    repoId: 1427966136,
     name: "Lilium",
     taxon: "Lilium pensile",
     vernacular: "百合",
@@ -113,6 +121,7 @@ export const projects: Project[] = [
     family: "principium",
   },
   {
+    repoId: 1368484171,
     name: "ExMachina",
     taxon: "Anima Collectiva",
     vernacular: "群智",
@@ -125,17 +134,20 @@ export const projects: Project[] = [
   },
   // ── 器物 ──
   {
-    name: "Myosotis-Chat",
+    repoId: 1402094804,
+    name: "Myosotis",
+    aliases: ["Myosotis-Chat"],
     taxon: "Myosotis loquax",
     vernacular: "勿忘我",
     desc: "多端 AI 陪伴聊天系统：Hub 服务器承载记忆引擎、模型调用与聊天软件接入（OneBot），桌面 / 移动 / 浏览器多端实时同步",
     lang: "TypeScript",
     stars: 0,
-    url: "https://github.com/KurohaneKaoruko/Myosotis-Chat",
+    url: "https://github.com/KurohaneKaoruko/Myosotis",
     topics: ["AI", "Chat", "Tauri"],
     family: "arsenalia",
   },
   {
+    repoId: 1403525985,
     name: "Convallaria-Input",
     taxon: "Convallaria typica",
     vernacular: "铃兰",
@@ -147,6 +159,7 @@ export const projects: Project[] = [
     family: "arsenalia",
   },
   {
+    repoId: 1427277204,
     name: "LoniceraMograph",
     taxon: "Lonicera motiva",
     vernacular: "忍冬",
@@ -158,6 +171,7 @@ export const projects: Project[] = [
     family: "arsenalia",
   },
   {
+    repoId: 1403463748,
     name: "Taraxacum-Draw",
     taxon: "Taraxacum pingens",
     vernacular: "蒲公英",
@@ -169,6 +183,7 @@ export const projects: Project[] = [
     family: "arsenalia",
   },
   {
+    repoId: 1427277605,
     name: "RoseZIP",
     taxon: "Rosa compressa",
     vernacular: "蔷薇",
@@ -180,6 +195,7 @@ export const projects: Project[] = [
     family: "arsenalia",
   },
   {
+    repoId: 1425592231,
     name: "LycorisWallet",
     taxon: "Lycoris custos",
     vernacular: "石蒜",
@@ -191,6 +207,7 @@ export const projects: Project[] = [
     family: "arsenalia",
   },
   {
+    repoId: 1411723578,
     name: "CodeView",
     taxon: "Codex visorius",
     vernacular: "阅码",
@@ -203,17 +220,20 @@ export const projects: Project[] = [
   },
   // ── 智能体 ──
   {
-    name: "DSH-Novelist",
+    repoId: 1333278181,
+    name: "DSH-Creator",
+    aliases: ["DSH-Novelist"],
     taxon: "Scriptor fabularum",
     vernacular: "说书人",
     desc: "小说作家智能体预设：面向中文网络小说长篇创作，1 个插件 7 个工具 + 12 个方法论 skill + 6 个文风 skill",
     lang: "JavaScript",
     stars: 12,
-    url: "https://github.com/KurohaneKaoruko/DSH-Novelist",
+    url: "https://github.com/KurohaneKaoruko/DSH-Creator",
     topics: ["DSH", "Agent", "Novel"],
     family: "animulae",
   },
   {
+    repoId: 1410682040,
     name: "Novelist-Skills",
     taxon: "Ars narrandi",
     vernacular: "叙事术",
@@ -225,6 +245,7 @@ export const projects: Project[] = [
     family: "animulae",
   },
   {
+    repoId: 1188161351,
     name: "ExMachina-Prompts",
     taxon: "Verba imperii",
     vernacular: "言令",
@@ -236,6 +257,7 @@ export const projects: Project[] = [
     family: "animulae",
   },
   {
+    repoId: 1419348908,
     name: "emotion-skill",
     taxon: "Animus affectus",
     vernacular: "情志",
@@ -247,6 +269,7 @@ export const projects: Project[] = [
     family: "animulae",
   },
   {
+    repoId: 1410454466,
     name: "ARTEX",
     taxon: "Ars penetrandi",
     vernacular: "攻防",
@@ -269,6 +292,7 @@ export const projects: Project[] = [
     family: "animulae",
   },
   {
+    repoId: 1410553567,
     name: "Multi-Agent-RL",
     taxon: "Turba discens",
     vernacular: "群学",
@@ -280,6 +304,7 @@ export const projects: Project[] = [
     family: "animulae",
   },
   {
+    repoId: 1403565535,
     name: "AI-MusicVideo",
     taxon: "Musica machinalis",
     vernacular: "机乐",
@@ -292,6 +317,7 @@ export const projects: Project[] = [
   },
   // ── 游戏 ──
   {
+    repoId: 1168335883,
     name: "Rosemary-Maidcafe",
     taxon: "Rosmarinus tabernarius",
     vernacular: "迷迭香",
@@ -303,6 +329,7 @@ export const projects: Project[] = [
     family: "ludi",
   },
   {
+    repoId: 1394146385,
     name: "Alchemy-Workshop",
     taxon: "Alchemia officina",
     vernacular: "炼金",
@@ -314,6 +341,7 @@ export const projects: Project[] = [
     family: "ludi",
   },
   {
+    repoId: 1416383918,
     name: "Infinity-Increment",
     taxon: "Numerus infinitus",
     vernacular: "增量",
@@ -325,6 +353,7 @@ export const projects: Project[] = [
     family: "ludi",
   },
   {
+    repoId: 958734434,
     name: "Project-Space",
     taxon: "Spatium experimentorum",
     vernacular: "试验场",
@@ -338,6 +367,7 @@ export const projects: Project[] = [
   },
   // ── Screeps 系列：单一游戏（ screeps.com ）的周边工具，照常入馆与排序 ──
   {
+    repoId: 1161116775,
     name: "ScreepsDashboard",
     taxon: "Custode ludi",
     vernacular: "哨卫",
@@ -349,6 +379,7 @@ export const projects: Project[] = [
     family: "ludi",
   },
   {
+    repoId: 1130407364,
     name: "Screeps-Tools",
     taxon: "Instruments ludi",
     vernacular: "棋具",
@@ -360,6 +391,7 @@ export const projects: Project[] = [
     family: "ludi",
   },
   {
+    repoId: 1413819359,
     name: "Screeps-Simulation",
     taxon: "Speculum ludi",
     vernacular: "沙盘",
@@ -371,6 +403,7 @@ export const projects: Project[] = [
     family: "ludi",
   },
   {
+    repoId: 1123698855,
     name: "MiniTools-Rust",
     taxon: "Instrumenta minora",
     vernacular: "什器",
@@ -396,9 +429,32 @@ export const langColor: Record<string, string> = {
   "Jupyter Notebook": "#da5b0b",
 };
 
-/** 采集号：馆藏编号，按策展顺序固定，不随实时排序变化 */
-export function accessionOf(name: string): string {
-  const index = projects.findIndex((p) => p.name === name);
+export type ProjectIdentity = Pick<Project, "name" | "repoId">;
+
+/** 用不变的 ID 找回策展资料；历史名称只用于兼容没有 ID 的引用。 */
+export function curatedProject(
+  reference: string | ProjectIdentity,
+): Project | undefined {
+  const name = typeof reference === "string" ? reference : reference.name;
+  const repoId = typeof reference === "string" ? undefined : reference.repoId;
+  if (repoId !== undefined) {
+    const match = projects.find((project) => project.repoId === repoId);
+    if (match) return match;
+  }
+  const key = name.toLowerCase();
+  return projects.find(
+    (project) =>
+      (repoId === undefined || project.repoId === undefined) &&
+      [project.name, ...(project.aliases ?? [])].some(
+        (alias) => alias.toLowerCase() === key,
+      ),
+  );
+}
+
+/** 采集号按策展顺序固定，仓库改名和实时排序均不改变编号。 */
+export function accessionOf(reference: string | ProjectIdentity): string {
+  const project = curatedProject(reference);
+  const index = project ? projects.indexOf(project) : -1;
   if (index < 0) return "KK-—";
   return "KK-" + String(index + 1).padStart(4, "0");
 }

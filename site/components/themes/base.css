@@ -21,7 +21,8 @@
   --page-grid-size: 80px;
 }
 
-/* 默认主题「档案」：v1 兼容令牌全部由 v2 令牌反推 */
+/* 默认主题与档案主题：v1 兼容令牌由 v2 令牌反推 */
+[data-theme="default"],
 [data-theme="archive"] {
   --background: var(--bg);
   --foreground: var(--fg);
@@ -49,7 +50,7 @@
 
 /* 其他主题：v2 令牌由主题自己的 v1 令牌推导。
    这样各主题的 theme.css 只需要声明「设计令牌」，不必重复维护第二套命名。 */
-html[data-theme]:not([data-theme="archive"]) {
+html[data-theme]:not([data-theme="archive"]):not([data-theme="default"]) {
   --bg: var(--background);
   --bg-2: color-mix(in srgb, var(--background) 96%, var(--foreground));
   --bg-3: color-mix(in srgb, var(--background) 91%, var(--foreground));

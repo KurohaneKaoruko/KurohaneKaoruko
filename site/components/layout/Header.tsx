@@ -13,13 +13,19 @@ import { CURATOR, NAV_ITEMS, SITE } from "@/lib/site";
  * 搜索时才需要。放在首屏包里纯属浪费 —— 大多数访客不会打开它。
  */
 const CommandPalette = dynamic(
-  () => import("@/components/layout/CommandPalette").then((m) => m.CommandPalette),
+  () =>
+    import("@/components/layout/CommandPalette").then((m) => m.CommandPalette),
   { ssr: false },
 );
 
 function GithubMark({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 16 16" fill="currentColor" className={className} aria-hidden="true">
+    <svg
+      viewBox="0 0 16 16"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
       <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
     </svg>
   );
@@ -28,14 +34,15 @@ function GithubMark({ className }: { className?: string }) {
 /**
  * 顶栏。
  *
- * 64px 高的一条系统栏：左侧是竖线 + 大写字标与副标，中间四个编号过的分区，
- * 右侧是主题、搜索与 GitHub。滚动之后才出现底色与底线。
+ * 档案与原有主题共用的顶栏。默认主题使用自己的 Header。
  */
-export default function Header() {
+export default function ArchiveHeader() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [paletteOpen, setPaletteOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     let raf = 0;
@@ -59,16 +66,72 @@ export default function Header() {
   }, [pathname]);
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
+    if (!menuOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const background = [
+      ...document.querySelectorAll<HTMLElement>("main, footer"),
+    ];
+    const previousInert = background.map((element) => element.inert);
+    background.forEach((element) => {
+      element.inert = true;
+    });
+    const frame = requestAnimationFrame(() =>
+      menuRef.current?.querySelector<HTMLAnchorElement>("nav a")?.focus(),
+    );
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+      if (event.key !== "Tab") return;
+      const controls = [
+        menuButtonRef.current,
+        ...Array.from(
+          menuRef.current?.querySelectorAll<HTMLElement>(
+            "a[href], button:not([disabled]), [tabindex='0']",
+          ) ?? [],
+        ),
+      ].filter((el): el is HTMLElement =>
+        Boolean(el && el.getClientRects().length),
+      );
+      const index = controls.indexOf(document.activeElement as HTMLElement);
+      if (event.shiftKey && index <= 0) {
+        event.preventDefault();
+        controls.at(-1)?.focus();
+      } else if (
+        !event.shiftKey &&
+        (index === controls.length - 1 || index < 0)
+      ) {
+        event.preventDefault();
+        controls[0]?.focus();
+      }
+    };
+    document.addEventListener("keydown", onKey);
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
+      background.forEach((element, index) => {
+        element.inert = previousInert[index];
+      });
+      cancelAnimationFrame(frame);
+      document.removeEventListener("keydown", onKey);
     };
   }, [menuOpen]);
+
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const closeOnDesktop = () => {
+      if (desktop.matches) setMenuOpen(false);
+    };
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => desktop.removeEventListener("change", closeOnDesktop);
+  }, []);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
+        setMenuOpen(false);
         setPaletteOpen((v) => !v);
       }
     };
@@ -79,7 +142,7 @@ export default function Header() {
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
-  /* 导航下划线：一条红线在三个入口之间滑动，鼠标离开就回到当前页 */
+  /* 导航下划线跟随悬停与键盘焦点，离开后回到当前页。 */
   const navRef = useRef<HTMLElement>(null);
   const barRef = useRef<HTMLSpanElement>(null);
   const [hoveredNav, setHoveredNav] = useState<string | null>(null);
@@ -116,8 +179,15 @@ export default function Header() {
     <>
       <header className="site-header" data-scrolled={scrolled || menuOpen}>
         <div className="shell flex h-[var(--nav-h)] items-center justify-between gap-4">
-          <Link href="/" className="group flex items-center gap-3.5" aria-label={`${SITE.name} — ${SITE.archive}`}>
-            <span className="h-[22px] w-[2px] shrink-0 bg-signal lg:h-9" aria-hidden="true" />
+          <Link
+            href="/"
+            className="group flex items-center gap-3.5"
+            title={`${SITE.name} — 首页`}
+          >
+            <span
+              className="h-[22px] w-[2px] shrink-0 bg-signal lg:h-9"
+              aria-hidden="true"
+            />
             <span className="flex min-w-0 flex-col leading-none">
               <span className="font-sans text-[16px] font-bold uppercase leading-none tracking-[-0.015em] text-fg transition-colors group-hover:text-signal">
                 {SITE.name.split(" ").map((part, index) => (
@@ -137,7 +207,7 @@ export default function Header() {
 
           <nav
             ref={navRef}
-            className="relative hidden items-center gap-8 md:flex"
+            className="relative hidden items-center gap-8 lg:flex"
             aria-label="主导航"
             onPointerLeave={() => setHoveredNav(null)}
           >
@@ -148,6 +218,7 @@ export default function Header() {
                 data-nav={item.href}
                 className="nav-link"
                 data-active={isActive(item.href)}
+                aria-current={isActive(item.href) ? "page" : undefined}
                 onPointerEnter={() => setHoveredNav(item.href)}
                 onFocus={() => setHoveredNav(item.href)}
                 onBlur={() => setHoveredNav(null)}
@@ -160,15 +231,21 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center gap-2 sm:gap-3">
-            <ThemeSwitcher className="hidden md:block" />
+            <ThemeSwitcher className="hidden lg:block" />
 
             <button
               type="button"
               onClick={() => setPaletteOpen(true)}
-              className="hidden items-center gap-2 border border-line px-2.5 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.14em] text-muted transition-colors hover:border-line-strong hover:text-fg sm:flex"
+              className="header-search hidden items-center gap-2 border border-line px-2.5 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.14em] text-muted transition-colors hover:border-line-strong hover:text-fg sm:flex"
               aria-label="打开全站搜索（⌘K）"
             >
-              <svg viewBox="0 0 16 16" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="1.2">
+              <svg
+                viewBox="0 0 16 16"
+                className="h-3 w-3"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.2"
+              >
                 <circle cx="7" cy="7" r="4.6" />
                 <path d="M10.6 10.6 L14 14" />
               </svg>
@@ -180,17 +257,19 @@ export default function Header() {
               target="_blank"
               rel="noreferrer"
               aria-label="GitHub"
-              className="hidden p-1.5 text-muted transition-colors hover:text-fg sm:block"
+              className="header-github hidden p-1.5 text-muted transition-colors hover:text-fg sm:block"
             >
               <GithubMark className="h-4 w-4" />
             </a>
 
             <button
+              ref={menuButtonRef}
               type="button"
               onClick={() => setMenuOpen((v) => !v)}
-              className="relative flex h-8 w-8 items-center justify-center border border-line text-fg transition-colors hover:border-line-strong md:hidden"
+              className="relative flex h-11 w-11 items-center justify-center border border-line text-fg transition-colors hover:border-line-strong lg:hidden"
               aria-label={menuOpen ? "关闭菜单" : "打开菜单"}
               aria-expanded={menuOpen}
+              aria-controls="site-menu"
             >
               <span className="sr-only">菜单</span>
               <span className="flex w-3.5 flex-col gap-[3px]">
@@ -200,7 +279,12 @@ export default function Header() {
                     (menuOpen ? "translate-y-[4px] rotate-45" : "")
                   }
                 />
-                <span className={"h-px w-full bg-current transition-opacity " + (menuOpen ? "opacity-0" : "")} />
+                <span
+                  className={
+                    "h-px w-full bg-current transition-opacity " +
+                    (menuOpen ? "opacity-0" : "")
+                  }
+                />
                 <span
                   className={
                     "h-px w-full bg-current transition-transform duration-300 " +
@@ -216,13 +300,22 @@ export default function Header() {
 
       {/* 移动端整页菜单 */}
       <div
+        ref={menuRef}
+        id="site-menu"
         className={
-          "fixed inset-0 z-40 flex flex-col bg-bg pt-[var(--nav-h)] transition-all duration-300 md:hidden " +
+          "fixed inset-0 z-40 flex flex-col overflow-y-auto bg-bg pt-[var(--nav-h)] transition-all duration-300 lg:hidden " +
           (menuOpen ? "visible opacity-100" : "invisible opacity-0")
         }
         aria-hidden={!menuOpen}
+        inert={!menuOpen}
+        role="dialog"
+        aria-modal={menuOpen || undefined}
+        aria-label="站点导航"
       >
-        <nav className="shell flex flex-1 flex-col justify-center pb-20">
+        <nav
+          className="shell flex flex-1 flex-col justify-center pb-8 pt-6"
+          aria-label="移动端主导航"
+        >
           <div className="mb-5 flex items-center justify-between border-b border-line pb-4">
             <span className="label-sm">站点主题 / THEME</span>
             <ThemeSwitcher />
@@ -232,12 +325,15 @@ export default function Header() {
               key={item.href}
               href={item.href}
               onClick={() => setMenuOpen(false)}
+              aria-current={isActive(item.href) ? "page" : undefined}
               className="group flex items-baseline justify-between border-b border-line py-5"
               tabIndex={menuOpen ? 0 : -1}
             >
               <span className="flex items-baseline gap-4">
                 <span className="num text-[10px] text-signal">{item.no}</span>
-                <span className="cn-title text-[clamp(1.9rem,9vw,2.8rem)] text-fg">{item.cn}</span>
+                <span className="cn-title text-[clamp(1.9rem,9vw,2.8rem)] text-fg">
+                  {item.cn}
+                </span>
               </span>
               <span className="label">{item.en}</span>
             </Link>
@@ -265,7 +361,10 @@ export default function Header() {
         </div>
       </div>
 
-      <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
+      <CommandPalette
+        open={paletteOpen}
+        onClose={() => setPaletteOpen(false)}
+      />
     </>
   );
 }

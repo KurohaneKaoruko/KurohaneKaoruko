@@ -1,6 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { notoSansSC, plexSans, plexMono400, plexMono500 } from "./fonts";
+import {
+  notoSansSC,
+  plexSans,
+  plexMono400,
+  plexMono500,
+  spaceGrotesk,
+} from "./fonts";
 
 import { Cursor } from "@/components/fx/Cursor";
 import { PointerFX } from "@/components/fx/PointerFX";
@@ -8,7 +14,7 @@ import { RouteFX } from "@/components/fx/RouteFX";
 import SplashScreen from "@/components/features/SplashScreen";
 import { LoadingTrigger } from "@/components/features/LoadingTrigger";
 import Footer from "@/components/layout/Footer";
-import Header from "@/components/layout/Header";
+import { SiteHeader } from "@/components/layout/SiteHeader";
 import { BootScript } from "@/components/layout/BootScript";
 import { ReposProvider } from "@/components/ReposProvider";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
@@ -44,11 +50,20 @@ export const metadata: Metadata = {
     siteName: SITE.name,
     title: `${SITE.name} — ${SITE.archive}`,
     description: SITE.description,
+    images: [
+      {
+        url: `${SITE.url}/og.png`,
+        width: 1200,
+        height: 630,
+        alt: `${SITE.name} — Independent developer & AI engineer`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: `${SITE.name} — ${SITE.archive}`,
     description: SITE.description,
+    images: [`${SITE.url}/og.png`],
   },
   robots: { index: true, follow: true },
   /** 站内自带深色界面，阻止国内浏览器的「智能反色」再翻一次 */
@@ -63,24 +78,43 @@ export const metadata: Metadata = {
       { url: `${BASE}/icon-192.png`, type: "image/png", sizes: "192x192" },
     ],
     shortcut: [{ url: `${BASE}/favicon-32.png`, type: "image/png" }],
-    apple: [{ url: `${BASE}/apple-touch-icon.png`, type: "image/png", sizes: "180x180" }],
+    apple: [
+      {
+        url: `${BASE}/apple-touch-icon.png`,
+        type: "image/png",
+        sizes: "180x180",
+      },
+    ],
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#070809",
+  themeColor: "#080808",
   colorScheme: "dark",
   width: "device-width",
   initialScale: 1,
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const fontVars = [notoSansSC, plexSans, plexMono400, plexMono500]
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  const fontVars = [
+    notoSansSC,
+    plexSans,
+    plexMono400,
+    plexMono500,
+    spaceGrotesk,
+  ]
     .map((f) => f.variable)
     .join(" ");
 
   return (
-    <html lang="zh-CN" data-theme="archive" suppressHydrationWarning className={fontVars}>
+    <html
+      lang="zh-CN"
+      data-theme="default"
+      suppressHydrationWarning
+      className={fontVars}
+    >
       <body>
         <ThemeScript />
         <BootScript />
@@ -94,8 +128,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <LoadingProvider>
             <ReposProvider>
               <SplashScreen />
-              <Header />
-              <main id="main" className="pt-[var(--nav-h)]">
+              <SiteHeader />
+              <main id="main">
                 <RouteFX>{children}</RouteFX>
               </main>
               <Footer />
