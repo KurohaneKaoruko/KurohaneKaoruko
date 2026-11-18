@@ -24,7 +24,9 @@ function SectionHead({ no, title }: { no: string; title: string }) {
       <span className="pointer-events-none absolute -top-10 right-0 select-none font-extralight leading-none text-foreground/[0.05] [font-size:9rem]">
         {no}
       </span>
-      <span className="font-mono text-[11px] tracking-[0.3em] text-text-dim">{no}</span>
+      <span className="font-mono text-[11px] tracking-[0.3em] text-text-dim">
+        {no}
+      </span>
       <h2 className="display-title text-3xl text-foreground">{title}</h2>
     </div>
   );
@@ -34,10 +36,16 @@ export default function MinimalHome() {
   const { repos } = useRepos();
 
   const { featured, totalStars, langCount } = useMemo(() => {
-    const sorted = [...repos].sort((a, b) => b.stars - a.stars || a.name.localeCompare(b.name));
+    const sorted = [...repos].sort(
+      (a, b) => b.stars - a.stars || a.name.localeCompare(b.name),
+    );
     const stars = repos.reduce((sum, p) => sum + p.stars, 0);
     const langs = new Set(repos.map((p) => p.lang).filter(Boolean));
-    return { featured: sorted.slice(0, 6), totalStars: stars, langCount: langs.size };
+    return {
+      featured: sorted.slice(0, 6),
+      totalStars: stars,
+      langCount: langs.size,
+    };
   }, [repos]);
 
   return (
@@ -52,7 +60,7 @@ export default function MinimalHome() {
         {/* ================= 开篇 ================= */}
         <section className="pb-20 pt-16">
           <p className="font-mono text-[10px] uppercase tracking-[0.35em] text-text-dim">
-            {SITE.name} · AI Engineer &amp; Toolmaker
+            {SITE.name} · {SITE.tagline}
           </p>
           <h1 className="display-title mt-8 text-[clamp(2.6rem,6.5vw,4rem)] leading-[1.06] text-foreground">
             用技术解决问题。
@@ -72,7 +80,10 @@ export default function MinimalHome() {
                 →
               </span>
             </Link>
-            <Link href="/about/" className="group flex items-baseline gap-2 text-foreground">
+            <Link
+              href="/about/"
+              className="group flex items-baseline gap-2 text-foreground"
+            >
               <span className="underline decoration-border underline-offset-8 transition-colors group-hover:decoration-foreground">
                 关于我
               </span>
@@ -91,7 +102,9 @@ export default function MinimalHome() {
             [langCount, "Languages"],
           ].map(([num, label]) => (
             <div key={label} className="px-4 py-8 text-center sm:px-6">
-              <p className="text-4xl font-extralight tracking-tight text-foreground">{num}</p>
+              <p className="text-4xl font-extralight tracking-tight text-foreground">
+                {num}
+              </p>
               <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.3em] text-text-dim">
                 {label}
               </p>
@@ -158,8 +171,9 @@ export default function MinimalHome() {
           <Reveal>
             <SectionHead no="02" title="关于" />
             <p className="mt-8 max-w-xl leading-loose text-text-muted">
-              关注 LLM Agents、Swarm Intelligence 与开发工具；这个站点本身也是一次实践
-              —— 静态导出，零后端，{THEMES.length} 套可切换主题。
+              关注 LLM Agents、Swarm Intelligence
+              与开发工具；这个站点本身也是一次实践 —— 静态导出，零后端，
+              {THEMES.length} 套可切换主题。
             </p>
             <Link
               href="/about/"

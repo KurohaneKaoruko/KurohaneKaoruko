@@ -12,9 +12,9 @@ export const SITE = {
   short: "K.H.KAORUKO",
   /** 站点副标 */
   archive: "Software Archive",
-  tagline: "AI engineer & toolmaker.",
+  tagline: "Independent developer & toolmaker.",
   description:
-    "Kurohane Kaoruko — AI engineer & toolmaker。二十余个开源项目：Agent 系统、桌面工具与游戏。Rust、TypeScript、Python。",
+    "Kurohane Kaoruko — 独立开发者。二十余个开源项目：Agent 系统、桌面工具与游戏。Rust、TypeScript、Python。",
   repo: "KurohaneKaoruko",
   url: "https://kurohanekaoruko.github.io/KurohaneKaoruko",
   github: "https://github.com/KurohaneKaoruko",
@@ -53,7 +53,7 @@ export const NAV_ITEMS: NavItem[] = [
 
 /** 作者自述：关于页与首页共用 */
 export const CURATOR = {
-  role: "独立开发者 / AI 工程师",
+  role: "独立开发者",
   base: "China · UTC+8",
   now: [
     {

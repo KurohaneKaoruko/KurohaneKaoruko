@@ -17,6 +17,8 @@ html[data-theme="default"] {
   --nav-h: 84px;
   --font-folio: var(--font-space-grotesk), var(--font-noto-sc), sans-serif;
   --ease-folio: cubic-bezier(0.16, 1, 0.3, 1);
+  --folio-response: 160ms;
+  --folio-switch: 280ms;
   color-scheme: dark;
 }
 html[data-theme="default"] body {
@@ -410,15 +412,10 @@ html[data-theme="default"] body {
   color: var(--signal);
 }
 [data-theme="default"] .personal-role {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+  display: block;
   margin-top: 29px;
   font: 10px/1.5 var(--stack-mono);
   letter-spacing: 0.1em;
-}
-[data-theme="default"] .personal-role > span {
-  color: var(--signal);
 }
 [data-theme="default"] .personal-hero-bottom {
   display: flex;
@@ -551,24 +548,25 @@ html[data-theme="default"] body {
   overflow: hidden;
 }
 [data-theme="default"] .folio-exhibit-exm {
+  inline-size: 100%;
   aspect-ratio: 1.63;
+  min-block-size: 332px;
   background: #111;
   border: 1px solid var(--line);
 }
 [data-theme="default"] .exm-art {
   position: absolute;
   inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 5.5%;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: clamp(12px, 2vw, 30px);
+  padding: clamp(14px, 4vw, 55px);
 }
 [data-theme="default"] .exm-art-heading {
-  position: relative;
-  z-index: 1;
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 15px;
+  gap: 12px;
 }
 [data-theme="default"] .exm-art-heading > span:first-child {
   font-size: clamp(20px, 3.8vw, 60px);
@@ -576,65 +574,170 @@ html[data-theme="default"] body {
   font-weight: 500;
   letter-spacing: -0.06em;
 }
-[data-theme="default"] .exm-art-edition {
-  padding-top: 5px;
+[data-theme="default"] .exm-modes {
+  display: flex;
+  border-block: 1px solid var(--line);
+}
+[data-theme="default"] .exm-modes > button {
+  min-inline-size: 44px;
+  min-block-size: 44px;
+  padding-inline: clamp(8px, 1.2vw, 18px);
+  border-bottom: 1px solid transparent;
   color: var(--muted);
-  font: 8px/1.5 var(--stack-mono);
+  font-size: 11px;
+  cursor: pointer;
+  transition:
+    color var(--folio-response),
+    border-color var(--folio-response);
+}
+[data-theme="default"] .exm-modes > button[aria-pressed="true"] {
+  border-color: var(--signal);
+  color: var(--fg);
 }
 [data-theme="default"] .exm-art-network {
-  position: absolute;
-  top: 29%;
-  left: 8%;
-  width: 84%;
-  height: 61%;
+  position: relative;
   color: #b5b5b5;
 }
-[data-theme="default"] .exm-art-guides {
-  opacity: 0.24;
+[data-theme="default"] .exm-art-network > svg,
+[data-theme="default"] .exm-nodes {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
-[data-theme="default"] .exm-art-edges {
-  opacity: 0.42;
-  transition: opacity 0.4s;
+[data-theme="default"] .exm-art-guides {
+  opacity: 0.2;
+}
+[data-theme="default"] .exm-art-edges > path {
+  opacity: 0.32;
+  transition:
+    opacity var(--folio-response),
+    stroke var(--folio-response);
+}
+[data-theme="default"] .exm-art-edges > path[data-active="true"] {
+  opacity: 0.85;
+  stroke: var(--signal);
+}
+[data-theme="default"] .exm-signals > path {
+  opacity: 0;
+  stroke-dasharray: 0.14 1;
+  animation: folio-signal 320ms linear var(--signal-delay) backwards;
+}
+[data-theme="default"] .exm-art[data-mode="relay"] .exm-signals > path {
+  animation-duration: 240ms;
+}
+@keyframes folio-signal {
+  0% {
+    opacity: 0;
+    stroke-dashoffset: 0.14;
+  }
+  12%,
+  78% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    stroke-dashoffset: -1;
+  }
 }
 [data-theme="default"] .exm-art-hub {
   color: var(--signal);
+  opacity: 0.32;
 }
-[data-theme="default"] .exm-art-labels {
-  color: var(--muted);
+[data-theme="default"] .exm-art-hub[data-active="true"] {
+  opacity: 1;
+}
+[data-theme="default"] .exm-node {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+  touch-action: manipulation;
+  cursor: pointer;
+}
+[data-theme="default"] .exm-node-ring {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: var(--bg-2);
+  color: var(--fg-2);
+  font: 10px/1 var(--stack-mono);
+  transition:
+    color var(--folio-response),
+    border-color var(--folio-response),
+    background var(--folio-response);
+}
+[data-theme="default"] .exm-node[aria-pressed="true"] .exm-node-ring {
+  border-color: var(--signal);
+}
+[data-theme="default"] .exm-node[data-active="true"] .exm-node-ring {
+  border-color: var(--signal);
+  background: #2a1313;
+  color: var(--fg);
+}
+[data-theme="default"] .exm-node-echo {
+  position: absolute;
+  inset: 4px;
+  border: 1px solid var(--signal);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  animation: folio-node-echo 500ms var(--ease-folio);
+}
+@keyframes folio-node-echo {
+  from {
+    transform: scale(0.85);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(1.65);
+    opacity: 0;
+  }
 }
 [data-theme="default"] .exm-art-footer {
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  font: 8px/1.5 var(--stack-mono);
+  min-width: 0;
+  gap: 8px 16px;
+  border-top: 1px solid var(--line);
+  font: 9px/1.5 var(--stack-mono);
   letter-spacing: 0.06em;
   color: var(--muted);
 }
-[data-theme="default"] .exm-art-arrow {
-  color: var(--signal);
-  font: 28px/1 var(--font-folio);
-}
-[data-theme="default"] .folio-exhibit-open {
-  position: absolute;
+[data-theme="default"] .exm-signal-controls {
   display: flex;
   align-items: center;
-  gap: 30px;
-  right: 18px;
-  bottom: 18px;
-  padding: 13px 16px;
-  background: #f4f4f4;
-  color: #111;
-  font: 9px/1.5 var(--stack-mono);
-  transform: translateY(8px);
-  opacity: 0;
-  transition:
-    opacity 0.2s,
-    transform 0.35s var(--ease-folio);
+  flex-wrap: wrap;
+  gap: 0 14px;
+  min-width: 0;
 }
-[data-theme="default"] .folio-exhibit-open > b {
-  font: 21px/1 var(--font-folio);
+[data-theme="default"] :is(.exm-send, .exm-art-repo) {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-block-size: 44px;
+  color: var(--fg);
+  font-size: 11px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+[data-theme="default"] :is(.exm-send, .exm-art-repo) > span {
+  color: var(--signal);
+  font-size: 15px;
+  transition: transform var(--folio-response) var(--ease-folio);
+}
+[data-theme="default"] .exm-signal-status b {
+  font-weight: 500;
+  color: var(--signal);
+}
+[data-theme="default"] .exm-hint {
+  text-align: center;
 }
 [data-theme="default"] .folio-project-bottom {
   display: flex;
@@ -769,29 +872,86 @@ html[data-theme="default"] body {
 
 /* A live, intentionally small program from the type of work in Project Space. */
 [data-theme="default"] .folio-experiment {
-  aspect-ratio: 0.96;
   display: flex;
   flex-direction: column;
-  padding: 5%;
+  padding: clamp(12px, 2.5vw, 30px);
   border: 1px solid var(--line);
   background: #101010;
 }
 [data-theme="default"] .experiment-title {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
-  font: 8px/1.5 var(--stack-mono);
+  align-items: flex-start;
+  gap: 10px;
+  font: 10px/1.4 var(--stack-mono);
   color: var(--fg-2);
 }
+[data-theme="default"] .experiment-readouts {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 12px;
+  text-align: right;
+  white-space: nowrap;
+}
 [data-theme="default"] .experiment-title output {
-  color: var(--signal);
+  margin-left: 2px;
+  color: var(--fg);
   font-variant-numeric: tabular-nums;
+}
+[data-theme="default"]
+  .experiment-title
+  .experiment-readouts
+  > span:last-child
+  output {
+  color: var(--signal);
+}
+[data-theme="default"] :is(.experiment-presets, .experiment-patterns) {
+  display: flex;
+  gap: clamp(2px, 1vw, 14px);
+}
+[data-theme="default"] .experiment-presets {
+  margin-block-start: 13px;
+  border-bottom: 1px solid var(--line);
+}
+[data-theme="default"] .folio-experiment button {
+  min-block-size: 44px;
+  min-inline-size: 44px;
+  padding-inline: 4px;
+  color: var(--muted);
+  font-size: 11px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    color var(--folio-response),
+    border-color var(--folio-response);
+}
+[data-theme="default"] .folio-experiment button:disabled {
+  opacity: 0.64;
+  cursor: default;
+}
+[data-theme="default"] :is(.experiment-patterns > button, .experiment-edit) {
+  padding-inline: 6px;
+  border-bottom: 1px solid transparent;
+}
+[data-theme="default"]
+  :is(.experiment-patterns > button, .experiment-edit)[aria-pressed="true"] {
+  border-color: var(--signal);
+  color: var(--fg);
+}
+[data-theme="default"] .experiment-edit {
+  display: none;
+  margin-inline-start: auto;
+}
+[data-theme="default"] .experiment-edit > span {
+  margin-left: 3px;
+  color: var(--signal);
 }
 [data-theme="default"] .experiment-field {
   position: relative;
-  flex: 1;
-  min-height: 0;
-  margin-block: 10px;
+  aspect-ratio: var(--columns) / var(--rows);
+  margin-block-start: 12px;
+  border: 1px solid var(--line-soft);
+  background: #0c0c0c;
 }
 [data-theme="default"] .experiment-field canvas {
   display: block;
@@ -799,28 +959,54 @@ html[data-theme="default"] body {
   height: 100%;
   position: absolute;
   inset: 0;
+  touch-action: pan-y pinch-zoom;
+  cursor: crosshair;
 }
-[data-theme="default"] .experiment-controls {
+[data-theme="default"] .folio-experiment[data-editing="true"] canvas {
+  touch-action: none;
+}
+[data-theme="default"] .experiment-cursor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(100% / var(--columns));
+  height: calc(100% / var(--rows));
+  outline: 1px solid var(--signal);
+  outline-offset: -1px;
+  background: #f044441f;
+  pointer-events: none;
+}
+[data-theme="default"] .experiment-field-note,
+[data-theme="default"] .experiment-tools {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  padding-top: 10px;
-  border-top: 1px solid var(--line);
+  gap: 4px;
 }
-[data-theme="default"] .experiment-controls button {
-  min-height: 44px;
-  padding-inline: 4px;
+[data-theme="default"] .experiment-field-note {
   color: var(--muted);
   font-size: 10px;
-  cursor: pointer;
+}
+[data-theme="default"] .experiment-touch-hint {
+  display: none;
+}
+[data-theme="default"] .experiment-tools > button:last-child {
+  font-family: var(--stack-mono);
+  color: var(--fg-2);
+}
+[data-theme="default"] .experiment-controls {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: center;
+  gap: 2px;
+  border-top: 1px solid var(--line);
 }
 [data-theme="default"] .experiment-controls button:first-child {
   color: var(--fg);
 }
 [data-theme="default"] .experiment-controls button:first-child > span {
   color: var(--signal);
-  margin-right: 5px;
+  margin-right: 3px;
 }
 [data-theme="default"] .experiment-static {
   position: absolute;
@@ -828,12 +1014,26 @@ html[data-theme="default"] body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 5%;
+  pointer-events: none;
 }
 [data-theme="default"] .experiment-static > i {
   background: var(--fg);
 }
 [data-theme="default"] .experiment-static > i:nth-child(3n) {
   background: transparent;
+}
+@media (any-pointer: coarse) {
+  [data-theme="default"] .experiment-edit {
+    display: block;
+  }
+}
+@media (pointer: coarse) {
+  [data-theme="default"] .experiment-mouse-hint {
+    display: none;
+  }
+  [data-theme="default"] .experiment-touch-hint {
+    display: inline;
+  }
 }
 
 /* The repository section uses actual counts and simple typographic filtering. */
@@ -878,6 +1078,9 @@ html[data-theme="default"] body {
   align-items: start;
   gap: 10%;
 }
+[data-theme="default"] :is(.folio-source-summary, .folio-source-list) {
+  min-width: 0;
+}
 [data-theme="default"] .folio-source-stats {
   display: flex;
   flex-wrap: wrap;
@@ -911,6 +1114,61 @@ html[data-theme="default"] body {
   font: 8px/1.5 var(--stack-mono);
   color: var(--muted);
 }
+[data-theme="default"] .folio-source-preview {
+  margin-top: 28px;
+  padding: 12px 0 0 14px;
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--signal);
+}
+[data-theme="default"] :is(.folio-preview-head, .folio-preview-meta) {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  color: var(--muted);
+  font: 9px/1.5 var(--stack-mono);
+  letter-spacing: 0.06em;
+}
+[data-theme="default"] .folio-preview-head {
+  justify-content: space-between;
+}
+[data-theme="default"] .folio-preview-content {
+  margin-top: 9px;
+  animation: folio-preview-in var(--folio-switch) var(--ease-folio);
+}
+@keyframes folio-preview-in {
+  from {
+    opacity: 0.5;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+[data-theme="default"] .folio-preview-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--fg);
+  font-size: clamp(17px, 1.75vw, 25px);
+  letter-spacing: -0.04em;
+}
+[data-theme="default"] .folio-preview-description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  min-block-size: 3.2em;
+  margin-block: 5px 10px;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  color: var(--fg-2);
+  font-size: 11px;
+  line-height: 1.6;
+}
+[data-theme="default"] .folio-preview-meta > span[aria-hidden="true"] {
+  color: var(--signal);
+}
 [data-theme="default"] .folio-source-filters {
   display: flex;
   gap: 6px 16px;
@@ -930,16 +1188,33 @@ html[data-theme="default"] body {
   text-decoration-color: var(--signal);
   text-underline-offset: 10px;
 }
+[data-theme="default"] .folio-source-rows {
+  --row-height: 68px;
+  position: relative;
+}
+[data-theme="default"] .folio-source-rows::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto -8px;
+  height: var(--row-height);
+  border-left: 2px solid var(--signal);
+  background: #ffffff08;
+  transform: translateY(calc(var(--active-row) * var(--row-height)));
+  transition: transform var(--folio-switch) var(--ease-folio);
+  pointer-events: none;
+}
 [data-theme="default"] .folio-source-row {
+  position: relative;
   display: grid;
   grid-template-columns: 22px minmax(0, 1fr) 80px 17px;
   gap: 15px;
   align-items: center;
   width: 100%;
-  min-height: 68px;
+  height: var(--row-height);
   padding: 12px 0;
   border-bottom: 1px solid var(--line);
   text-align: left;
+  touch-action: manipulation;
   cursor: pointer;
 }
 [data-theme="default"] .folio-row-no {
@@ -952,8 +1227,12 @@ html[data-theme="default"] body {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition: transform var(--folio-response) var(--ease-folio);
 }
 [data-theme="default"] .folio-source-lang {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   text-align: right;
   font: 8px/1.5 var(--stack-mono);
   color: var(--muted);
@@ -961,6 +1240,13 @@ html[data-theme="default"] body {
 [data-theme="default"] .folio-source-row > span:last-child {
   color: var(--muted);
   font-size: 17px;
+}
+[data-theme="default"]
+  .folio-source-rows
+  > li[data-preview="true"]
+  .folio-source-row
+  > span:last-child {
+  color: var(--signal);
 }
 [data-theme="default"] .folio-source-all {
   display: flex;
@@ -1122,12 +1408,11 @@ html[data-theme="default"].js .reveal {
     color: var(--bg);
     transform: translateY(3px);
   }
-  [data-theme="default"] .folio-exhibit-exm:hover .exm-art-edges {
-    opacity: 0.9;
+  [data-theme="default"] :is(.exm-send, .exm-art-repo):hover > span {
+    transform: translate(2px, -2px);
   }
-  [data-theme="default"] .folio-exhibit:hover .folio-exhibit-open {
-    opacity: 1;
-    transform: none;
+  [data-theme="default"] .exm-modes button:hover {
+    color: var(--fg);
   }
   [data-theme="default"] .folio-source-row:hover .folio-source-name {
     color: var(--fg-2);
@@ -1136,7 +1421,7 @@ html[data-theme="default"].js .reveal {
   [data-theme="default"] .folio-source-row:hover > span:last-child {
     color: var(--signal);
   }
-  [data-theme="default"] .experiment-controls button:hover {
+  [data-theme="default"] .folio-experiment button:not(:disabled):hover {
     color: var(--fg);
   }
   [data-theme="default"] .folio-footer-links a:hover {
@@ -1155,11 +1440,6 @@ html[data-theme="default"].js .reveal {
     background: var(--fg);
   }
 }
-[data-theme="default"] .folio-exhibit:focus-visible .folio-exhibit-open {
-  opacity: 1;
-  transform: none;
-}
-
 @media (max-width: 1100px) {
   [data-theme="default"] .default-wordmark-name {
     display: none;
@@ -1246,7 +1526,6 @@ html[data-theme="default"].js .reveal {
   }
   [data-theme="default"] .personal-role {
     margin-top: 20px;
-    gap: 10px;
     font-size: 8px;
   }
   [data-theme="default"] .folio-portrait {
@@ -1314,22 +1593,23 @@ html[data-theme="default"].js .reveal {
     gap: 10px;
     margin-bottom: 9px;
   }
+  [data-theme="default"] .folio-exhibit-exm {
+    min-block-size: 352px;
+  }
   [data-theme="default"] .exm-art-heading > span:first-child {
     font-size: clamp(21px, 5.5vw, 40px);
   }
-  [data-theme="default"] .exm-art-edition {
-    font-size: 6px;
-    max-width: 72px;
-    text-align: right;
+  [data-theme="default"] .exm-hint {
+    order: 1;
+    flex-basis: 100%;
+    text-align: left;
   }
   [data-theme="default"] .exm-art-footer {
-    font-size: 6px;
+    flex-wrap: wrap;
+    row-gap: 0;
   }
-  [data-theme="default"] .exm-art-footer > span:nth-child(2) {
-    display: none;
-  }
-  [data-theme="default"] .exm-art-arrow {
-    font-size: 20px;
+  [data-theme="default"] .exm-signal-controls {
+    gap: 0 8px;
   }
   [data-theme="default"] .folio-project-bottom {
     gap: 15px;
@@ -1351,18 +1631,6 @@ html[data-theme="default"].js .reveal {
     font-size: 9px;
     gap: 15px;
   }
-  [data-theme="default"] .folio-exhibit-open {
-    opacity: 1;
-    transform: none;
-    right: 9px;
-    bottom: 9px;
-    padding: 8px 10px;
-    gap: 12px;
-    font-size: 8px;
-  }
-  [data-theme="default"] .folio-exhibit-open > b {
-    font-size: 15px;
-  }
   [data-theme="default"] .folio-secondary-work {
     grid-template-columns: 1fr;
     gap: 37px;
@@ -1383,9 +1651,6 @@ html[data-theme="default"].js .reveal {
   }
   [data-theme="default"] .novelist-art-grid small {
     font-size: 8px;
-  }
-  [data-theme="default"] .folio-experiment {
-    aspect-ratio: 1;
   }
   [data-theme="default"] .folio-all-work {
     margin-top: 47px;
@@ -1440,6 +1705,11 @@ html[data-theme="default"].js .reveal {
   [data-theme="default"] .folio-source-stats > div > span {
     font-size: 8px;
   }
+  [data-theme="default"] .folio-source-preview {
+    margin-top: 14px;
+    border-top: none;
+    padding-block: 4px;
+  }
   [data-theme="default"] .folio-source-filters {
     gap: 0 17px;
     padding-bottom: 7px;
@@ -1450,7 +1720,9 @@ html[data-theme="default"].js .reveal {
   [data-theme="default"] .folio-source-row {
     grid-template-columns: 18px minmax(0, 1fr) 65px 14px;
     gap: 8px;
-    min-height: 61px;
+  }
+  [data-theme="default"] .folio-source-rows {
+    --row-height: 61px;
   }
   [data-theme="default"] .folio-source-name {
     font-size: 18px;
@@ -1509,10 +1781,42 @@ html[data-theme="default"].js .reveal {
     font-size: 48px;
   }
 }
+@media (max-width: 479px) {
+  [data-theme="default"] .folio-exhibit-exm {
+    min-block-size: 370px;
+  }
+  [data-theme="default"] .exm-art-heading {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   [data-theme="default"]
-    :is(.exm-art-edges, .personal-scroll > span:last-child) {
+    :is(
+      .exm-art-edges > path,
+      .exm-node-ring,
+      .exm-modes > button,
+      .exm-send > span,
+      .exm-art-repo > span,
+      .folio-experiment button,
+      .folio-source-name,
+      .personal-scroll > span:last-child
+    ),
+  [data-theme="default"] .folio-source-rows::before {
     transition: none;
+  }
+  [data-theme="default"]
+    :is(.exm-signals > path, .exm-node-echo, .folio-preview-content) {
+    animation: none;
+  }
+  [data-theme="default"] .exm-signals > path {
+    opacity: 0.7;
+    stroke-dasharray: 0.14 1;
+    stroke-dashoffset: 0;
+  }
+  [data-theme="default"] :is(.exm-send, .exm-art-repo):hover > span,
+  [data-theme="default"] .folio-source-row:hover .folio-source-name {
+    transform: none;
   }
   [data-theme="default"] .folio-portrait .portrait-lens {
     clip-path: none;

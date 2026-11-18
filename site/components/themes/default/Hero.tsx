@@ -25,9 +25,7 @@ export function Hero() {
               Kaoruko<span className="personal-title-dot">.</span>
             </span>
           </h1>
-          <p className="personal-role">
-            AI ENGINEER <span>/</span> TOOLMAKER
-          </p>
+          <p className="personal-role">TOOLMAKER</p>
           <div className="personal-hero-bottom">
             <p className="personal-now">
               CURRENTLY BUILDING

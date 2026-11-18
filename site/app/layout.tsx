@@ -55,7 +55,7 @@ export const metadata: Metadata = {
         url: `${SITE.url}/og.png`,
         width: 1200,
         height: 630,
-        alt: `${SITE.name} — Independent developer & AI engineer`,
+        alt: `${SITE.name} — Independent developer`,
       },
     ],
   },

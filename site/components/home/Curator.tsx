@@ -15,12 +15,7 @@ export function Curator() {
     <section id="about" className="section border-t border-line">
       <div className="shell">
         <Reveal>
-          <SectionHead
-            index="03"
-            en="Operator"
-            cn="关于"
-            note="独立开发者 / AI 工程师"
-          />
+          <SectionHead index="03" en="Operator" cn="关于" note={CURATOR.role} />
         </Reveal>
 
         <div className="mt-10 grid gap-10 lg:grid-cols-12 lg:gap-12">

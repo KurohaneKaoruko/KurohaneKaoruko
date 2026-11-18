@@ -101,12 +101,43 @@ def red_accents(colour):
     return red
 
 
+def blush_accent(colour):
+    """Return the original soft-pink cheek blush, separate from scarlet irises."""
+    height, width = colour.shape[:2]
+    red, green, blue = colour.astype(np.float32).transpose(2, 0, 1)
+    result = np.zeros((height, width), dtype=np.float32)
+    # Select the existing cheek paint by colour inside its own local bounds.
+    # This keeps the original gradients and darker blush marks rather than
+    # drawing a new ellipse or repainting the cheeks with the signal red.
+    pinkness = np.minimum(red - green, red - blue)
+    pink = (red > 232) & (green > 165) & (blue > 165) & (green - blue < 32)
+    weight = np.clip((pinkness - 12) / 8, 0, 1) * pink
+    for bounds in [(88, 1608, 327, 1777), (889, 1744, 1125, 1910)]:
+        x0, y0, x1, y1 = [
+            round(value * (width if i % 2 == 0 else height) / 1920)
+            for i, value in enumerate(bounds)
+        ]
+        result[y0:y1, x0:x1] = weight[y0:y1, x0:x1]
+    return result
+
+
 def build():
     rgb = np.asarray(Image.open(ROOT / "public/logo.jpg").convert("RGB"))
     colour, alpha, background = portrait_matte(rgb)
     grey = cv2.cvtColor(colour.astype(np.uint8), cv2.COLOR_RGB2GRAY)
-    mono = np.repeat(grey[..., None], 3, axis=2)
+    mono = np.repeat(grey[..., None], 3, axis=2).astype(np.float32)
     red = red_accents(colour)
+    mono[red] = [240, 68, 68]
+    mono[alpha == 0] = 0
+    # Tile geometry still comes from the same grayscale/red portrait as before.
+    # Restoring cheek colour must not change the point sizes or opacity.
+    base_subject = Image.fromarray(
+        np.dstack((mono.astype(np.uint8), (alpha * 255).astype(np.uint8))), "RGBA"
+    ).resize(OUTPUT_SIZE, Image.Resampling.LANCZOS)
+    blush = blush_accent(rgb)
+    blush_weight = blush[..., None]
+    mono = mono * (1 - blush_weight) + colour * blush_weight
+    mono = np.clip(mono, 0, 255).astype(np.uint8)
     mono[red] = [240, 68, 68]
     mono[alpha == 0] = 0
     subject = Image.fromarray(np.dstack((mono, (alpha * 255).astype(np.uint8))), "RGBA")
@@ -115,22 +146,31 @@ def build():
     subject.save(ROOT / "public/portrait-mono.webp", lossless=True, method=6)
 
     sample = np.asarray(subject)
+    base_sample = np.asarray(base_subject)
+    pixel_blush = np.asarray(Image.fromarray(blush, "F").resize(OUTPUT_SIZE, Image.Resampling.BILINEAR))
     pixels = Image.new("RGBA", subject.size)
     draw = ImageDraw.Draw(pixels)
     for y in range(4, OUTPUT_SIZE[1], 7):
         for x in range(4, OUTPUT_SIZE[0], 7):
-            r, g, b, opacity = (int(value) for value in sample[y, x])
+            r, g, b, opacity = (int(value) for value in base_sample[y, x])
             if opacity < 100:
                 continue
             luminance = (r + g + b) / 3 / 255
             radius = .7 + luminance ** .8 * 2.3
             hot = r > g * 1.7 and r > b * 1.7
+            # Tint existing tiles without changing their opacity, size or grid.
+            strength = float(pixel_blush[y, x])
+            tint = tuple(round(220 * (1 - strength) + int(channel) * strength) for channel in sample[y, x, :3])
             fill = ((240, 68, 68, 235) if hot else
-                    (220, 220, 220, int((.14 + luminance * .86) * opacity)))
+                    (*tint, int((.14 + luminance * .86) * opacity)))
             draw.rectangle((x - radius, y - radius, x + radius, y + radius), fill=fill)
     pixels.save(ROOT / "public/portrait-pixels.webp", lossless=True, method=6)
+    blush_pixels = int(np.count_nonzero((blush > 0) & (alpha > .06)))
+    if blush_pixels < 100:
+        raise RuntimeError(f"Portrait blush mask is unexpectedly small: {blush_pixels}px")
     print(json.dumps({"source": "public/logo.jpg", "background": background.tolist(),
                       "foregroundCoverage": round(float((alpha > .06).mean()), 4),
+                      "softBlushPixels": blush_pixels,
                       "outputSize": OUTPUT_SIZE,
                       "files": {name: (ROOT / "public" / name).stat().st_size for name in
                                 ["portrait-mono.webp", "portrait-pixels.webp"]}}))

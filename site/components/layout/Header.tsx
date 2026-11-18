@@ -198,7 +198,7 @@ export default function ArchiveHeader() {
                 ))}
               </span>
               <span className="mt-[7px] hidden font-mono text-[8.5px] uppercase leading-none tracking-[0.16em] text-muted sm:flex sm:items-center sm:gap-2">
-                <span>{CURATOR.role.replace(" / ", " · ")}</span>
+                <span>{CURATOR.role}</span>
                 <span className="text-faint">/</span>
                 <span>{SITE.archive}</span>
               </span>

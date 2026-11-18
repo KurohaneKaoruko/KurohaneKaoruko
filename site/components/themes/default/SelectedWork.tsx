@@ -37,21 +37,11 @@ export function SelectedWork() {
         >
           <div className="folio-exhibit-head">
             <span className="folio-caption">01 / INTELLIGENCE</span>
-            <span className="folio-caption">MULTI-AGENT SYSTEM</span>
+            <span className="folio-caption">概念演示 / SIGNAL ROUTING</span>
           </div>
-          <a
-            className="folio-exhibit folio-exhibit-exm"
-            href={exm.url}
-            target="_blank"
-            rel="noreferrer"
-            title={`查看 ${exm.name} GitHub 仓库`}
-          >
-            <span className="sr-only">查看 {exm.name} GitHub 仓库 — </span>
-            <ExMachinaArtwork name={exm.name} />
-            <span className="folio-exhibit-open" aria-hidden="true">
-              EXPLORE PROJECT <b>↗</b>
-            </span>
-          </a>
+          <div className="folio-exhibit folio-exhibit-exm">
+            <ExMachinaArtwork name={exm.name} href={exm.url} />
+          </div>
           <div className="folio-project-bottom">
             <div>
               <h3>

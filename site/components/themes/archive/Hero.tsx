@@ -38,9 +38,7 @@ export function Hero() {
         </div>
         <div className="grid gap-12 pb-12 pt-10 lg:grid-cols-12 lg:gap-0 lg:pb-16 lg:pt-14">
           <div className="lg:col-span-8 lg:pr-12">
-            <p className="eyebrow hero-rise">
-              Independent developer / AI engineer
-            </p>
+            <p className="eyebrow hero-rise">Independent developer</p>
             <h1
               className="hero-title hero-rise"
               style={{ "--d": "60ms" } as React.CSSProperties}

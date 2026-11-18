@@ -23,7 +23,7 @@ export const marqueeTech = [
 
 /** 终端主题的会话回放（也用于卡带主题的琥珀屏） */
 export const TERMINAL_SESSION = [
-  { cmd: "whoami", out: "kurohane-kaoruko — AI engineer & toolmaker" },
+  { cmd: "whoami", out: "kurohane-kaoruko — independent developer & toolmaker" },
   { cmd: "cat focus.txt", out: "LLM Agents / Swarm Intelligence / Dev Tools" },
   { cmd: "ls ~/stack", out: "rust  python  typescript  next.js  tauri" },
   { cmd: "sudo make world", out: "[ OK ] compiling the world..." },
