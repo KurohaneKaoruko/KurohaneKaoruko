@@ -423,11 +423,7 @@ export default function NotFound() {
   }
 
   return createPortal(
-    <div className={`${fontVars} nf-root fixed inset-0 z-[200] overflow-hidden bg-black text-white`}>
-      {/* 404 全部样式在 app/not-found.scss */}
-
-      
-      
+    <main className={`${fontVars} nf-root fixed inset-0 z-[200] bg-black text-white`}>
       <div ref={stageRef} className="nf-stage" style={layout ? { height: `${layout.stageH.toFixed(2)}px` } : undefined}>
         <div ref={maskRef} className="nf-mask">
           <pre
@@ -441,64 +437,53 @@ export default function NotFound() {
         </div>
       </div>
 
-      
-      <div ref={fgRef} className="relative z-30 flex min-h-full flex-col items-center justify-center gap-6 px-6 py-12">
-        <div className="bg-black/70 px-3 py-1.5">
-          <div className="relative z-30 flex flex-wrap items-center justify-center gap-3 font-mono text-[11px] tracking-[0.3em] text-neutral-300">
-            <span className="bg-[#ff2a2a] px-1.5 py-0.5 font-bold tracking-[0.2em] text-white">
-              ERR_0x194
-            </span>
-            <span>SIGNAL LOST</span>
-            <span className="text-[#7fa5ff]">NODE:K.H.KAORUKO</span>
+      <div ref={fgRef} className="nf-foreground">
+        <div className="nf-statusbar" lang="en">
+          <span className="nf-code">ERR_0x194</span>
+          <span>SIGNAL LOST</span>
+          <span className="nf-node">NODE:K.H.KAORUKO</span>
+        </div>
+
+        <h1 className="nf-404">
+          <span aria-hidden className="nf-g-b">
+            404
+          </span>
+          <span aria-hidden className="nf-g-r">
+            404
+          </span>
+          <span className="nf-number">404</span>
+        </h1>
+
+        <nav className="nf-recovery" aria-labelledby="nf-reconnect">
+          <p className="nf-reconnect" id="nf-reconnect" lang="en">
+            RECONNECT
+          </p>
+          <div className="nf-actions">
+            <Link href="/" className="nf-btn">
+              <span className="nf-btn-label">
+                返回首页
+                <small lang="en">HOME</small>
+              </span>
+              <span className="nf-btn-arrow" aria-hidden>←</span>
+            </Link>
+            <Link href="/projects/" className="nf-btn">
+              <span className="nf-btn-label">
+                查看项目
+                <small lang="en">PROJECTS</small>
+              </span>
+              <span className="nf-btn-arrow" aria-hidden>→</span>
+            </Link>
           </div>
-        </div>
+        </nav>
 
-        
-        <div className="nf-404 relative z-30 inline-block select-none">
-          <span aria-hidden className="nf-g-b select-none text-[#2f6dff]">
-            404
-          </span>
-          <span aria-hidden className="nf-g-r select-none text-[#ff2a2a]">
-            404
-          </span>
-          <span className="relative select-none text-[#0b0b0b]">404</span>
-        </div>
-
-        
-        <div className="relative z-30 bg-black px-3 py-1 font-mono text-[12px] font-bold tracking-[0.35em] text-white">
-          RECONNECT
-        </div>
-
-        <div className="relative z-30 mt-3 flex flex-wrap items-center justify-center gap-4 font-mono text-xs uppercase tracking-[0.25em]">
-          <Link
-            href="/"
-            className="nf-btn bg-[#f2f2f2] border border-black/60 px-5 py-2.5 text-black"
-          >
-            返回首页 / HOME
-          </Link>
-          <Link
-            href="/projects/"
-            className="nf-btn bg-[#f2f2f2] border border-black/60 px-5 py-2.5 text-black"
-          >
-            查看项目 / PROJECTS
-          </Link>
-        </div>
-
-        <p className="relative z-30 bg-black/70 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.3em] text-white/80">
-          {"// 页面不存在 · PAGE NOT FOUND"}
+        <p className="nf-note">
+          <span aria-hidden>{"// "}</span>页面不存在 · <span lang="en">PAGE NOT FOUND</span>
         </p>
       </div>
 
-      {/* 随机故障线池（v43）：位置/形态/颜色/生命周期全随机，200ms tick 状态转移 */}
-      <div className="nf-scan pointer-events-none fixed inset-0 z-40" />
-      <div
-        className="pointer-events-none fixed inset-0 z-40"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, transparent 48%, rgba(0,0,0,0.5) 100%)",
-        }}
-      />
-    </div>,
+      <div className="nf-scan" aria-hidden />
+      <div className="nf-vignette" aria-hidden />
+    </main>,
     document.body
   );
 }
