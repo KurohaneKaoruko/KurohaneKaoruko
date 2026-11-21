@@ -1,8 +1,7 @@
 "use client";
 
 import { useRef, type PointerEvent } from "react";
-import pixels from "@/public/portrait-pixels.webp";
-import original from "@/public/portrait-mono.webp";
+import { BASE } from "@/lib/site";
 
 export function Portrait() {
   const root = useRef<HTMLDivElement>(null);
@@ -35,10 +34,10 @@ export function Portrait() {
       <div className="portrait-pixels-layer">
         <img
           className="portrait-pixels"
-          src={pixels.src}
+          src={`${BASE}/portrait-pixels.webp`}
           alt="Kurohane Kaoruko 的像素头像"
-          width={pixels.width}
-          height={pixels.height}
+          width={960}
+          height={960}
           fetchPriority="high"
           draggable={false}
         />
@@ -46,10 +45,10 @@ export function Portrait() {
       <div className="portrait-lens" aria-hidden="true">
         <img
           className="portrait-original"
-          src={original.src}
+          src={`${BASE}/portrait-mono.webp`}
           alt=""
-          width={original.width}
-          height={original.height}
+          width={960}
+          height={960}
           draggable={false}
         />
       </div>
