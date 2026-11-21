@@ -7,12 +7,7 @@ import type { Repo } from "@/lib/repos";
 /**
  * 详情面板按需加载。
  *
- * SpecimenDialog 带着 Schematic（一块几百行的 SVG 系统图）与 Portal，
- * 但只有用户真的点开某个项目时才会用到。以前是静态 import，于是首屏
- * 就为一次可能永远不会发生的点击付了打包与解析的代价。
- *
- * next/dynamic 把它拆成独立 chunk：不点不下载。ssr: false 是因为它只在
- * 点击后存在，服务端渲染它没有意义。
+ * SpecimenDialog 只在用户点开项目后渲染，拆成独立 chunk 按需加载。
  */
 const SpecimenDialog = dynamic(
   () => import("@/components/collection/SpecimenDialog").then((m) => m.SpecimenDialog),

@@ -2,15 +2,9 @@
 
 import { useEffect, useRef } from "react";
 import { Portal } from "@/components/ui/Portal";
-import { StackGraph } from "@/components/ui/StackGraph";
 import { accessionOf, familyOf, type Project } from "@/lib/data";
 
-/**
- * 项目详情：点开索引里的一行，像拉开一个抽屉。
- *
- * 左边是这块项目的系统图，右边是结构化记录 —— 分类、技术栈、星标、
- * 最近一次推送，最后是两个出口：GitHub 与项目主页。
- */
+/** 项目详情面板，展示项目资料和仓库链接。 */
 export function SpecimenDialog({
   repo,
   plateNo,
@@ -151,99 +145,75 @@ export function SpecimenDialog({
             </div>
           </div>
 
-          <div className="grid gap-0 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-            {/* 系统图 */}
-            <div className="relative border-b border-line bg-bg p-5 md:border-b-0 md:border-r sm:p-6">
-              <div className="schematic-grid flex h-[240px] items-center justify-center border border-line-soft sm:h-[320px]">
-                <StackGraph
-                  name={repo.name}
-                  topics={repo.topics}
-                  lang={repo.lang}
-                  className="h-full w-full text-fg/70"
-                  animate
-                />
-              </div>
-              <div className="mt-3 flex items-end justify-between gap-4 border-t border-line pt-3">
-                <div className="min-w-0">
-                  <p className="truncate font-mono text-[11px] uppercase tracking-[0.1em] text-fg">
-                    {repo.name}
-                  </p>
-                  <p className="label-sm mt-1 truncate">{repo.taxon}</p>
-                </div>
-                <span className="label-sm shrink-0">{family.code}</span>
-              </div>
-            </div>
+          <div className="flex flex-col p-6 sm:p-8">
+            <span className="eyebrow">Project detail</span>
 
-            {/* 记录 */}
-            <div className="flex flex-col p-6 sm:p-8">
-              <span className="eyebrow">Project detail</span>
+            <h2
+              id="specimen-title"
+              className="display mt-4 text-[clamp(1.9rem,4.2vw,2.9rem)] uppercase text-fg"
+            >
+              {repo.name}
+            </h2>
+            {repo.taxon && <p className="label-sm mt-2">{repo.taxon}</p>}
 
-              <h2
-                id="specimen-title"
-                className="display mt-4 text-[clamp(1.9rem,4.2vw,2.9rem)] uppercase text-fg"
-              >
-                {repo.name}
-              </h2>
+            <p className="mt-5 text-[14px] leading-[1.9] text-fg-2">
+              {repo.desc || "这个项目还没有写说明。"}
+            </p>
 
-              <p className="mt-5 text-[14px] leading-[1.9] text-fg-2">
-                {repo.desc || "这个项目还没有写说明。"}
-              </p>
-
-              {repo.topics.length > 0 && (
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {repo.topics.map((t) => (
-                    <span
-                      key={t}
-                      className="border border-line px-2 py-1 font-mono text-[9.5px] uppercase tracking-[0.14em] text-muted"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              )}
-
-              <dl className="mt-7 border-t border-line">
-                {[
-                  ["CATEGORY", `${family.code} / ${family.cn}`],
-                  ["STACK", repo.lang || "—"],
-                  ["STARS", String(repo.stars)],
-                  ["UPDATED", updated],
-                ].map(([k, v]) => (
-                  <div
-                    key={k}
-                    className="flex items-baseline justify-between gap-4 border-b border-line-soft py-2.5"
+            {repo.topics.length > 0 && (
+              <div className="mt-5 flex flex-wrap gap-2">
+                {repo.topics.map((t) => (
+                  <span
+                    key={t}
+                    className="border border-line px-2 py-1 font-mono text-[9.5px] uppercase tracking-[0.14em] text-muted"
                   >
-                    <dt className="label-sm">{k}</dt>
-                    <dd className="font-mono text-[11px] text-fg">{v}</dd>
-                  </div>
+                    {t}
+                  </span>
                 ))}
-              </dl>
+              </div>
+            )}
 
-              <div className="mt-auto flex flex-wrap items-center gap-3 pt-7">
+            <dl className="mt-7 border-t border-line">
+              {[
+                ["CATEGORY", `${family.code} / ${family.cn}`],
+                ["STACK", repo.lang || "—"],
+                ["STARS", String(repo.stars)],
+                ["UPDATED", updated],
+              ].map(([k, v]) => (
+                <div
+                  key={k}
+                  className="flex items-baseline justify-between gap-4 border-b border-line-soft py-2.5"
+                >
+                  <dt className="label-sm">{k}</dt>
+                  <dd className="font-mono text-[11px] text-fg">{v}</dd>
+                </div>
+              ))}
+            </dl>
+
+            <div className="flex flex-wrap items-center gap-3 pt-7">
+              <a
+                className="btn btn-primary"
+                href={repo.url}
+                target="_blank"
+                rel="noreferrer"
+              >
+                GitHub
+                <span className="btn-arrow">↗</span>
+              </a>
+              {repo.homepage && (
                 <a
-                  className="btn btn-primary"
-                  href={repo.url}
+                  className="btn btn-ghost"
+                  href={repo.homepage}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  GitHub
+                  项目主页
                   <span className="btn-arrow">↗</span>
                 </a>
-                {repo.homepage && (
-                  <a
-                    className="btn btn-ghost"
-                    href={repo.homepage}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    项目主页
-                    <span className="btn-arrow">↗</span>
-                  </a>
-                )}
-                <span className="label-sm ml-auto hidden sm:block">
-                  ← → 切换 · ESC 关闭
-                </span>
-              </div>
+              )}
+              <span className="label-sm ml-auto hidden sm:block">
+                ← → 切换 · ESC 关闭
+              </span>
             </div>
           </div>
         </div>
