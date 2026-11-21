@@ -14,6 +14,9 @@ from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parent.parent
 OUTPUT_SIZE = (960, 960)
+PIXEL_STEP = 7
+SIGNAL_RED = (240, 68, 68)
+IRIS_LUMINANCE = sum(SIGNAL_RED) / (3 * 255)
 
 
 def portrait_matte(rgb):
@@ -77,11 +80,37 @@ def portrait_matte(rgb):
     return colour, alpha, background
 
 
-def red_accents(colour):
+def iris_matte(colour, core):
+    """Separate the iris from the adjacent skin and lash pixels."""
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7))
+    interior = cv2.erode(core, kernel).astype(bool)
+    band = cv2.dilate(core, kernel)
+    exterior = band == 0
+    _, nearest = cv2.distanceTransformWithLabels(
+        band, cv2.DIST_L2, cv2.DIST_MASK_5, labelType=cv2.DIST_LABEL_PIXEL
+    )
+    palette = np.zeros((int(nearest.max()) + 1, 3), dtype=np.float32)
+    palette[nearest[exterior]] = colour[exterior]
+    surround = palette[nearest]
+    iris_colour = np.median(colour[interior], axis=0)
+    delta = iris_colour - surround
+    coverage = np.clip(
+        ((colour - surround) * delta).sum(axis=2) / np.maximum((delta * delta).sum(axis=2), 1),
+        0, 1,
+    )
+    coverage[interior] = 1
+    coverage[exterior] = 0
+    surround_luminance = cv2.cvtColor(surround, cv2.COLOR_RGB2GRAY) / 255
+    return coverage, surround_luminance * (1 - coverage)
+
+
+def red_accents(colour, greyscale):
     r, g, b = colour.transpose(2, 0, 1)
     red = (r > g * 1.55) & (r > b * 1.18) & (r > 120)
     iris_core = (r > 195) & (g < 135) & (b < 150) & (r > g * 1.9)
     height, width = red.shape
+    irises = np.zeros_like(greyscale)
+    neutral = greyscale.copy()
 
     # The eyelashes have a burgundy gradient that crosses the global red
     # threshold. Inside each eye region, keep only its saturated iris component
@@ -95,10 +124,14 @@ def red_accents(colour):
         if count <= 1:
             raise ValueError("No iris found in the portrait's eye region")
         largest = 1 + np.argmax(stats[1:, cv2.CC_STAT_AREA])
-        iris = (labels == largest).astype(np.uint8)
-        iris = cv2.dilate(iris, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))).astype(bool)
-        red[y0:y1, x0:x1] &= iris & (r[y0:y1, x0:x1] > 185)
-    return red
+        core = (labels == largest).astype(np.uint8)
+        coverage, surround = iris_matte(colour[y0:y1, x0:x1], core)
+        red[y0:y1, x0:x1] = False
+        irises[y0:y1, x0:x1] = coverage
+        neutral[y0:y1, x0:x1] = np.where(
+            coverage > 0, surround, greyscale[y0:y1, x0:x1]
+        )
+    return red, irises, neutral
 
 
 def blush_accent(colour):
@@ -121,13 +154,31 @@ def blush_accent(colour):
     return result
 
 
+def iris_tile(average, center_iris, center_grey, opacity, tint):
+    coverage, neutral_luminance = map(float, average)
+    if center_iris < .5 and center_grey < .44:
+        # The centre is on the eyelash. Keep that tile neutral.
+        return (220, 220, 220, int((.14 + .86 * center_grey) * opacity)), center_grey
+
+    # Let each pixel tile take the colour of its dominant surface.
+    if coverage >= .5:
+        return (*SIGNAL_RED, 235), IRIS_LUMINANCE
+
+    # Use only the surrounding light so the neutral edge keeps its full size.
+    luminance = min(1, neutral_luminance / (1 - coverage))
+    return (*tint, int((.14 + .86 * luminance) * opacity)), luminance
+
+
 def build():
     rgb = np.asarray(Image.open(ROOT / "public/logo.jpg").convert("RGB"))
     colour, alpha, background = portrait_matte(rgb)
     grey = cv2.cvtColor(colour.astype(np.uint8), cv2.COLOR_RGB2GRAY)
     mono = np.repeat(grey[..., None], 3, axis=2).astype(np.float32)
-    red = red_accents(colour)
-    mono[red] = [240, 68, 68]
+    greyscale = grey.astype(np.float32) / 255
+    red, irises, neutral = red_accents(colour, greyscale)
+    iris = irises > 0
+    mono[iris] = neutral[iris, None] * 255 + irises[iris, None] * SIGNAL_RED
+    mono[red] = SIGNAL_RED
     mono[alpha == 0] = 0
     # Tile geometry still comes from the same grayscale/red portrait as before.
     # Restoring cheek colour must not change the point sizes or opacity.
@@ -135,10 +186,10 @@ def build():
         np.dstack((mono.astype(np.uint8), (alpha * 255).astype(np.uint8))), "RGBA"
     ).resize(OUTPUT_SIZE, Image.Resampling.LANCZOS)
     blush = blush_accent(rgb)
-    blush_weight = blush[..., None]
+    blush_weight = (blush * (1 - irises))[..., None]
     mono = mono * (1 - blush_weight) + colour * blush_weight
     mono = np.clip(mono, 0, 255).astype(np.uint8)
-    mono[red] = [240, 68, 68]
+    mono[red] = SIGNAL_RED
     mono[alpha == 0] = 0
     subject = Image.fromarray(np.dstack((mono, (alpha * 255).astype(np.uint8))), "RGBA")
     subject = subject.resize(OUTPUT_SIZE, Image.Resampling.LANCZOS)
@@ -148,21 +199,31 @@ def build():
     sample = np.asarray(subject)
     base_sample = np.asarray(base_subject)
     pixel_blush = np.asarray(Image.fromarray(blush, "F").resize(OUTPUT_SIZE, Image.Resampling.BILINEAR))
+    # Sample iris coverage and neutral light with a non-ringing area filter.
+    iris_source = np.dstack((irises, neutral))
+    iris_sample = cv2.resize(iris_source, OUTPUT_SIZE, interpolation=cv2.INTER_AREA)
+    iris_tiles = cv2.blur(iris_sample, (PIXEL_STEP, PIXEL_STEP))
+    pixel_grey = cv2.resize(greyscale, OUTPUT_SIZE, interpolation=cv2.INTER_AREA)
     pixels = Image.new("RGBA", subject.size)
     draw = ImageDraw.Draw(pixels)
-    for y in range(4, OUTPUT_SIZE[1], 7):
-        for x in range(4, OUTPUT_SIZE[0], 7):
+    for y in range(4, OUTPUT_SIZE[1], PIXEL_STEP):
+        for x in range(4, OUTPUT_SIZE[0], PIXEL_STEP):
             r, g, b, opacity = (int(value) for value in base_sample[y, x])
             if opacity < 100:
                 continue
             luminance = (r + g + b) / 3 / 255
-            radius = .7 + luminance ** .8 * 2.3
             hot = r > g * 1.7 and r > b * 1.7
             # Tint existing tiles without changing their opacity, size or grid.
             strength = float(pixel_blush[y, x])
             tint = tuple(round(220 * (1 - strength) + int(channel) * strength) for channel in sample[y, x, :3])
-            fill = ((240, 68, 68, 235) if hot else
+            fill = ((*SIGNAL_RED, 235) if hot else
                     (*tint, int((.14 + luminance * .86) * opacity)))
+            if iris_tiles[y, x, 0] > 0:
+                fill, luminance = iris_tile(
+                    iris_tiles[y, x], iris_sample[y, x, 0],
+                    float(pixel_grey[y, x]), opacity, tint,
+                )
+            radius = .7 + luminance ** .8 * 2.3
             draw.rectangle((x - radius, y - radius, x + radius, y + radius), fill=fill)
     pixels.save(ROOT / "public/portrait-pixels.webp", lossless=True, method=6)
     blush_pixels = int(np.count_nonzero((blush > 0) & (alpha > .06)))

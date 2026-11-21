@@ -11,7 +11,7 @@ export function SelectedWork() {
   const { repos } = useRepos();
   const exm = findRepo(repos, "ExMachina");
   const space = findRepo(repos, "Project-Space");
-  const novelist = findRepo(repos, "DSH-Creator");
+  const iris = findRepo(repos, "Iris-Creation");
 
   return (
     <section
@@ -91,26 +91,30 @@ export function SelectedWork() {
             </div>
           </article>
         )}
-        {novelist && (
-          <article className="folio-project folio-project-novelist">
+        {iris && (
+          <article className="folio-project folio-project-iris" id="project-iris">
             <div className="folio-exhibit-head">
-              <span className="folio-caption">03 / LANGUAGE</span>
-              <span className="folio-caption">AGENT SKILLS</span>
+              <span className="folio-caption">03 / WRITING</span>
+              <span className="folio-caption">TAURI / REACT</span>
             </div>
             <a
-              className="folio-exhibit folio-exhibit-novelist"
-              href={novelist.url}
+              className="folio-exhibit folio-exhibit-iris"
+              href={iris.url}
               target="_blank"
               rel="noreferrer"
-              title={`查看 ${novelist.name} GitHub 仓库`}
+              aria-label={`查看 ${iris.name} GitHub 仓库`}
+              aria-describedby="iris-exhibit-metrics"
             >
-              <span className="sr-only">{novelist.name} — </span>
-              <span className="novelist-art-top">
-                A SYSTEM FOR
+              <span className="iris-art-title" lang="en">
+                A WORKSPACE FOR
                 <br />
                 STORIES.
               </span>
-              <span className="novelist-art-grid">
+              <span
+                className="iris-art-metrics"
+                id="iris-exhibit-metrics"
+                lang="en"
+              >
                 <span>
                   <b>12</b>
                   <small>METHODOLOGY</small>
@@ -120,21 +124,23 @@ export function SelectedWork() {
                   <small>WRITING STYLES</small>
                 </span>
               </span>
-              <span className="novelist-art-bottom">
-                <span>01 PLUGIN / 07 TOOLS</span>
-                <b aria-hidden="true">↗</b>
+              <span className="iris-art-bottom">
+                <span lang="en">LOCAL MARKDOWN</span>
+                <span className="iris-art-link">
+                  GitHub <b aria-hidden="true">↗</b>
+                </span>
               </span>
             </a>
             <div className="folio-project-bottom">
               <div>
                 <h3>
-                  {novelist.name}
+                  {iris.name}
                   <span className="folio-project-dot">.</span>
                 </h3>
-                <p>长篇写作智能体 / JavaScript</p>
+                <p>小说与剧本创作工作台</p>
               </div>
-              <SpecimenTrigger repo={novelist} className="folio-round-link">
-                <span className="sr-only">查看 {novelist.name} 详情</span>
+              <SpecimenTrigger repo={iris} className="folio-round-link">
+                <span className="sr-only">查看 {iris.name} 详情</span>
                 <span aria-hidden="true">↗</span>
               </SpecimenTrigger>
             </div>

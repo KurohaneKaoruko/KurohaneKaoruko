@@ -15,10 +15,10 @@ These were references for hierarchy and interaction, not sources of artwork or f
 The first three are nominees at the time of this review; Preymaker is the November 14, 2026 Site of the Day.
 
 Rendering: semantic DOM + CSS, original-derived WebP portrait layers, Canvas 2D for
-Conway's Game of Life. No animation or 3D framework is required. The portrait has
-an explicit touch/keyboard toggle. The automaton is paused by default, stops when
-off-screen/hidden, and only runs after a user action. Reduced-motion retains the
-finished layout and explicit controls.
+Conway's Game of Life. The portrait has a mouse-hover lens that reveals the
+undithered image. The automaton starts paused, runs after a user action, and
+stops when off-screen or hidden. Reduced motion keeps the pixel portrait and
+the automaton controls available.
 
 Type: self-hosted Space Grotesk + IBM Plex Mono + Noto Sans SC, all SIL OFL 1.1.
 See `app/fonts/README.md` and the included license files.
@@ -26,6 +26,8 @@ See `app/fonts/README.md` and the included license files.
 ExMachina uses an original conceptual illustration based only on its public
 description: Rust, collective intelligence and multi-agent collaboration. No
 application screenshots, conversations or session data are included in the site.
-The DSH-Creator exhibit is a typographic visualization of the
-existing project's declared 12 methodology skills, 6 writing styles, 1 plugin and
-7 tools. Project Space's live exhibit is a small standalone Conway simulation.
+The Iris-Creation exhibit shows the 12 methodology skills and six writing styles
+in the skill library it shares with DSH-Creator.
+[Novelist-Skills](https://github.com/KurohaneKaoruko/Novelist-Skills)
+
+Project Space's live exhibit is a small standalone Conway simulation.

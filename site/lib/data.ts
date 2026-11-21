@@ -101,11 +101,11 @@ export const projects: Project[] = [
     aliases: ["Iris-I.C.E."],
     taxon: "Machina Scriptoria",
     vernacular: "写作台",
-    desc: "长篇小说桌面写作工作台：作品资料管理、章节写作与改稿、AI 规划审阅与长期记忆、人物关系与连续性维护，Tauri + React + Lexical 构建",
+    desc: "小说与剧本的本地桌面创作工作台，支持作品资料管理、章节与分场写作、改稿审阅、AI 规划与长期记忆，以及人物关系和连续性维护。基于 Tauri 和 React 构建，文稿以 Markdown 保存。",
     lang: "TypeScript",
     stars: 8,
     url: "https://github.com/KurohaneKaoruko/Iris-Creation",
-    topics: ["Novel", "Tauri", "Lexical"],
+    topics: ["Novel", "Tauri", "Markdown"],
     family: "principium",
   },
   {

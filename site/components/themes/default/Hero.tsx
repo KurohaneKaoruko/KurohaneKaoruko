@@ -25,7 +25,6 @@ export function Hero() {
               Kaoruko<span className="personal-title-dot">.</span>
             </span>
           </h1>
-          <p className="personal-role">TOOLMAKER</p>
           <div className="personal-hero-bottom">
             <p className="personal-now">
               CURRENTLY BUILDING
@@ -44,7 +43,7 @@ export function Hero() {
       </div>
       <div className="personal-hero-index" aria-label="作品类别">
         <a href="#project-exmachina">AI AGENTS</a>
-        <a href="#collection">DESKTOP TOOLS</a>
+        <a href="#project-iris">DESKTOP TOOLS</a>
         <a href="#project-space">EXPERIMENTS</a>
         <a href={SITE.github} target="_blank" rel="noreferrer">
           OPEN SOURCE <span aria-hidden="true">↗</span>

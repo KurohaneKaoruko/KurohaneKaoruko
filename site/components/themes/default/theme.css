@@ -294,7 +294,7 @@ html[data-theme="default"] body {
   opacity: 0.9;
 }
 [data-theme="default"]
-  .folio-portrait[data-inspecting="true"]:not([data-original="true"])
+  .folio-portrait[data-inspecting="true"]
   .portrait-pixels-layer {
   /* The original has transparency: actually cut the pixel layer out below it. */
   -webkit-mask-image: radial-gradient(
@@ -334,8 +334,8 @@ html[data-theme="default"] body {
   inset: 0;
   z-index: 2;
   background:
-    linear-gradient(90deg, #080808 0%, #08080800 18%),
-    linear-gradient(0deg, #080808 0%, #08080800 17%);
+    linear-gradient(90deg, #080808 0%, #08080800 8%),
+    linear-gradient(0deg, #080808 0%, #08080800 8%);
   pointer-events: none;
 }
 [data-theme="default"] .folio-portrait[data-inspecting="true"] .portrait-lens {
@@ -343,45 +343,6 @@ html[data-theme="default"] body {
   clip-path: circle(
     var(--portrait-radius) at var(--portrait-x, 50%) var(--portrait-y, 50%)
   );
-}
-[data-theme="default"] .folio-portrait[data-original="true"] .portrait-lens {
-  opacity: 1;
-  clip-path: none;
-  background: transparent;
-}
-[data-theme="default"] .folio-portrait[data-original="true"] .portrait-pixels {
-  opacity: 0;
-}
-[data-theme="default"] .portrait-mode {
-  position: absolute;
-  bottom: 17px;
-  right: 12px;
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  min-height: 44px;
-  padding: 9px 14px;
-  border: 1px solid var(--line-strong);
-  background: var(--bg);
-  color: var(--fg-2);
-  font-size: 10px;
-  cursor: pointer;
-}
-[data-theme="default"] .portrait-mode b {
-  color: var(--signal);
-  padding-inline: 3px;
-  font-weight: 400;
-}
-[data-theme="default"] .portrait-mode-icon {
-  width: 9px;
-  height: 9px;
-  background: repeating-conic-gradient(var(--fg) 0% 25%, transparent 0% 50%)
-    50% / 6px 6px;
-}
-[data-theme="default"] .portrait-mode > span:last-child {
-  font-size: 16px;
-  color: var(--signal);
 }
 [data-theme="default"] .personal-hero-copy {
   position: relative;
@@ -410,12 +371,6 @@ html[data-theme="default"] body {
 }
 [data-theme="default"] .personal-title-dot {
   color: var(--signal);
-}
-[data-theme="default"] .personal-role {
-  display: block;
-  margin-top: 29px;
-  font: 10px/1.5 var(--stack-mono);
-  letter-spacing: 0.1em;
 }
 [data-theme="default"] .personal-hero-bottom {
   display: flex;
@@ -788,7 +743,7 @@ html[data-theme="default"] body {
   align-items: start;
   margin-top: 87px;
 }
-[data-theme="default"] .folio-project-novelist {
+[data-theme="default"] .folio-project-iris {
   margin-top: 130px;
 }
 [data-theme="default"] .folio-round-link {
@@ -801,50 +756,66 @@ html[data-theme="default"] body {
   cursor: pointer;
   font-size: 21px;
 }
-[data-theme="default"] .folio-exhibit-novelist {
+[data-theme="default"] .folio-exhibit-iris {
   aspect-ratio: 0.94;
+  container-type: inline-size;
   padding: 9%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 16px;
   background: #eee;
   color: #111;
 }
-[data-theme="default"] .novelist-art-top {
-  font-size: clamp(26px, 4.5vw, 72px);
+[data-theme="default"] .iris-art-title {
+  font-size: clamp(25px, 4vw, 78px);
+  font-size: clamp(25px, 11.7cqi, 88px);
   font-weight: 500;
   line-height: 0.96;
   letter-spacing: -0.065em;
+  white-space: nowrap;
 }
-[data-theme="default"] .novelist-art-grid {
+[data-theme="default"] .iris-art-metrics {
   display: flex;
-  gap: 22%;
   align-items: flex-end;
+  gap: 22%;
   border-top: 1px solid #1114;
-  padding-top: 17px;
+  padding-top: clamp(10px, 3.5cqi, 22px);
 }
-[data-theme="default"] .novelist-art-grid > span {
+[data-theme="default"] .iris-art-metrics > span {
   display: grid;
   gap: 8px;
 }
-[data-theme="default"] .novelist-art-grid b {
+[data-theme="default"] .iris-art-metrics b {
+  font-size: clamp(42px, 6vw, 112px);
+  font-size: clamp(42px, 18cqi, 112px);
   font-weight: 400;
-  font-size: clamp(40px, 6vw, 88px);
   line-height: 1;
   letter-spacing: -0.065em;
 }
-[data-theme="default"] .novelist-art-grid small {
-  font: 7px/1.5 var(--stack-mono);
+[data-theme="default"] .iris-art-metrics small {
+  font: 9px/1.5 var(--stack-mono);
+  white-space: nowrap;
 }
-[data-theme="default"] .novelist-art-bottom {
+[data-theme="default"] .iris-art-bottom {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font: 8px/1.5 var(--stack-mono);
+  gap: 12px;
+  font: 9px/1.5 var(--stack-mono);
 }
-[data-theme="default"] .novelist-art-bottom > b {
-  color: #cf3030;
-  font: 32px/1 var(--font-folio);
+[data-theme="default"] .iris-art-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+[data-theme="default"] .iris-art-link > b {
+  color: #b72727;
+  font: 28px/1 var(--font-folio);
+}
+[data-theme="default"] .folio-exhibit-iris:focus-visible .iris-art-link {
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 [data-theme="default"] .folio-all-work {
   display: flex;
@@ -1431,13 +1402,13 @@ html[data-theme="default"].js .reveal {
   [data-theme="default"] .folio-footer-title:hover > span {
     transform: translate(5px, -5px);
   }
-  [data-theme="default"] .portrait-mode:hover {
-    border-color: var(--fg);
-    color: var(--fg);
-  }
   [data-theme="default"] .folio-round-link:hover {
     color: var(--bg);
     background: var(--fg);
+  }
+  [data-theme="default"] .folio-exhibit-iris:hover .iris-art-link {
+    text-decoration: underline;
+    text-underline-offset: 4px;
   }
 }
 @media (max-width: 1100px) {
@@ -1524,22 +1495,11 @@ html[data-theme="default"].js .reveal {
   [data-theme="default"] .personal-hero h1 > span:last-child {
     margin-left: 0.18em;
   }
-  [data-theme="default"] .personal-role {
-    margin-top: 20px;
-    font-size: 8px;
-  }
   [data-theme="default"] .folio-portrait {
     top: 192px;
     right: -22px;
     width: min(100%, 440px);
     max-width: none;
-  }
-  [data-theme="default"] .portrait-mode {
-    top: 12px;
-    bottom: auto;
-    right: 0;
-    padding: 8px 11px;
-    font-size: 10px;
   }
   [data-theme="default"] .personal-hero-bottom {
     margin-top: 257px;
@@ -1636,21 +1596,12 @@ html[data-theme="default"].js .reveal {
     gap: 37px;
     margin-top: 43px;
   }
-  [data-theme="default"] .folio-project-novelist {
+  [data-theme="default"] .folio-project-iris {
     margin-top: 0;
     margin-left: 8%;
   }
-  [data-theme="default"] .folio-exhibit-novelist {
+  [data-theme="default"] .folio-exhibit-iris {
     aspect-ratio: 1;
-  }
-  [data-theme="default"] .novelist-art-top {
-    font-size: 49px;
-  }
-  [data-theme="default"] .novelist-art-grid b {
-    font-size: 68px;
-  }
-  [data-theme="default"] .novelist-art-grid small {
-    font-size: 8px;
   }
   [data-theme="default"] .folio-all-work {
     margin-top: 47px;
@@ -1774,9 +1725,6 @@ html[data-theme="default"].js .reveal {
   [data-theme="default"] .folio-work-title {
     font-size: 44px;
   }
-  [data-theme="default"] .novelist-art-top {
-    font-size: 42px;
-  }
   [data-theme="default"] .folio-source h2 {
     font-size: 48px;
   }
@@ -1818,18 +1766,13 @@ html[data-theme="default"].js .reveal {
   [data-theme="default"] .folio-source-row:hover .folio-source-name {
     transform: none;
   }
-  [data-theme="default"] .folio-portrait .portrait-lens {
-    clip-path: none;
-  }
   [data-theme="default"]
-    .folio-portrait[data-inspecting="true"]:not([data-original="true"])
+    .folio-portrait[data-inspecting="true"]
     .portrait-pixels-layer {
     -webkit-mask-image: none;
     mask-image: none;
   }
-  [data-theme="default"]
-    .folio-portrait[data-inspecting="true"]:not([data-original="true"])
-    .portrait-lens {
+  [data-theme="default"] .folio-portrait[data-inspecting="true"] .portrait-lens {
     opacity: 0;
   }
 }
